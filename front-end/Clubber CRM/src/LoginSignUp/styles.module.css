@@ -1,0 +1,7 @@
+.container {
+  height: 100vh;
+  background-image: url("../../assets/16.jpg");
+  /background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+}
