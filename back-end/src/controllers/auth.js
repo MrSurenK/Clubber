@@ -123,6 +123,7 @@ const refresh = (req, res) => {
       isStaff: decoded.isStaff,
       staffRank: decoded.staffRank,
       isMember: decoded.isMember,
+      memberRank: decoded.memberRank,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
       expiresIn: "20m",

@@ -19,6 +19,6 @@ router.get("/", getAllTransactions);
 router.get("/t/:transactionId", getTransactionsByTransactionId);
 router.get("/m/:memberId", getTransactionsByMemberId);
 router.put("/", addNewTransactions);
-router.patch("/:transactionId", updatePaymentStatus);
+// router.patch("/:transactionId", updatePaymentStatus);
 
 module.exports = router;
