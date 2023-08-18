@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styles from "./styles.module.css";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
 
 function Copyright(props) {
@@ -29,6 +29,13 @@ function Copyright(props) {
     </Typography>
   );
 }
+
+//Simulate successful login to design UI
+const navigate = useNavigate();
+
+const handleSimulatedSignIn = () => {
+  navigate("/dashboard");
+};
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -109,6 +116,7 @@ export default function SignIn() {
                   bgcolor: customTheme.palette.secondary.main,
                   "&:hover": { bgcolor: customTheme.palette.secondary.main },
                 }}
+                onClick={handleSimulatedSignIn}
               >
                 Sign In
               </Button>
