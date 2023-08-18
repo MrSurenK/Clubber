@@ -53,80 +53,69 @@ export default function SignIn() {
       <ThemeProvider theme={customTheme}>
         <Container component="main" maxWidth="xs" styles>
           <CssBaseline />
+
           <Box
             sx={{
+              marginTop: 0,
               display: "flex",
               flexDirection: "column",
-
-              alignItems: "flex-start",
-              justifyContent: "center", // Center vertically
-              height: "100vh", // Adjusted the height of the containe
-              paddingLeft: "20%", // Added left padding to move content to the left
+              alignItems: "center",
+              fontFamily: "Exo",
+              justifyContent: "center",
             }}
           >
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
             <Box
-              sx={{
-                marginTop: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                fontFamily: "Exo",
-                justifyContent: "center",
-              }}
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-                sx={{ mt: 1 }}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
               >
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button>
-                <Grid container>
-                  <Grid item s>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <RouterLink to="/register">
-                      <Link variant="body2">
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </RouterLink>
-                  </Grid>
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs="6">
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
                 </Grid>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
-              </Box>
+                <Grid item xs="8">
+                  <RouterLink to="/register">
+                    <Link variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </RouterLink>
+                </Grid>
+              </Grid>
+              <Copyright sx={{ mt: 8, mb: 4 }} />
             </Box>
           </Box>
         </Container>

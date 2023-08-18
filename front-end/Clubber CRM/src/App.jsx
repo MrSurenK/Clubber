@@ -5,13 +5,15 @@ import Display from "./Display";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/register" element={<SignUp />} />
-      </Routes>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
       <Display></Display>
-    </BrowserRouter>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 .container {
+  width: 100vw;
   height: 100vh;
+  background-size: 100vw 100vh;
   background-image: url("../../assets/16.jpg");
-  /background-size: cover;
-  background-repeat: no-repeat;
-  margin: 0;
+  background-size: cover;
 }
