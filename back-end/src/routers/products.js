@@ -4,20 +4,20 @@ const {
   seedProducts,
   getProducts,
   addNewProduct,
-  getProductbyProductID,
+  getProductbyProductId,
   updateProductStatus,
 } = require("../controllers/products");
 
-// const {} = require("../validators/transactions");
+// const {} = require("../valIdators/transactions");
 
-// const {auth, authAdmin} = require("../middleware/auth")
+// const {auth, authAdmin} = require("../mIddleware/auth")
 
 const router = express.Router();
 
-router.get("/products/seed", seedProducts);
-router.get("/products", getProducts);
-router.put("/products/", addNewProduct);
-router.post("/products/:productID", getProductbyProductID);
-router.patch("/products/:productID", updateProductStatus);
+router.get("/seed", seedProducts);
+router.get("/", getProducts);
+router.put("/", addNewProduct);
+router.post("/:productId", getProductbyProductId);
+router.patch("/:productId", updateProductStatus);
 
 module.exports = router;

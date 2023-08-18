@@ -7,25 +7,25 @@ const seedProducts = async (req, res) => {
 
     await ProductsModel.create([
       {
-        productID: "P0000001",
+        productId: "P0000001",
         productName: "Cover Charge",
         productPrice: 15,
         productActive: true,
       },
       {
-        productID: "P0000002",
+        productId: "P0000002",
         productName: "Drinks",
         productPrice: 30,
         productActive: true,
       },
       {
-        productID: "P0000003",
+        productId: "P0000003",
         productName: "Bottle of Booze",
         productPrice: 300,
         productActive: true,
       },
       {
-        productID: "P0000004",
+        productId: "P0000004",
         productName: "Extra Services",
         productPrice: 999,
         productActive: true,
@@ -54,7 +54,7 @@ const getProducts = async (req, res) => {
 const addNewProduct = async (req, res) => {
   try {
     const newProduct = {
-      productID: req.body.productID,
+      productId: req.body.productId,
       productName: req.body.productName,
       productPrice: req.body.productPrice,
       productActive: req.body.productActive,
@@ -67,10 +67,12 @@ const addNewProduct = async (req, res) => {
   }
 };
 
-//POST - get product by productID
-const getProductbyProductID = async (req, res) => {
+//POST - get product by productId
+const getProductbyProductId = async (req, res) => {
   try {
-    const product = await ProductsModel.findById(req.body.productid);
+    const product = await ProductsModel.findOne({
+      productId: req.params.productId,
+    });
     res.json(product);
   } catch (error) {
     console.log(error.message);
@@ -78,13 +80,23 @@ const getProductbyProductID = async (req, res) => {
   }
 };
 
-//PATCh - update product status by productID
+//PATCh - update product status by productId
 const updateProductStatus = async (req, res) => {
   try {
     const updatedProduct = {};
     if ("productActive" in req.body)
       updatedProduct.productActive = req.body.productActive;
-    await Products.findByIdAndUpdate(req.params.productid, updatedProduct);
+
+    const result = await ProductsModel.findOneAndUpdate(
+      { productId: req.params.productId },
+      updatedProduct,
+      { new: true }
+    );
+    if (!result) {
+      return res
+        .status(404)
+        .json({ status: "error", msg: "Product not found" });
+    }
     res.json({ status: "ok", msg: "Product Active Status updated" });
   } catch (error) {
     console.log(error.message);
@@ -96,6 +108,6 @@ module.exports = {
   seedProducts,
   getProducts,
   addNewProduct,
-  getProductbyProductID,
+  getProductbyProductId,
   updateProductStatus,
 };

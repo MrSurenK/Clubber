@@ -7,40 +7,40 @@ const seedTransactions = async (req, res) => {
     await TransactionsModel.deleteMany();
     await TransactionsModel.create([
       {
-        _id: "64d0f3f75676c304033d8c89",
-        transactionID: "T000000001",
+        _Id: "64d0f3f75676c304033d8c89",
+        transactionId: "T000000001",
         transactionDate: "2023-08-16",
         paymentStatus: false,
-        productID: "P0000001",
-        memberID: "M0000001",
-        staffID: "S0000001",
+        productId: "P0000001",
+        memberId: "M0000001",
+        staffId: "S0000001",
       },
       {
-        _id: "64d0f3f75676c304033d8c89",
-        transactionID: "T000000002",
+        _Id: "64d0f3f75676c304033d8c89",
+        transactionId: "T000000002",
         transactionDate: "2023-08-17",
         paymentStatus: false,
-        productID: "P0000002",
-        memberID: "M0000002",
-        staffID: "S0000002",
+        productId: "P0000002",
+        memberId: "M0000002",
+        staffId: "S0000002",
       },
       {
-        _id: "64d0f3f75676c304033d8c89",
-        transactionID: "T000000003",
+        _Id: "64d0f3f75676c304033d8c89",
+        transactionId: "T000000003",
         transactionDate: "2023-08-18",
         paymentStatus: false,
-        productID: "P0000003",
-        memberID: "M0000003",
-        staffID: "S0000003",
+        productId: "P0000003",
+        memberId: "M0000003",
+        staffId: "S0000003",
       },
       {
-        _id: "64d0f3f75676c304033d8c89",
-        transactionID: "T000000004",
+        _Id: "64d0f3f75676c304033d8c89",
+        transactionId: "T000000004",
         transactionDate: "2023-08-19",
         paymentStatus: false,
-        productID: "P0000004",
-        memberID: "M0000004",
-        staffID: "S0000004",
+        productId: "P0000004",
+        memberId: "M0000004",
+        staffId: "S0000004",
       },
     ]);
     res.json({ status: "ok", msg: "seeding successful" });
@@ -61,12 +61,19 @@ const getAllTransactions = async (req, res) => {
   }
 };
 
-// GET - get a new purchase transaction by Transaction ID
+// GET - get purchase transaction by Transaction Id
 const getTransactionsByTransactionId = async (req, res) => {
   try {
-    const transaction = await TransactionsModel.findById(
-      req.params.transactionID
-    );
+    const transaction = await TransactionsModel.find({
+      transactionId: req.params.transactionId,
+    });
+
+    if (!transaction) {
+      return res.status(404).json({
+        status: "error",
+        msg: "Transaction cannot be found by transaction Id",
+      });
+    }
     res.json(transaction);
   } catch (error) {
     console.log(error.message);
@@ -74,10 +81,19 @@ const getTransactionsByTransactionId = async (req, res) => {
   }
 };
 
-// GET - get a new purchase transaction by memberID
+// GET - get purchase transaction by Member Id
 const getTransactionsByMemberId = async (req, res) => {
   try {
-    const transaction = await TransactionsModel.findById(req.params.memberID);
+    const transaction = await TransactionsModel.find({
+      memberId: req.params.memberId,
+    });
+
+    if (!transaction) {
+      return res.status(404).json({
+        status: "error",
+        msg: "Transaction cannot be found by member Id",
+      });
+    }
     res.json(transaction);
   } catch (error) {
     console.log(error.message);
@@ -89,15 +105,44 @@ const getTransactionsByMemberId = async (req, res) => {
 const addNewTransactions = async (req, res) => {
   try {
     const newTransaction = {
-      transactionID: req.body.transactionID,
+      transactionId: req.body.transactionId,
       transactionDate: req.body.transactionDate,
       paymentStatus: req.body.paymentStatus,
-      productID: req.body.productID,
-      memberID: req.body.memberID,
-      staffID: req.body.staffID,
+      productId: req.body.productId,
+      memberId: req.body.memberId,
+      staffId: req.body.staffId,
     };
     await TransactionsModel.create(newTransaction);
-    res.json({ status: "ok", msg: "transaction saved" });
+    res.json({ status: "ok", msg: "transaction added" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", msg: error.msg });
+  }
+};
+
+// PATCH - update payment status
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const updatedPaymentStatus = {};
+    if ("paymentStatus" in req.body)
+      updatedPaymentStatus.paymentStatus = req.body.paymentStatus;
+
+    const result = await TransactionsModel.updateMany(
+      { transactionId: req.params.transactionId },
+      { $set: updatedPaymentStatus }
+    );
+
+    if (result.nModified === 0) {
+      return (
+        res,
+        status(404).json({
+          status: "error",
+          msg: "no transactions foundto update",
+        })
+      );
+    }
+
+    res.json({ status: "ok", msg: "transaction(s) updated" });
   } catch (error) {
     console.log(error.message);
     res.json({ status: "error", msg: error.msg });
@@ -110,4 +155,5 @@ module.exports = {
   getTransactionsByTransactionId,
   getTransactionsByMemberId,
   addNewTransactions,
+  updatePaymentStatus,
 };

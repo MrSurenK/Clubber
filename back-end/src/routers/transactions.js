@@ -6,18 +6,20 @@ const {
   getTransactionsByTransactionId,
   getTransactionsByMemberId,
   addNewTransactions,
+  updatePaymentStatus,
 } = require("../controllers/transactions");
 
-// const {} = require("../validators/transactions");
+// const {} = require("../valIdators/transactions");
 
-// const {auth, authAdmin} = require("../middleware/auth")
+// const {auth, authAdmin} = require("../mIddleware/auth")
 
 const router = express.Router();
 
-router.get("/transactions/seed", seedTransactions);
-router.get("/transactions", getAllTransactions);
-router.get("/transactions/:transactionID", getTransactionsByTransactionId);
-router.get("/transactions/:memberID", getTransactionsByMemberId);
-router.put("/transactions", addNewTransactions);
+router.get("/seed", seedTransactions);
+router.get("/", getAllTransactions);
+router.get("/t/:transactionId", getTransactionsByTransactionId);
+router.get("/m/:memberId", getTransactionsByMemberId);
+router.put("/", addNewTransactions);
+router.patch("/:transactionId", updatePaymentStatus);
 
 module.exports = router;
