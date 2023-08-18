@@ -1,11 +1,15 @@
 import "./App.css";
 import SignIn from "./LoginSignUp/Login";
-
+import SignUp from "./LoginSignUp/Register";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
-    <>
-      <SignIn></SignIn>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<SignIn />} />
+        <Route path="/register" element={<SignUp />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
