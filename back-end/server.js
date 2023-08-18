@@ -8,6 +8,7 @@ const connectDB = require("./src/db/db");
 
 connectDB();
 
+const auth = require("./src/routers/auth");
 const products = require("./src/routers/products");
 const transactions = require("./src/routers/transactions");
 const users = require("./src/routers/users");
@@ -27,6 +28,7 @@ app.use(limit);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use("/auth", auth);
 app.use("/products", products);
 app.use("/transactions", transactions);
 app.use("/users", users);
