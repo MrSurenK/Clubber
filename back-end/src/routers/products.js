@@ -6,7 +6,7 @@ const {
   addNewProduct,
   getProductbyProductID,
   updateProductStatus,
-} = require("../constrollers/products");
+} = require("../controllers/products");
 
 // const {} = require("../validators/transactions");
 
