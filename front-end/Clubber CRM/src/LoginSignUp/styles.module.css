@@ -5,3 +5,7 @@
   background-image: url("../../assets/16.jpg");
   background-size: cover;
 }
+
+.logo {
+  margin-left: 30%;
+}

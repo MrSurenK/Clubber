@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 import styles from "./styles.module.css";
+import sketch from "../../assets/sketch.png";
 
 function Copyright(props) {
   return (
@@ -58,15 +59,17 @@ export default function SignUp() {
           <CssBaseline />
           <Box
             sx={{
+              height: "100vh",
               marginTop: 0,
+              marginLeft: 0,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "flex-start",
+              fontFamily: "Exo",
+              justifyContent: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
+            <img src={sketch} alt="logo" className={styles.logo} />
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
@@ -129,17 +132,17 @@ export default function SignUp() {
                 Sign Up
               </Button>
               <Grid container justifyContent="flex-end">
-                <Grid item xs="12">
-                  <RouterLink to="/login">
-                    <Link href="#" variant="body2">
+                <Grid item xs={9}>
+                  <RouterLink to="/">
+                    <Typography variant="body2">
                       Already have an account? Sign in
-                    </Link>
+                    </Typography>
                   </RouterLink>
                 </Grid>
               </Grid>
             </Box>
+            <Copyright sx={{ mt: 8, mb: 4, ml: 12 }} />
           </Box>
-          <Copyright sx={{ mt: 5 }} />
         </Container>
       </div>
     </ThemeProvider>

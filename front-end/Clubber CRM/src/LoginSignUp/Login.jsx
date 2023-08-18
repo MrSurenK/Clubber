@@ -1,5 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -11,6 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styles from "./styles.module.css";
 import { Link as RouterLink } from "react-router-dom";
+import sketch from "../../assets/sketch.png";
 
 function Copyright(props) {
   return (
@@ -51,19 +51,22 @@ export default function SignIn() {
   return (
     <div className={styles.container}>
       <ThemeProvider theme={customTheme}>
-        <Container component="main" maxWidth="xs" styles>
+        <Container component="main" maxWidth="xs">
           <CssBaseline />
 
           <Box
             sx={{
+              height: "100vh",
               marginTop: 0,
+              marginLeft: 0,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "flex-start",
               fontFamily: "Exo",
               justifyContent: "center",
             }}
           >
+            <img src={sketch} alt="logo" className={styles.logo} />
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
@@ -101,20 +104,17 @@ export default function SignIn() {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs="6">
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item xs="8">
+
+              <Grid container justifyContent={"center"}>
+                <Grid item s={6}>
                   <RouterLink to="/register">
-                    <Link variant="body2">
+                    <Typography variant="body2">
                       {"Don't have an account? Sign Up"}
-                    </Link>
+                    </Typography>
                   </RouterLink>
                 </Grid>
               </Grid>
+
               <Copyright sx={{ mt: 8, mb: 4 }} />
             </Box>
           </Box>
