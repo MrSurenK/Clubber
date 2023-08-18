@@ -97,8 +97,10 @@ const login = async (req, res) => {
     const claims = {
       email: auth.email,
       isStaff: auth.isStaff,
+      staffId: auth.staffId,
       staffRank: auth.staffRank,
       isMember: auth.isMember,
+      memberId: auth.memberId,
       memberRank: auth.memberRank,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
@@ -122,8 +124,10 @@ const refresh = (req, res) => {
     const claims = {
       email: decoded.email,
       isStaff: decoded.isStaff,
+      staffId: decoded.staffId,
       staffRank: decoded.staffRank,
       isMember: decoded.isMember,
+      memberId: decoded.ismemberId,
       memberRank: decoded.memberRank,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
