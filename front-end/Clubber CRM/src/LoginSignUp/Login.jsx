@@ -36,6 +36,9 @@ const customTheme = createTheme({
   typography: {
     fontFamily: "Exo, Roboto",
   },
+  palette: {
+    secondary: { main: "#FF5C00" },
+  },
 });
 
 export default function SignIn() {
@@ -100,7 +103,12 @@ export default function SignIn() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  bgcolor: customTheme.palette.secondary.main,
+                  "&:hover": { bgcolor: customTheme.palette.secondary.main },
+                }}
               >
                 Sign In
               </Button>
