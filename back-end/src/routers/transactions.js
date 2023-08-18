@@ -6,7 +6,7 @@ const {
   getTransactionsByTransactionId,
   getTransactionsByMemberId,
   addNewTransactions,
-} = require("../constrollers/transactions");
+} = require("../controllers/transactions");
 
 // const {} = require("../validators/transactions");
 

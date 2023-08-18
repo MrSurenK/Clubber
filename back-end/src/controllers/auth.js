@@ -51,6 +51,11 @@ const register = async (req, res) => {
       newMemberId = generateMemberUID();
     }
 
+    let barTabStatus = false;
+    if (req.body.memberRank === "gold") {
+      barTabStatus = true;
+    }
+
     const newUser = {
       email: req.body.email,
       hash,
@@ -61,8 +66,8 @@ const register = async (req, res) => {
       staffRank: req.body.staffRank || "minion",
       isMember: req.body.isMember,
       memberId: newMemberId,
-      memberRank: req.body.memberRank,
-      barTabActive: req.body.barTabActive,
+      memberRank: req.body.memberRank || null,
+      barTabActive: barTabStatus,
     };
 
     await UserModel.create(newUser);
