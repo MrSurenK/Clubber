@@ -99,6 +99,7 @@ const login = async (req, res) => {
       isStaff: auth.isStaff,
       staffRank: auth.staffRank,
       isMember: auth.isMember,
+      memberRank: auth.memberRank,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
