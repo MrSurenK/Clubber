@@ -117,7 +117,6 @@ const patchMember = async (req, res) => {
       isActive: req.body.isActive || existingMember.isActive,
       name: req.body.name || existingMember.name,
       isMember: req.body.isMember || existingMember.isMember,
-      memberId: req.body.memberId || existingMember.memberId,
       memberRank: req.body.memberRank || existingMember.memberRank,
       barTabActive: req.body.barTabActive || existingMember.barTabActive,
     };
@@ -133,10 +132,41 @@ const patchMember = async (req, res) => {
   }
 };
 
+const patchStaff = async (req, res) => {
+  try {
+    const existingStaff = await UserModel.find({
+      staffId: req.params.staffId,
+    });
+
+    if (!existingStaff) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Staff not found" });
+    }
+
+    const updateFields = {
+      isActive: req.body.isActive || existingStaff.isActive,
+      name: req.body.name || existingStaff.name,
+      isStaff: req.body.isStaff || existingStaff.isStaff,
+      staffRank: req.body.staffRank || existingStaff.staffRank,
+    };
+    const updateStaff = await UserModel.findOneAndUpdate(
+      { staffId: req.params.staffId },
+      updateFields,
+      { new: true }
+    );
+    res.json(updateStaff);
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", message: error.message });
+  }
+};
+
 module.exports = {
   getAllStaff,
   getAllMember,
   getAllUser,
   getMemberById,
   patchMember,
+  patchStaff,
 };
