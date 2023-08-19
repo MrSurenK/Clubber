@@ -1,13 +1,11 @@
 import React from "react";
-import StaffHeader from "./StaffHeader";
+import StaffLayout from "./StaffLayout";
 import { Outlet } from "react-router-dom";
-import StaffSideBar from "./StaffSideBar";
 
 const StaffPortal = () => {
   return (
     <>
-      <StaffHeader></StaffHeader>
-      <StaffSideBar></StaffSideBar>
+      <StaffLayout></StaffLayout>
       <Outlet />
     </>
   );

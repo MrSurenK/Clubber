@@ -1,6 +1,6 @@
 import React from "react";
 import CustomerAccountMgmt from "./CmAccountMgmt";
-import CustomerDashBoard from "./CustomerDashBoard";
+import CustomerDashBoard from "./CustomerDashboard";
 
 const CustomerPortal = () => {
   return (

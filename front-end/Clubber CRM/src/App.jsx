@@ -4,11 +4,11 @@ import SignUp from "./LoginSignUp/Register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import User from "./User";
 import StaffPortal from "./StaffComponents/StaffPortal";
-import StaffDashBoard from "./StaffComponents/StaffDashBoard";
+import StaffDashboard from "./StaffComponents/StaffDashboard";
 import MemberDisplay from "./StaffComponents/MemberDisplay";
 import StaffRevenue from "./StaffComponents/StaffRevenue";
 import StaffEmployee from "./StaffComponents/StaffEmployee";
-import CustomerDashBoard from "./CustomerPortal/CustomerDashBoard";
+import CustomerDashboard from "./CustomerPortal/CustomerDashboard";
 import CustomerPortal from "./CustomerPortal/CustomerPortal";
 import CmAccountMgmt from "./CustomerPortal/CmAccountMgmt";
 
@@ -21,11 +21,11 @@ function App() {
           <Route path="/register" element={<SignUp />} />
           <Route path="/user" element={<User />}>
             <Route path="customer" element={<CustomerPortal />}>
-              <Route path="dashboard" element={<CustomerDashBoard />} />
+              <Route path="dashboard" element={<CustomerDashboard />} />
               <Route path="account" element={<CmAccountMgmt />} />
             </Route>
             <Route path="staff" element={<StaffPortal />}>
-              <Route path="dashboard" element={<StaffDashBoard />} />
+              <Route path="dashboard" element={<StaffDashboard />} />
               <Route path="members" element={<MemberDisplay />} />
               <Route path="revenue" element={<StaffRevenue />} />
               <Route path="employee" element={<StaffEmployee />} />
