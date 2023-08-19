@@ -1,18 +1,14 @@
 import React from "react";
-import StaffDashBoard from "./StaffDashBoard";
-import MemberDisplay from "./MemberDisplay";
-import StaffRevenue from "./StaffRevenue";
-import StaffEmployee from "./StaffEmployee";
 import StaffHeader from "./StaffHeader";
+import { Outlet } from "react-router-dom";
+import StaffSideBar from "./StaffSideBar";
 
 const StaffPortal = () => {
   return (
     <>
-      <StaffHeader>Test</StaffHeader>
-      <StaffDashBoard></StaffDashBoard>
-      <MemberDisplay></MemberDisplay>
-      <StaffRevenue></StaffRevenue>
-      <StaffEmployee></StaffEmployee>
+      <StaffHeader></StaffHeader>
+      <StaffSideBar></StaffSideBar>
+      <Outlet />
     </>
   );
 };

@@ -1,12 +1,10 @@
 import React from "react";
-import StaffDashBoard from "./StaffComponents/StaffDashBoard";
-import CustomerDashBoard from "./CustomerPortal/CustomerDashBoard";
+import { Outlet } from "react-router-dom";
 
 const User = () => {
   return (
     <>
-      <StaffDashBoard></StaffDashBoard>
-      <CustomerDashBoard></CustomerDashBoard>
+      <Outlet />
     </>
   );
 };

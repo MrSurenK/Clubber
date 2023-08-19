@@ -1,10 +1,11 @@
 import React from "react";
 import CustomerAccountMgmt from "./CmAccountMgmt";
+import CustomerDashBoard from "./CustomerDashBoard";
 
 const CustomerPortal = () => {
   return (
     <>
-      <CustomerDashboard></CustomerDashboard>
+      <CustomerDashBoard></CustomerDashBoard>
       <CustomerAccountMgmt></CustomerAccountMgmt>
     </>
   );
