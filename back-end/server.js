@@ -11,6 +11,7 @@ connectDB();
 const auth = require("./src/routers/auth");
 const products = require("./src/routers/products");
 const transactions = require("./src/routers/transactions");
+const reservations = require("./src/routers/reservations");
 const users = require("./src/routers/users");
 
 const limit = rateLimit({
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/auth", auth);
 app.use("/products", products);
 app.use("/transactions", transactions);
+app.use("/reservations", reservations);
 app.use("/users", users);
 
 const PORT = process.env.PORT || 5001;
