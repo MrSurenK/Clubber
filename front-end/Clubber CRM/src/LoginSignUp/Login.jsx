@@ -30,13 +30,6 @@ function Copyright(props) {
   );
 }
 
-//Simulate successful login to design UI
-const navigate = useNavigate();
-
-const handleSimulatedSignIn = () => {
-  navigate("/dashboard");
-};
-
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const customTheme = createTheme({
@@ -56,6 +49,12 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     });
+  };
+
+  const navigate = useNavigate();
+
+  const handleSimulatedSignIn = () => {
+    navigate("/dashboard");
   };
 
   return (
@@ -82,7 +81,7 @@ export default function SignIn() {
             </Typography>
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit} //Submission will be cancelled during dev stage to create other pages
               noValidate
               sx={{ mt: 1 }}
             >
