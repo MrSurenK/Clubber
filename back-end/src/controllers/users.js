@@ -120,12 +120,27 @@ const patchMember = async (req, res) => {
       memberRank: req.body.memberRank || existingMember.memberRank,
       barTabActive: req.body.barTabActive || existingMember.barTabActive,
     };
-    const updateMember = await UserModel.findOneAndUpdate(
+    const updatedMember = await UserModel.findOneAndUpdate(
       { memberId: req.params.memberId },
       updateFields,
       { new: true }
     );
-    res.json(updateMember);
+
+    const sanitizedMember = {
+      _id: updatedMember._id,
+      email: updatedMember.email,
+      isActive: updatedMember.isActive,
+      name: updatedMember.name,
+      created_at: updatedMember.created_at,
+      isStaff: updatedMember.isStaff,
+      staffId: updatedMember.staffId,
+      staffRank: updatedMember.staffRank,
+      isMember: updatedMember.isMember,
+      memberRank: updatedMember.memberRank,
+      barTabActive: updatedMember.barTabActive,
+    };
+
+    res.json(sanitizedMember);
   } catch (error) {
     console.log(error.message);
     res.json({ status: "error", message: error.message });
@@ -155,7 +170,22 @@ const patchStaff = async (req, res) => {
       updateFields,
       { new: true }
     );
-    res.json(updateStaff);
+
+    const sanitizedStaff = {
+      _id: updateStaff._id,
+      email: updateStaff.email,
+      isActive: updateStaff.isActive,
+      name: updateStaff.name,
+      created_at: updateStaff.created_at,
+      isStaff: updateStaff.isStaff,
+      staffId: updateStaff.staffId,
+      staffRank: updateStaff.staffRank,
+      isMember: updateStaff.isMember,
+      memberRank: updateStaff.memberRank,
+      barTabActive: updateStaff.barTabActive,
+    };
+
+    res.json(sanitizedStaff);
   } catch (error) {
     console.log(error.message);
     res.json({ status: "error", message: error.message });
