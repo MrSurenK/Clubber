@@ -101,4 +101,42 @@ const getMemberById = async (req, res) => {
   }
 };
 
-module.exports = { getAllStaff, getAllMember, getAllUser, getMemberById };
+const patchMember = async (req, res) => {
+  try {
+    const existingMember = await UserModel.find({
+      memberId: req.params.memberId,
+    });
+
+    if (!existingMember) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Member not found" });
+    }
+
+    const updateFields = {
+      isActive: req.body.isActive || existingMember.isActive,
+      name: req.body.name || existingMember.name,
+      isMember: req.body.isMember || existingMember.isMember,
+      memberId: req.body.memberId || existingMember.memberId,
+      memberRank: req.body.memberRank || existingMember.memberRank,
+      barTabActive: req.body.barTabActive || existingMember.barTabActive,
+    };
+    const updateMember = await UserModel.findOneAndUpdate(
+      { memberId: req.params.memberId },
+      updateFields,
+      { new: true }
+    );
+    res.json(updateMember);
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", message: error.message });
+  }
+};
+
+module.exports = {
+  getAllStaff,
+  getAllMember,
+  getAllUser,
+  getMemberById,
+  patchMember,
+};
