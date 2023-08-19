@@ -192,6 +192,16 @@ const patchStaff = async (req, res) => {
   }
 };
 
+const delUser = async (req, res) => {
+  try {
+    await UserModel.findByIdAndDelete(req.params.id);
+    res.json({ message: "User deleted" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", message: error.message });
+  }
+};
+
 module.exports = {
   getAllStaff,
   getAllMember,
@@ -199,4 +209,5 @@ module.exports = {
   getMemberById,
   patchMember,
   patchStaff,
+  delUser,
 };
