@@ -8,16 +8,31 @@ const {
   updateProductStatus,
 } = require("../controllers/products");
 
-// const {} = require("../valIdators/transactions");
+const {
+  validateIdInParam,
+  validateAddProductData,
+  validateUpdateProductData,
+} = require("../validators/products");
 
-// const {auth, authAdmin} = require("../mIddleware/auth")
+const checkValid = require("../middleware/checkValid");
 
 const router = express.Router();
 
 router.get("/seed", seedProducts);
 router.get("/", getProducts);
-router.put("/", addNewProduct);
-router.post("/:productId", getProductbyProductId);
-router.patch("/:productId", updateProductStatus);
+router.put("/", validateAddProductData, checkValid, addNewProduct);
+router.post(
+  "/:productId",
+  validateIdInParam,
+  checkValid,
+  getProductbyProductId
+);
+router.patch(
+  "/:productId",
+  validateIdInParam,
+  validateUpdateProductData,
+  checkValid,
+  updateProductStatus
+);
 
 module.exports = router;
