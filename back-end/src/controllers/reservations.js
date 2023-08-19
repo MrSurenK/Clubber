@@ -58,7 +58,7 @@ const addNewReservations = async (req, res) => {
       reservationCreatedDate: req.body.reservationCreatedDate,
     };
     await ReservationsModel.create(newReservation);
-    res.json({ status: "ok", msg: "reservation saved" });
+    res.json({ status: "ok", msg: "new reservation added" });
   } catch (error) {
     console.log(error.message);
     res.json({ status: "error", msg: error.msg });
