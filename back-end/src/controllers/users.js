@@ -75,4 +75,30 @@ const getAllUser = async (req, res) => {
   }
 };
 
-module.exports = { getAllStaff, getAllMember, getAllUser };
+const getMemberById = async (req, res) => {
+  try {
+    const member = await UserModel.findOne({ memberId: req.body.memberId });
+
+    if (!member) {
+      return res.status(404).json({ status: "error", msg: "Member not found" });
+    }
+
+    const memberReturn = {
+      _id: member._id,
+      email: member.email,
+      isActive: member.isActive,
+      name: member.name,
+      created_at: formatDateInTimeZone(member.created_at),
+      memberId: member.memberId,
+      memberRank: member.memberRank,
+      barTabActive: member.barTabActive,
+    };
+
+    res.json(memberReturn);
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", msg: error.message });
+  }
+};
+
+module.exports = { getAllStaff, getAllMember, getAllUser, getMemberById };
