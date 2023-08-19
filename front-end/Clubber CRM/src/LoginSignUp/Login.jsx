@@ -54,7 +54,7 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleSimulatedSignIn = () => {
-    navigate("/dashboard");
+    navigate("/user/staff");
   };
 
   return (
