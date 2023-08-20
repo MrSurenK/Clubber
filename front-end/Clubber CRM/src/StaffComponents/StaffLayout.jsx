@@ -20,6 +20,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { colors } from "@mui/material";
 import styles from "./StaffLayout.module.css";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import sketch from "../../assets/sketch.png";
+
 const StaffHeader = () => {
   const drawerWidth = 240;
 
@@ -28,6 +31,12 @@ const StaffHeader = () => {
       fontFamily: "Exo,Roboto",
     },
   });
+
+  const navigate = useNavigate();
+
+  const handleDashboardButton = (route) => {
+    navigate(route);
+  };
 
   return (
     <ThemeProvider theme={LayoutTheme}>
@@ -77,29 +86,40 @@ const StaffHeader = () => {
           variant="permanent"
           anchor="left"
         >
-          <ToolBar />
+          <ToolBar>
+            <img src={sketch} alt="logo" className={styles.logo} />
+          </ToolBar>
           <List>
             {[
               {
                 text: "Dashboard",
                 icon: <DashboardIcon sx={{ color: "white" }} />,
+                route: "dashboard",
               },
-              { text: "Members", icon: <GroupIcon sx={{ color: "white" }} /> },
               {
-                text: "Invoices",
+                text: "Members",
+                icon: <GroupIcon sx={{ color: "white" }} />,
+                route: "members",
+              },
+              {
+                text: "Revenue",
                 icon: <ReceiptIcon sx={{ color: "white" }} />,
+                route: "revenue",
               },
               {
                 text: "Staff",
                 icon: <EngineeringIcon sx={{ color: "white" }} />,
+                route: "employee",
               },
               {
                 text: "Reservation",
                 icon: <BookIcon sx={{ color: "white" }} />,
+                route: "reservations", //Will break, does not exist yet(Stetch goal)
               },
             ].map((item, index) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton
+                  onClick={() => handleDashboardButton(item.route)}
                   className={styles.ListItemButton}
                   sx={{
                     display: "flex",
