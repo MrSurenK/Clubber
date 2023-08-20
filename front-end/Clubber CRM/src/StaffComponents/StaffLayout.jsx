@@ -15,7 +15,11 @@ import GroupIcon from "@mui/icons-material/Group";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import BookIcon from "@mui/icons-material/Book";
-
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import { colors } from "@mui/material";
+import styles from "./StaffLayout.module.css";
 const StaffHeader = () => {
   const drawerWidth = 240;
 
@@ -74,6 +78,46 @@ const StaffHeader = () => {
           anchor="left"
         >
           <ToolBar />
+          <List>
+            {[
+              {
+                text: "Dashboard",
+                icon: <DashboardIcon sx={{ color: "white" }} />,
+              },
+              { text: "Members", icon: <GroupIcon sx={{ color: "white" }} /> },
+              {
+                text: "Invoices",
+                icon: <ReceiptIcon sx={{ color: "white" }} />,
+              },
+              {
+                text: "Staff",
+                icon: <EngineeringIcon sx={{ color: "white" }} />,
+              },
+              {
+                text: "Reservation",
+                icon: <BookIcon sx={{ color: "white" }} />,
+              },
+            ].map((item, index) => (
+              <ListItem key={index} disablePadding>
+                <ListItemButton
+                  className={styles.ListItemButton}
+                  sx={{
+                    display: "flex",
+                    gap: "20%",
+                    alignItems: "center",
+                    backgroundColor: "initial", // Reset background color
+                    transition: "background-color 0.3s", // Smooth transition
+                    "&:hover": {
+                      backgroundColor: "grey",
+                    },
+                  }}
+                >
+                  {item.icon}
+                  <ListItemText primary={item.text} sx={{ color: "white" }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
         </Drawer>
       </Box>
     </ThemeProvider>
