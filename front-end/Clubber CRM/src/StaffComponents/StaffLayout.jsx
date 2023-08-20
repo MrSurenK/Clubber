@@ -18,7 +18,6 @@ import BookIcon from "@mui/icons-material/Book";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { colors } from "@mui/material";
 import styles from "./StaffLayout.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
@@ -59,20 +58,29 @@ const StaffHeader = () => {
           }}
         >
           <ToolBar>
-            <Stack direction="row" spacing={2} alignItems={"center"}>
-              <img
-                src="../../assets/Company_Name.png"
-                alt="Company Logo"
-                className={styles.compLogo}
-              />
-              <Typography variant="h5">Staff Portal</Typography>
-              <Button onClick={handleAppBarButton} variant="contained">
-                MyClubber
-              </Button>
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>KS</Avatar>
+            <img src="../../assets/Company_Name.png" alt="Company Logo" />
 
-              <Typography variant="h6">Account Name</Typography>
-              <Typography variant="h6">demoemail@gmail.com</Typography>
+            <Typography variant="h5">Staff Portal</Typography>
+
+            <Button
+              onClick={handleAppBarButton}
+              variant="contained"
+              sx={{ height: "100%" }}
+            >
+              MyClubber
+            </Button>
+
+            {/* Right side */}
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Avatar sx={{ bgcolor: deepPurple[500] }}>KS</Avatar>
+              <Stack direction="column" alignItems="flex-end">
+                <Typography variant="h6" marginRight={"auto"} paddingTop={2}>
+                  Account Name
+                </Typography>
+                <Typography variant="h6" marginBottom={2}>
+                  demoemail@gmail.com
+                </Typography>
+              </Stack>
             </Stack>
           </ToolBar>
         </AppBar>
