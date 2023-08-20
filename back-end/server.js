@@ -13,6 +13,8 @@ const products = require("./src/routers/products");
 const transactions = require("./src/routers/transactions");
 const reservations = require("./src/routers/reservations");
 const users = require("./src/routers/users");
+const staffRank = require("./src/routers/staffRank");
+const memberRank = require("./src/routers/memberRank");
 
 const limit = rateLimit({
   windowMs: 15 * 6 * 1000, // 15 mins
@@ -33,6 +35,8 @@ app.use("/auth", auth);
 app.use("/products", products);
 app.use("/transactions", transactions);
 app.use("/reservations", reservations);
+app.use("/staffRank", staffRank);
+app.use("/memberRank", memberRank);
 app.use("/users", users);
 
 const PORT = process.env.PORT || 5001;
