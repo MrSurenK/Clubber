@@ -20,8 +20,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { colors } from "@mui/material";
 import styles from "./StaffLayout.module.css";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
+import Button from "@mui/material/Button";
 
 const StaffHeader = () => {
   const drawerWidth = 240;
@@ -38,6 +39,10 @@ const StaffHeader = () => {
     navigate(route);
   };
 
+  const handleAppBarButton = () => {
+    navigate("/user/customer");
+  };
+
   return (
     <ThemeProvider theme={LayoutTheme}>
       <Box sx={{ display: "flex" }}>
@@ -52,25 +57,22 @@ const StaffHeader = () => {
             bgcolor: "#000000",
           }}
         >
-          <ToolBar sx={{ disaply: "flex", flexDirection: "column" }}>
+          <ToolBar>
             <Stack direction="row" spacing={2} alignItems={"center"}>
+              <img
+                src="../../assets/Company_Name.png"
+                alt="Company Logo"
+                className={styles.compLogo}
+              />
+              <Typography variant="h5">Staff Portal</Typography>
+              <Button onClick={handleAppBarButton} variant="contained">
+                MyClubber
+              </Button>
               <Avatar sx={{ bgcolor: deepPurple[500] }}>KS</Avatar>
 
-              <Typography variant="h6" wrap component="div">
-                Account Name
-              </Typography>
+              <Typography variant="h6">Account Name</Typography>
+              <Typography variant="h6">demoemail@gmail.com</Typography>
             </Stack>
-
-            <Typography
-              variant="h8"
-              wrap
-              component="div"
-              alignSelf={"flex-end"}
-              marginTop={-1}
-              paddingLeft={10}
-            >
-              demoemail@gmail.com
-            </Typography>
           </ToolBar>
         </AppBar>
         <Drawer
