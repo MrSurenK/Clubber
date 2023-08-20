@@ -20,7 +20,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { colors } from "@mui/material";
 import styles from "./StaffLayout.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
 import Button from "@mui/material/Button";
 
@@ -34,6 +34,7 @@ const StaffHeader = () => {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleDashboardButton = (route) => {
     navigate(route);
@@ -122,12 +123,14 @@ const StaffHeader = () => {
               <ListItem key={index} disablePadding>
                 <ListItemButton
                   onClick={() => handleDashboardButton(item.route)}
-                  className={styles.ListItemButton}
                   sx={{
                     display: "flex",
                     gap: "20%",
                     alignItems: "center",
-                    backgroundColor: "initial", // Reset background color
+                    backgroundColor:
+                      location.pathname === `/user/staff/${item.route}` //use location object from react-router-dom to set active button click styling
+                        ? "grey"
+                        : "initial", // Apply grey background for the active page
                     transition: "background-color 0.3s", // Smooth transition
                     "&:hover": {
                       backgroundColor: "grey",
