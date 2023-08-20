@@ -10,6 +10,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepPurple } from "@mui/material/colors";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import GroupIcon from "@mui/icons-material/Group";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import BookIcon from "@mui/icons-material/Book";
+
 const StaffHeader = () => {
   const drawerWidth = 240;
 
@@ -48,6 +54,7 @@ const StaffHeader = () => {
               component="div"
               alignSelf={"flex-end"}
               marginTop={-1}
+              paddingLeft={10}
             >
               demoemail@gmail.com
             </Typography>
