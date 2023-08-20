@@ -7,40 +7,40 @@ const seedTransactions = async (req, res) => {
     await TransactionsModel.deleteMany();
     await TransactionsModel.create([
       {
-        _Id: "64d0f3f75676c304033d8c89",
-        transactionId: "T000000001",
-        transactionDate: "2023-08-16",
+        _id: "64e18af5540c79fd815e4957",
+        transactionId: "T0000001",
+        transactionDate: "2023-08-16T00:00:00.000Z",
         paymentStatus: false,
         productId: "P0000001",
         memberId: "M0000001",
         staffId: "S0000001",
       },
       {
-        _Id: "64d0f3f75676c304033d8c89",
-        transactionId: "T000000002",
-        transactionDate: "2023-08-17",
+        _id: "64e18af5540c79fd815e4958",
+        transactionId: "T0000002",
+        transactionDate: "2023-08-17T00:00:00.000Z",
         paymentStatus: false,
         productId: "P0000002",
         memberId: "M0000002",
         staffId: "S0000002",
       },
       {
-        _Id: "64d0f3f75676c304033d8c89",
-        transactionId: "T000000003",
-        transactionDate: "2023-08-18",
+        _id: "64e18af5540c79fd815e495a",
+        transactionId: "T0000003",
+        transactionDate: "2023-08-18T00:00:00.000Z",
         paymentStatus: false,
         productId: "P0000003",
         memberId: "M0000003",
         staffId: "S0000003",
       },
       {
-        _Id: "64d0f3f75676c304033d8c89",
-        transactionId: "T000000004",
-        transactionDate: "2023-08-19",
+        _id: "64d0f3f75676c304033d8c89",
+        transactionId: "T0000004",
+        transactionDate: "2023-08-19T00:00:00.000Z",
         paymentStatus: false,
         productId: "P0000004",
-        memberId: "M0000004",
-        staffId: "S0000004",
+        memberId: "M0000003",
+        staffId: "S0000002",
       },
     ]);
     res.json({ status: "ok", msg: "seeding successful" });
@@ -106,7 +106,6 @@ const addNewTransactions = async (req, res) => {
   try {
     const newTransaction = {
       transactionId: req.body.transactionId,
-      transactionDate: req.body.transactionDate,
       paymentStatus: req.body.paymentStatus,
       productId: req.body.productId,
       memberId: req.body.memberId,
