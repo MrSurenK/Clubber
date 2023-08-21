@@ -9,7 +9,7 @@ const seedReservations = async (req, res) => {
       {
         _id: "64d0f3f75676c304033d8c89",
         reservationId: "R0000001",
-        memberId: "M00000001",
+        memberId: "M0000001",
         reservationDate: "2023-08-16",
         reservationTime: "19:00",
         reservationPax: 4,
@@ -19,7 +19,7 @@ const seedReservations = async (req, res) => {
       {
         _id: "64d0f3f75676c304033d8c88",
         reservationId: "R0000002",
-        memberId: "M00000002",
+        memberId: "M0000002",
         reservationDate: "2023-08-20",
         reservationTime: "20:00",
         reservationPax: 2,

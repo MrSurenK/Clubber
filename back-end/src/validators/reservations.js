@@ -1,11 +1,19 @@
 const { body, param } = require("express-validator");
 const ReservationsModel = require("../models/Reservations");
+const UsersModel = require("../models/Users");
 
 const isReservationIdUnique = async (reservationId) => {
   const existingReservation = await ReservationsModel.findOne({
     reservationId,
   });
   return !existingReservation;
+};
+
+const validateMemberIdExists = async (memberId) => {
+  const member = await UsersModel.findOne({ memberId });
+  if (!member) {
+    throw new Error("memberId does not exist");
+  }
 };
 
 const validateIdInParam = [
@@ -22,6 +30,7 @@ const validateAddReservationData = [
   }),
   body("memberId", "memberId is required").not().isEmpty(),
   body("memberId", "memberId is invalid").matches(/^M\d{7}$/),
+  body("memberId").custom(validateMemberIdExists),
   body("reservationDate", "reservationDate is required").not().isEmpty(),
   body("reservationDate", "must be a date").isDate(),
   body("reservationTime", "reservationTime is required").not().isEmpty(),

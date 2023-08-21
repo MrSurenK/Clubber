@@ -148,6 +148,63 @@ const updatePaymentStatus = async (req, res) => {
   }
 };
 
+// GET - get total spend to date based on memberId
+const getTotalAmountSpentbyMemberId = async (req, res) => {
+  try {
+    const memberId = req.params.memberId;
+
+    // Find all transactions with the specified memberId
+    const transactions = await TransactionsModel.find({
+      memberId: memberId,
+    });
+
+    // Calculate the total product amount for these transactions
+    let totalAmount = 0;
+    for (const transaction of transactions) {
+      const product = await ProductsModel.findOne({
+        productId: transaction.productId,
+      });
+      if (product) {
+        totalAmount += product.productPrice;
+      }
+    }
+
+    res.json({ totalAmount: totalAmount });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", msg: error.message });
+  }
+};
+
+// GET - get total amount that's outstanding based on memberId
+const getTotalAmountOutstandingbyMemberId = async (req, res) => {
+  try {
+    const memberId = req.params.memberId;
+
+    // Find all transactions with the specified memberId and paymentStatus = false
+    const transactions = await TransactionsModel.find({
+      memberId: memberId,
+      paymentStatus: false,
+    });
+
+    // Calculate the total product amount for these transactions
+    let totalAmount = 0;
+    for (const transaction of transactions) {
+      const product = await ProductsModel.findOne({
+        productId: transaction.productId,
+      });
+      if (product) {
+        totalAmount += product.productPrice;
+      }
+    }
+
+    res.json({ totalAmount: totalAmount });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", msg: error.message });
+  }
+};
+
 module.exports = {
   seedTransactions,
   getAllTransactions,
@@ -155,4 +212,6 @@ module.exports = {
   getTransactionsByMemberId,
   addNewTransactions,
   updatePaymentStatus,
+  getTotalAmountSpentbyMemberId,
+  getTotalAmountOutstandingbyMemberId,
 };

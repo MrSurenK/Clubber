@@ -7,6 +7,8 @@ const {
   getTransactionsByMemberId,
   addNewTransactions,
   updatePaymentStatus,
+  getTotalAmountSpentbyMemberId,
+  getTotalAmountOutstandingbyMemberId,
 } = require("../controllers/transactions");
 
 const {
@@ -41,6 +43,18 @@ router.patch(
   validateUpdateTransactionkData,
   checkValid,
   updatePaymentStatus
+);
+router.get(
+  "/totalamount/:memberId",
+  validatememberIdInParam,
+  checkValid,
+  getTotalAmountSpentbyMemberId
+);
+router.get(
+  "/outstandingamount/:memberId",
+  validatememberIdInParam,
+  checkValid,
+  getTotalAmountOutstandingbyMemberId
 );
 
 module.exports = router;
