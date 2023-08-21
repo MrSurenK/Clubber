@@ -63,7 +63,7 @@ const register = async (req, res) => {
       name: req.body.name,
       isStaff: req.body.isStaff,
       staffId: newStaffId,
-      staffRank: req.body.staffRank || "minion",
+      staffRank: req.body.staffRank || null,
       isMember: req.body.isMember,
       memberId: newMemberId,
       memberRank: req.body.memberRank || null,
