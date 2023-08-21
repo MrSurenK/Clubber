@@ -2,7 +2,7 @@
   "name": "back-end",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "server.js": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
@@ -20,6 +20,7 @@
     "express-validator": "^7.0.1",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.1",
+    "moment-timezone": "^0.5.43",
     "mongoose": "^7.4.3",
     "uuid": "^9.0.0"
   },
