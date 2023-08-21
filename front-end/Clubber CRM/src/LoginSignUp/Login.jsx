@@ -70,7 +70,6 @@ export default function Login(props) {
       userCtx.setAccessToken(res.data.access);
       const decoded = jwtDecode(res.data.access);
       console.log("Decoded Claims:", decoded);
-      userCtx.setEmailDisplay(decoded.email);
       userCtx.setIsStaff(decoded.isStaff);
       userCtx.setStaffId(decoded.staffId);
       userCtx.setStaffRank(decoded.staffRank);

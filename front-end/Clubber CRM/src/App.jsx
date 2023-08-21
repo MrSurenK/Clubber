@@ -16,7 +16,6 @@ import UserContext from "./context/user";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
-  const [emailDisplay, setEmailDisplay] = useState("");
   const [isStaff, setIsStaff] = useState(false);
   const [staffId, setStaffId] = useState("");
   const [staffRank, setStaffRank] = useState("");
@@ -30,8 +29,6 @@ function App() {
         value={{
           accessToken,
           setAccessToken,
-          emailDisplay,
-          setEmailDisplay,
           isStaff,
           setIsStaff,
           staffId,
@@ -75,7 +72,10 @@ function App() {
 
               {isStaff === true && (
                 <Route path="staff" element={<StaffPortal />}>
-                  <Route path="dashboard" element={<StaffDashboard />} />
+                  <Route
+                    path="dashboard"
+                    element={<StaffDashboard staffId={staffId} />}
+                  />
                   <Route path="members" element={<MemberDisplay />} />
                   <Route path="revenue" element={<StaffRevenue />} />
                   <Route path="employee" element={<StaffEmployee />} />

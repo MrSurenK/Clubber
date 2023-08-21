@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -22,9 +22,15 @@ import styles from "./StaffLayout.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
 import Button from "@mui/material/Button";
+import useFetch from "../hooks/useFetch";
+import UserContext from "../context/user";
 
-const StaffLayout = () => {
+const StaffLayout = (props) => {
+  const userCtx = useContext(UserContext);
+  const fetchData = useFetch();
   const drawerWidth = 240;
+  const [nameDisplay, setNameDisplay] = useState("");
+  const [emailDisplay, setEmailDisplay] = useState("");
 
   const LayoutTheme = createTheme({
     typography: {
@@ -42,6 +48,24 @@ const StaffLayout = () => {
   const handleAppBarButton = () => {
     navigate("/user/customer");
   };
+
+  const getStaffDetails = async () => {
+    const res = await fetchData("/users/staff", "POST", {
+      staffId: userCtx.staffId,
+    });
+
+    if (res.ok) {
+      setNameDisplay(res.data.name);
+      setEmailDisplay(res.data.email);
+    } else {
+      alert(JSON.stringify(res.data));
+      console.log(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getStaffDetails();
+  }, []);
 
   return (
     <ThemeProvider theme={LayoutTheme}>
@@ -75,10 +99,10 @@ const StaffLayout = () => {
               <Avatar sx={{ bgcolor: deepPurple[500] }}>KS</Avatar>
               <Stack direction="column" alignItems="flex-end">
                 <Typography variant="h6" marginRight={"auto"} paddingTop={2}>
-                  Account Name
+                  {nameDisplay}
                 </Typography>
                 <Typography variant="h6" marginBottom={2}>
-                  demoemail@gmail.com
+                  {emailDisplay}
                 </Typography>
               </Stack>
             </Stack>
