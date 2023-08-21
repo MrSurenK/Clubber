@@ -37,7 +37,7 @@ const MemberDisplay = () => {
 
   const getTransactions = async (memberId) => {
     const res = await fetchData("/transactions/totalamount/" + memberId, "GET");
-    console.log("Transaction response for", memberId, ":", res);
+    // console.log("Transaction response for", memberId, ":", res);
     if (res.ok) {
       setTransactions((prevTransactions) => ({
         ...prevTransactions,
@@ -51,7 +51,9 @@ const MemberDisplay = () => {
   };
 
   const fetchTable = async () => {
+    // Promise.all wait for the array of promises before setting loading to false.
     await Promise.all(
+      // Returns an array of promises as getTransaction is an async await API call
       members.map((member) => getTransactions(member.memberId))
     );
     setLoading(false); // Set loading to false after all transactions are fetched
@@ -64,8 +66,9 @@ const MemberDisplay = () => {
   useEffect(() => {
     fetchTable();
   }, [members]); // Depend on members instead of transactions
+  // Transactions data depends on member data since you need to fetch transactions for each individual member.
 
-  console.log("Transaction state: ", transactions);
+  // console.log("Transaction state: ", transactions);
 
   const handleSearch = () => {
     return members.filter((member) => {
