@@ -12,6 +12,7 @@ import StaffEmployee from "./StaffComponents/StaffEmployee";
 import CustomerDashboard from "./CustomerPortal/CustomerDashboard";
 import CustomerPortal from "./CustomerPortal/CustomerPortal";
 import CmAccountMgmt from "./CustomerPortal/CmAccountMgmt";
+import UserContext from "./context/user";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -25,38 +26,59 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            index
-            element={
-              <Login
-                setAccessToken={setAccessToken}
-                setEmailDisplay={setEmailDisplay}
-                setIsStaff={setIsStaff}
-                setStaffId={setStaffId}
-                setStaffRank={setStaffRank}
-                setIsMember={setIsMember}
-                setMemberId={setMemberId}
-                setMemberRank={setMemberRank}
-              />
-            }
-          />
-          <Route path="/register" element={<SignUp />} />
-          <Route path="/user" element={<User />}>
-            <Route path="customer" element={<CustomerPortal />}>
-              <Route path="dashboard" element={<CustomerDashboard />} />
-              <Route path="account" element={<CmAccountMgmt />} />
+      <UserContext.Provider
+        value={{
+          accessToken,
+          setAccessToken,
+          emailDisplay,
+          setEmailDisplay,
+          isStaff,
+          setIsStaff,
+          staffId,
+          setStaffId,
+          staffRank,
+          setStaffRank,
+          isMember,
+          setIsMember,
+          memberId,
+          setMemberId,
+          memberRank,
+          setMemberRank,
+        }}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route
+              index
+              element={
+                <Login
+                // setAccessToken={setAccessToken}
+                // setEmailDisplay={setEmailDisplay}
+                // setIsStaff={setIsStaff}
+                // setStaffId={setStaffId}
+                // setStaffRank={setStaffRank}
+                // setIsMember={setIsMember}
+                // setMemberId={setMemberId}
+                // setMemberRank={setMemberRank}
+                />
+              }
+            />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/user" element={<User />}>
+              <Route path="customer" element={<CustomerPortal />}>
+                <Route path="dashboard" element={<CustomerDashboard />} />
+                <Route path="account" element={<CmAccountMgmt />} />
+              </Route>
+              <Route path="staff" element={<StaffPortal />}>
+                <Route path="dashboard" element={<StaffDashboard />} />
+                <Route path="members" element={<MemberDisplay />} />
+                <Route path="revenue" element={<StaffRevenue />} />
+                <Route path="employee" element={<StaffEmployee />} />
+              </Route>
             </Route>
-            <Route path="staff" element={<StaffPortal />}>
-              <Route path="dashboard" element={<StaffDashboard />} />
-              <Route path="members" element={<MemberDisplay />} />
-              <Route path="revenue" element={<StaffRevenue />} />
-              <Route path="employee" element={<StaffEmployee />} />
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
     </>
   );
 }

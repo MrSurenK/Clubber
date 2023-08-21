@@ -14,6 +14,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
+import jwtDecode from "jwt-decode";
 
 function Copyright(props) {
   return (
@@ -59,14 +60,16 @@ export default function Login(props) {
   //   });
   // };
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
     const res = await fetchData("/auth/login", "POST", { email, password });
 
     if (res.ok) {
       userCtx.setAccessToken(res.data.access);
       const decoded = jwtDecode(res.data.access);
+      console.log("Decoded Claims:", decoded);
       userCtx.setEmailDisplay(decoded.email);
       userCtx.setIsStaff(decoded.isStaff);
       userCtx.setStaffId(decoded.staffId);
@@ -74,6 +77,15 @@ export default function Login(props) {
       userCtx.setIsMember(decoded.isMember);
       userCtx.setMemberId(decoded.memberId);
       userCtx.setMemberRank(decoded.memberRank);
+
+      // Check if user is a staff member or a customer
+      if (decoded.isStaff) {
+        // Navigate to StaffPortal if user is a staff member
+        navigate("/user/staff/dashboard");
+      } else if (decoded.isMember) {
+        // Navigate to CustomerPortal if user is a customer
+        navigate("/user/customer/dashboard");
+      }
     } else {
       alert(JSON.stringify(res.data));
     }
