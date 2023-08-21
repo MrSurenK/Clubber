@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -11,6 +12,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styles from "./styles.module.css";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
+import UserContext from "../context/user";
+import useFetch from "../hooks/useFetch";
 
 function Copyright(props) {
   return (
@@ -41,20 +44,39 @@ const customTheme = createTheme({
   },
 });
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+export default function Login(props) {
+  const userCtx = useContext(UserContext);
+  const [email, setEmail] = useState("user@gmail.com");
+  const [password, setPassword] = useState("example");
+  const fetchData = useFetch();
 
-  const navigate = useNavigate();
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     email: data.get("email"),
+  //     password: data.get("password"),
+  //   });
+  // };
 
-  const handleSimulatedSignIn = () => {
-    navigate("/user/staff");
+  // const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const res = await fetchData("/auth/login", "POST", { email, password });
+
+    if (res.ok) {
+      userCtx.setAccessToken(res.data.access);
+      const decoded = jwtDecode(res.data.access);
+      userCtx.setEmailDisplay(decoded.email);
+      userCtx.setIsStaff(decoded.isStaff);
+      userCtx.setStaffId(decoded.staffId);
+      userCtx.setStaffRank(decoded.staffRank);
+      userCtx.setIsMember(decoded.isMember);
+      userCtx.setMemberId(decoded.memberId);
+      userCtx.setMemberRank(decoded.memberRank);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
   };
 
   return (
@@ -79,12 +101,7 @@ export default function SignIn() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit} //Submission will be cancelled during dev stage to create other pages
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -94,6 +111,7 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -104,6 +122,7 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Button
                 type="submit"
@@ -115,12 +134,12 @@ export default function SignIn() {
                   bgcolor: customTheme.palette.secondary.main,
                   "&:hover": { bgcolor: customTheme.palette.secondary.main },
                 }}
-                onClick={handleSimulatedSignIn}
+                onClick={handleLogin}
               >
                 Sign In
               </Button>
 
-              <Grid container justifyContent={"center"}>
+              {/* <Grid container justifyContent={"center"}>
                 <Grid item s={6}>
                   <RouterLink to="/register">
                     <Typography variant="body2">
@@ -128,7 +147,7 @@ export default function SignIn() {
                     </Typography>
                   </RouterLink>
                 </Grid>
-              </Grid>
+              </Grid> */}
 
               <Copyright sx={{ mt: 8, mb: 4 }} />
             </Box>
