@@ -174,7 +174,7 @@ const MemberDisplay = () => {
                       <TableCell>{row.memberRank}</TableCell>
                       <TableCell>
                         {transactions[row.memberId]
-                          ? transactions[row.memberId]
+                          ? `$ ${transactions[row.memberId]}`
                           : "No transactions"}
                       </TableCell>
                       <TableCell>
