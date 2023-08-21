@@ -29,7 +29,9 @@ const validateAddReservationData = [
     }
   }),
   body("memberId", "memberId is required").not().isEmpty(),
-  body("memberId", "memberId is invalid").matches(/^M\d{7}$/),
+  body("memberId", "memberId is invalid").matches(
+    /^MEM-\d{7}-[A-Za-z0-9]{6}-\d{6}$/
+  ),
   body("memberId").custom(validateMemberIdExists),
   body("reservationDate", "reservationDate is required").not().isEmpty(),
   body("reservationDate", "must be a date").isDate(),

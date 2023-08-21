@@ -1,13 +1,17 @@
 const { body, param } = require("express-validator");
 const ProductModel = require("../models/Products");
-const UsersModel = require("../models/Users");
+const UserModel = require("../models/Users");
 
 const validatetransactionIdInParam = [
-  param("transactionId", "transactionId is invalid").matches(/^T\d{7}$/),
+  param("transactionId", "transactionId is invalid").matches(
+    /^TRA-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/
+  ),
 ];
 
 const validatememberIdInParam = [
-  param("memberId", "memberId is invalid").matches(/^M\d{7}$/),
+  param("memberId", "memberId is invalid").matches(
+    /^MEM-\d{7}-[A-Za-z0-9]{6}-\d{6}$/
+  ),
 ];
 
 const validateProductIdExists = async (productId) => {
@@ -18,32 +22,36 @@ const validateProductIdExists = async (productId) => {
 };
 
 const validateMemberIdExists = async (memberId) => {
-  const member = await UsersModel.findOne({ memberId });
+  const member = await UserModel.findOne({ memberId });
   if (!member) {
     throw new Error("memberId does not exist");
   }
 };
 
 const validateStaffIdExists = async (staffId) => {
-  const staff = await UsersModel.findOne({ staffId });
+  const staff = await UserModel.findOne({ staffId });
   if (!staff) {
     throw new Error("staffId does not exist");
   }
 };
 
 const validateAddTransactionData = [
-  body("transactionId", "transactionId is required").not().isEmpty(),
-  body("transactionId", "transactionId is invalid").matches(/^T\d{7}$/),
   body("paymentStatus", "paymentStatus is required").not().isEmpty(),
   body("paymentStatus", "paymentStatus is required").isBoolean(),
   body("productId", "productId is required").not().isEmpty(),
-  body("productId", "productId is invalid").matches(/^P\d{7}$/),
+  body("productId", "productId is invalid").matches(
+    /^PRO-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/
+  ),
   body("productId").custom(validateProductIdExists),
   body("memberId", "memberId is required").not().isEmpty(),
-  body("memberId", "memberId is invalid").matches(/^M\d{7}$/),
+  body("memberId", "memberId is invalid").matches(
+    /^MEM-\d{7}-[A-Za-z0-9]{6}-\d{6}$/
+  ),
   body("memberId").custom(validateMemberIdExists),
   body("staffId", "staffId is required").not().isEmpty(),
-  body("staffId", "staffId is invalid").matches(/^S\d{7}$/),
+  body("staffId", "staffId is invalid").matches(
+    /^STA-\d{7}-[A-Za-z0-9]{6}-\d{6}$/
+  ),
   body("staffId").custom(validateStaffIdExists),
 ];
 

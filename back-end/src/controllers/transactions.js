@@ -1,5 +1,6 @@
-const Transactions = require("../models/Transactions");
 const TransactionsModel = require("../models/Transactions");
+const ProductsModel = require("../models/Products");
+const uuid = require("uuid");
 
 // SEED - seed payment transactions
 const seedTransactions = async (req, res) => {
@@ -8,39 +9,39 @@ const seedTransactions = async (req, res) => {
     await TransactionsModel.create([
       {
         _id: "64e18af5540c79fd815e4957",
-        transactionId: "T0000001",
+        transactionId: "TRA-b2bdb78b-d7d9-432e-a7c4-875ced6aa836",
         transactionDate: "2023-08-16T00:00:00.000Z",
         paymentStatus: false,
-        productId: "P0000001",
-        memberId: "M0000001",
-        staffId: "S0000001",
+        productId: "PRO-badad4ff-82b4-4d97-9cf1-49b97ea2d991",
+        memberId: "MEM-1692338-BjJOdT-453249",
+        staffId: "STA-1692338-6mA8Uo-166748",
       },
       {
         _id: "64e18af5540c79fd815e4958",
-        transactionId: "T0000002",
+        transactionId: "TRA-4bcbaea9-25a6-4a86-92c0-d8919264fbbb",
         transactionDate: "2023-08-17T00:00:00.000Z",
         paymentStatus: false,
-        productId: "P0000002",
-        memberId: "M0000002",
-        staffId: "S0000002",
+        productId: "PRO-65bedb3a-b24f-42b5-a36a-2c9c67fc5ae9",
+        memberId: "MEM-1692338-BjJOdT-453249",
+        staffId: "STA-1692338-J9Bvv2-194944",
       },
       {
         _id: "64e18af5540c79fd815e495a",
-        transactionId: "T0000003",
+        transactionId: "TRA-6fa809f6-082f-4e09-af40-f6bebdd2843f",
         transactionDate: "2023-08-18T00:00:00.000Z",
         paymentStatus: false,
-        productId: "P0000003",
-        memberId: "M0000003",
-        staffId: "S0000003",
+        productId: "PRO-093e4ef7-3b1f-4ec1-a3f1-5340c03ab8ac",
+        memberId: "MEM-1692338-vaRuBG-408593",
+        staffId: "STA-1692338-J9Bvv2-194944",
       },
       {
         _id: "64d0f3f75676c304033d8c89",
-        transactionId: "T0000004",
+        transactionId: "TRA-eabda4a5-b2d7-4415-aa3a-d3abcc1272b7",
         transactionDate: "2023-08-19T00:00:00.000Z",
         paymentStatus: false,
-        productId: "P0000004",
-        memberId: "M0000003",
-        staffId: "S0000002",
+        productId: "PRO-52cb7c70-e07a-4bae-a105-305bd4e1b7c7",
+        memberId: "MEM-1692338-vaRuBG-408593",
+        staffId: "STA-1692338-J9Bvv2-194944",
       },
     ]);
     res.json({ status: "ok", msg: "seeding successful" });
@@ -105,7 +106,7 @@ const getTransactionsByMemberId = async (req, res) => {
 const addNewTransactions = async (req, res) => {
   try {
     const newTransaction = {
-      transactionId: req.body.transactionId,
+      transactionId: `TRA-${uuid.v4()}`,
       paymentStatus: req.body.paymentStatus,
       productId: req.body.productId,
       memberId: req.body.memberId,
@@ -157,6 +158,8 @@ const getTotalAmountSpentbyMemberId = async (req, res) => {
     const transactions = await TransactionsModel.find({
       memberId: memberId,
     });
+
+    console.log(memberId);
 
     // Calculate the total product amount for these transactions
     let totalAmount = 0;
