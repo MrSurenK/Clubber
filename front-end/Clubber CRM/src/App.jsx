@@ -64,17 +64,23 @@ function App() {
               }
             />
             <Route path="/register" element={<SignUp />} />
+
             <Route path="/user" element={<User />}>
-              <Route path="customer" element={<CustomerPortal />}>
-                <Route path="dashboard" element={<CustomerDashboard />} />
-                <Route path="account" element={<CmAccountMgmt />} />
-              </Route>
-              <Route path="staff" element={<StaffPortal />}>
-                <Route path="dashboard" element={<StaffDashboard />} />
-                <Route path="members" element={<MemberDisplay />} />
-                <Route path="revenue" element={<StaffRevenue />} />
-                <Route path="employee" element={<StaffEmployee />} />
-              </Route>
+              {isMember === true && (
+                <Route path="customer" element={<CustomerPortal />}>
+                  <Route path="dashboard" element={<CustomerDashboard />} />
+                  <Route path="account" element={<CmAccountMgmt />} />
+                </Route>
+              )}
+
+              {isStaff === true && (
+                <Route path="staff" element={<StaffPortal />}>
+                  <Route path="dashboard" element={<StaffDashboard />} />
+                  <Route path="members" element={<MemberDisplay />} />
+                  <Route path="revenue" element={<StaffRevenue />} />
+                  <Route path="employee" element={<StaffEmployee />} />
+                </Route>
+              )}
             </Route>
           </Routes>
         </BrowserRouter>
