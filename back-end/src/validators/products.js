@@ -7,12 +7,16 @@ const isProductIdUnique = async (productId) => {
 };
 
 const validateIdInParam = [
-  param("productId", "productId is invalid").matches(/^P\d{7}$/),
+  param("productId", "productId is invalid").matches(
+    /^PRO-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/
+  ),
 ];
 
 const validateAddProductData = [
   body("productId", "productId is required").not().isEmpty(),
-  body("productId", "productId is invalid").matches(/^P\d{7}$/),
+  body("productId", "productId is invalid").matches(
+    /^PRO-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/
+  ),
   body("productId").custom(async (value) => {
     if (!(await isProductIdUnique(value))) {
       throw new Error("productId has already been used");
