@@ -16,6 +16,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import EditIcon from "@mui/icons-material/Edit";
+import MemberModal from "./MemberModal";
 
 const MemberDisplay = () => {
   const [members, setMembers] = useState([]);
@@ -24,6 +25,17 @@ const MemberDisplay = () => {
   // Due to async nature of transaction call, require loading for table
   const [loading, setLoading] = useState(false);
   const [outstanding, setOutstanding] = useState([]);
+
+  // Control Modal
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const fetchData = useFetch();
   // Get members from API
@@ -110,7 +122,7 @@ const MemberDisplay = () => {
 
   // edit icon
   const editIcon = (
-    <IconButton onClick={console.log("edited")}>
+    <IconButton onClick={() => handleClickOpen()}>
       <EditIcon color="primary" />
     </IconButton>
   );
@@ -191,6 +203,16 @@ const MemberDisplay = () => {
           )}
         </TableContainer>
       </Container>
+      <MemberModal
+        name={members.name}
+        id={members.memberId}
+        email={members.email}
+        rank={members.memberRank}
+        open={open}
+        setOpen={setOpen}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+      ></MemberModal>
     </>
   );
 };
