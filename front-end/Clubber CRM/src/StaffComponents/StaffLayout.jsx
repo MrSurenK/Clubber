@@ -151,6 +151,11 @@ const StaffLayout = (props) => {
                 icon: <BookIcon sx={{ color: "white" }} />,
                 route: "reservations", //Will break, does not exist yet(Stetch goal)
               },
+              {
+                text: "Registration",
+                icon: <BookIcon sx={{ color: "white" }} />,
+                route: "registration",
+              },
             ].map((item, index) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton

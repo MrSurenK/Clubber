@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import Login from "./LoginSignUp/Login";
-import SignUp from "./LoginSignUp/Register";
+import SignUp from "./StaffComponents/Register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import User from "./User";
 import StaffPortal from "./StaffComponents/StaffPortal";
@@ -13,6 +13,7 @@ import CustomerDashboard from "./CustomerPortal/CustomerDashboard";
 import CustomerPortal from "./CustomerPortal/CustomerPortal";
 import CmAccountMgmt from "./CustomerPortal/CmAccountMgmt";
 import UserContext from "./context/user";
+import Registration from "./StaffComponents/Register";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -45,21 +46,7 @@ function App() {
       >
         <BrowserRouter>
           <Routes>
-            <Route
-              index
-              element={
-                <Login
-                // setAccessToken={setAccessToken}
-                // setEmailDisplay={setEmailDisplay}
-                // setIsStaff={setIsStaff}
-                // setStaffId={setStaffId}
-                // setStaffRank={setStaffRank}
-                // setIsMember={setIsMember}
-                // setMemberId={setMemberId}
-                // setMemberRank={setMemberRank}
-                />
-              }
-            />
+            <Route index element={<Login />} />
             <Route path="/register" element={<SignUp />} />
 
             <Route path="/user" element={<User />}>
@@ -79,6 +66,7 @@ function App() {
                   <Route path="members" element={<MemberDisplay />} />
                   <Route path="revenue" element={<StaffRevenue />} />
                   <Route path="employee" element={<StaffEmployee />} />
+                  <Route path="registration" element={<Registration />} />
                 </Route>
               )}
             </Route>
