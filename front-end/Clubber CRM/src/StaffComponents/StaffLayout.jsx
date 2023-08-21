@@ -23,7 +23,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
 import Button from "@mui/material/Button";
 
-const StaffHeader = () => {
+const StaffLayout = () => {
   const drawerWidth = 240;
 
   const LayoutTheme = createTheme({
@@ -157,4 +157,4 @@ const StaffHeader = () => {
   );
 };
 
-export default StaffHeader;
+export default StaffLayout;
