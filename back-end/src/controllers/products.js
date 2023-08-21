@@ -1,4 +1,5 @@
 const ProductsModel = require("../models/Products");
+const uuid = require("uuid");
 
 //SEED - seed products
 const seedProducts = async (req, res) => {
@@ -7,25 +8,25 @@ const seedProducts = async (req, res) => {
 
     await ProductsModel.create([
       {
-        productId: "P0000001",
+        productId: "PRO-badad4ff-82b4-4d97-9cf1-49b97ea2d991",
         productName: "Cover Charge",
         productPrice: 15,
         productActive: true,
       },
       {
-        productId: "P0000002",
+        productId: "PRO-65bedb3a-b24f-42b5-a36a-2c9c67fc5ae9",
         productName: "Drinks",
         productPrice: 30,
         productActive: true,
       },
       {
-        productId: "P0000003",
+        productId: "PRO-093e4ef7-3b1f-4ec1-a3f1-5340c03ab8ac",
         productName: "Bottle of Booze",
         productPrice: 300,
         productActive: true,
       },
       {
-        productId: "P0000004",
+        productId: "PRO-52cb7c70-e07a-4bae-a105-305bd4e1b7c7",
         productName: "Extra Services",
         productPrice: 999,
         productActive: true,
@@ -54,7 +55,7 @@ const getProducts = async (req, res) => {
 const addNewProduct = async (req, res) => {
   try {
     const newProduct = {
-      productId: req.body.productId,
+      productId: `PRO-${uuid.v4()}`,
       productName: req.body.productName,
       productPrice: req.body.productPrice,
       productActive: req.body.productActive,
