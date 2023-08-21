@@ -6,6 +6,7 @@ import {
   Paper,
   Box,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
 import Container from "@mui/material/Container";
 import Table from "@mui/material/Table";
@@ -14,6 +15,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
+import EditIcon from "@mui/icons-material/Edit";
 
 const MemberDisplay = () => {
   const [members, setMembers] = useState([]);
@@ -21,6 +23,7 @@ const MemberDisplay = () => {
   const [transactions, setTransactions] = useState([]);
   // Due to async nature of transaction call, require loading for table
   const [loading, setLoading] = useState(false);
+  const [outstanding, setOutstanding] = useState([]);
 
   const fetchData = useFetch();
   // Get members from API
@@ -50,13 +53,37 @@ const MemberDisplay = () => {
     }
   };
 
-  const fetchTable = async () => {
-    // Promise.all wait for the array of promises before setting loading to false.
+  const getOutstandingAmount = async (memberId) => {
+    const res = await fetchData(
+      "/transactions/outstandingamount/" + memberId,
+      "GET"
+    );
+    console.log("Outstanding Amt for", memberId, ":", res);
+    if (res.ok) {
+      setOutstanding((prevOutstanding) => ({
+        ...prevOutstanding,
+        // Without .outstanding, you would be trying to set the outstanding state with an entire response object instead of just the outstanding value.
+        [memberId]: res.data.outstanding,
+      }));
+      console.log(res.data);
+    } else {
+      alert(JSON.stringify(res.data));
+      // console.log(res.data);
+    }
+  };
+
+  const fetchSpend = async () => {
     await Promise.all(
-      // Returns an array of promises as getTransaction is an async await API call
       members.map((member) => getTransactions(member.memberId))
     );
     setLoading(false); // Set loading to false after all transactions are fetched
+  };
+
+  const fetchOutstanding = async () => {
+    await Promise.all(
+      members.map((member) => getOutstandingAmount(member.memberId))
+    );
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -64,7 +91,8 @@ const MemberDisplay = () => {
   }, []);
 
   useEffect(() => {
-    fetchTable();
+    fetchSpend();
+    fetchOutstanding();
   }, [members]); // Depend on members instead of transactions
   // Transactions data depends on member data since you need to fetch transactions for each individual member.
 
@@ -79,6 +107,13 @@ const MemberDisplay = () => {
       );
     });
   };
+
+  // edit icon
+  const editIcon = (
+    <IconButton onClick={console.log("edited")}>
+      <EditIcon color="primary" />
+    </IconButton>
+  );
 
   return (
     <>
@@ -107,6 +142,7 @@ const MemberDisplay = () => {
                     "Rank",
                     "Total Spend",
                     "Outstanding Amount",
+                    "Edit",
                   ].map((header) => (
                     <TableCell
                       sx={{
@@ -141,6 +177,12 @@ const MemberDisplay = () => {
                           ? transactions[row.memberId]
                           : "No transactions"}
                       </TableCell>
+                      <TableCell>
+                        {outstanding[row.memberId]
+                          ? outstanding[row.memberId]
+                          : "No outstanding"}
+                      </TableCell>
+                      <TableCell>{editIcon}</TableCell>
                     </TableRow>
                   );
                 })}
