@@ -91,7 +91,7 @@ const updateReservationById = async (req, res) => {
     if ("reservationStatus" in req.body)
       updatedReservation.reservationStatus = req.body.reservationStatus;
 
-    const result = await Reservations.findOneandUpdate(
+    const result = await Reservations.findOneAndUpdate(
       { reservationId: req.params.reservationId },
       updatedReservation,
       { new: true }
