@@ -18,9 +18,6 @@ import styles from "../LoginSignUp/styles.module.css";
 import sketch from "../../assets/sketch.png";
 import MenuItem from "@mui/material/MenuItem";
 import useFetch from "../hooks/useFetch";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
 
 function Copyright(props) {
   return (
@@ -134,6 +131,10 @@ export default function SignUp() {
                     label="Name"
                     name="name"
                     autoComplete="name"
+                    value={formName}
+                    onChange={(e) => {
+                      setFormName(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -144,6 +145,10 @@ export default function SignUp() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    value={formEmail}
+                    onChange={(e) => {
+                      setFormEmail(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -155,6 +160,10 @@ export default function SignUp() {
                     type="password"
                     id="password"
                     autoComplete="new-password"
+                    value={formPassword}
+                    onChange={(e) => {
+                      setFormPassword(e.target.value);
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -167,6 +176,10 @@ export default function SignUp() {
                   label="Is Staff"
                   name="isStaff"
                   select
+                  value={formIsStaff}
+                  onChange={(e) => {
+                    setFormIsStaff(e.target.value);
+                  }}
                 >
                   <MenuItem value={true}>Yes</MenuItem>
                   <MenuItem value={false}>No</MenuItem>
@@ -200,6 +213,10 @@ export default function SignUp() {
                   label="Is Member"
                   name="isMember"
                   select
+                  value={formIsMember}
+                  onChange={(e) => {
+                    setFormIsMember(e.target.value);
+                  }}
                 >
                   <MenuItem value={true}>Yes</MenuItem>
                   <MenuItem value={false}>No</MenuItem>
