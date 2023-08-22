@@ -88,9 +88,11 @@ const AddTransactionForm = ({ onSubmit }) => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ textAlign: "center", marginBottom: "50vh" }}>
+    <Container component="main" maxWidth="xs">
       <form onSubmit={handleSubmit}>
-        <Typography variant="h5">Add a New Transaction</Typography>
+        <Typography component="h1" variant="h5">
+          Add a New Transaction
+        </Typography>
         <br />
 
         {userCtx.staffId}
@@ -155,8 +157,12 @@ const AddTransactionForm = ({ onSubmit }) => {
         />
         <br />
         <br />
-
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          onClick={addTransactions}
+        >
           Add Transaction
         </Button>
       </form>
