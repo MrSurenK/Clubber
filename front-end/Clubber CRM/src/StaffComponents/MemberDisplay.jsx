@@ -25,16 +25,14 @@ const MemberDisplay = () => {
   // Due to async nature of transaction call, require loading for table
   const [loading, setLoading] = useState(false);
   const [outstanding, setOutstanding] = useState([]);
-
-  // Control Modal
-  const [open, setOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setShowModal(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setShowModal(false);
   };
 
   const fetchData = useFetch();
@@ -197,6 +195,19 @@ const MemberDisplay = () => {
                           : "No outstanding"}
                       </TableCell>
                       <TableCell>{editIcon}</TableCell>
+
+                      {showModal && (
+                        <MemberModal
+                          key={idx}
+                          name={row.name}
+                          id={row.memberId}
+                          email={row.email}
+                          rank={row.memberRank}
+                          handleClickOpen={handleClickOpen}
+                          handleClose={handleClose}
+                          getMembers={getMembers}
+                        />
+                      )}
                     </TableRow>
                   );
                 })}
@@ -206,24 +217,20 @@ const MemberDisplay = () => {
         </TableContainer>
       </Container>
 
-      <Container>
-        {members.map((eachMember, idx) => {
-          return (
+      {/* <Container>
+          {showModal && (
             <MemberModal
               key={idx}
-              name={eachMember.name}
+              name={membername}
               id={eachMember.memberId}
               email={eachMember.email}
               rank={eachMember.memberRank}
-              open={open}
-              setOpen={setOpen}
               handleClickOpen={handleClickOpen}
               handleClose={handleClose}
               getMembers={getMembers}
-            ></MemberModal>
-          );
-        })}
-      </Container>
+            />
+          )}
+      </Container> */}
     </>
   );
 };

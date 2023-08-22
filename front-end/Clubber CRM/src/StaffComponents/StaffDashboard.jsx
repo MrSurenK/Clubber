@@ -21,7 +21,9 @@ const Item = styled(Paper)(({ theme }) => ({
 const StaffDashboard = () => {
   return (
     <Box sx={{ flexGrow: 1, p: 5 }}>
-      <Typography>Revenue Data</Typography>
+      <Typography component="h1" variant="h4">
+        Revenue Data
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Item>
@@ -42,7 +44,9 @@ const StaffDashboard = () => {
       </Grid>
       <br />
       <br />
-      <Typography>Member Data</Typography>
+      <Typography component="h1" variant="h4">
+        Member Data
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Item>
