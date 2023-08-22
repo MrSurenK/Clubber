@@ -34,22 +34,42 @@ const StaffRevenue = () => {
 
   // GET for all transactions
   const getTransactions = async () => {
-    const res = await fetchData("/transactions");
+    const res = await fetchData(
+      "/transactions",
+      undefined,
+      undefined,
+      userCtx.accessToken
+    );
 
     if (res.ok) {
       setTransactions(res.data);
       // Fetch product data
-      const productRes = await fetchData("/products");
+      const productRes = await fetchData(
+        "/products",
+        undefined,
+        undefined,
+        userCtx.accessToken
+      );
       if (productRes.ok) {
         setProducts(productRes.data); // Assuming products are stored in state using `setProducts`
       }
       // Fetch staff data
-      const staffRes = await fetchData("/users/staff");
+      const staffRes = await fetchData(
+        "/users/staff",
+        undefined,
+        undefined,
+        userCtx.accessToken
+      );
       if (staffRes.ok) {
         setStaff(staffRes.data); // Assuming staff members are stored in state using `setStaff`
       }
       // Fetch member data
-      const memberRes = await fetchData("/users/member");
+      const memberRes = await fetchData(
+        "/users/member",
+        undefined,
+        undefined,
+        userCtx.accessToken
+      );
       if (memberRes.ok) {
         setMembers(memberRes.data); // Assuming members are stored in state using `setMembers`
       }
@@ -129,13 +149,13 @@ const StaffRevenue = () => {
               <TableRow>
                 <TableCell>Transaction ID</TableCell>
                 <TableCell>Transaction Date</TableCell>
-                <TableCell>Product Name</TableCell>{" "}
+                <TableCell>Product Name</TableCell>
                 <TableCell>
                   Product Amount
                   <br /> (S$)
                 </TableCell>
                 <TableCell>Staff Name</TableCell>
-                <TableCell>Member Name</TableCell>{" "}
+                <TableCell>Member Name</TableCell>
                 <TableCell>Payment Collected?</TableCell>
               </TableRow>
             </TableHead>

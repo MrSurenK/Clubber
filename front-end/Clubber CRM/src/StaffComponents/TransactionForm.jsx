@@ -38,12 +38,22 @@ const AddTransactionForm = () => {
   const staffIdRef = useRef("");
 
   const fetchProducts = async () => {
-    const res = await fetchData("/products");
+    const res = await fetchData(
+      "/products",
+      undefined,
+      undefined,
+      userCtx.accessToken
+    );
     setProducts(res.data);
   };
 
   const fetchMembers = async () => {
-    const res = await fetchData("/users/member");
+    const res = await fetchData(
+      "/users/member",
+      undefined,
+      undefined,
+      userCtx.accessToken
+    );
     setMembers(res.data);
   };
 
