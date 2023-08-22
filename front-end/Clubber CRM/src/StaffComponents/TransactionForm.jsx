@@ -4,16 +4,18 @@ import UserContext from "../context/user";
 import {
   TextField,
   Button,
-  Select,
-  MenuItem,
   FormControl,
+  FormControlLabel,
   InputLabel,
   Container,
   Typography,
+  Checkbox,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 
-const AddTransactionForm = ({ onSubmit }) => {
+const AddTransactionForm = () => {
   const userCtx = useContext(UserContext);
   const [transaction, setTransaction] = useState({
     transactionId: "TRA-" + uuidv4(),
@@ -23,6 +25,8 @@ const AddTransactionForm = ({ onSubmit }) => {
   });
   const [products, setProducts] = useState([]);
   const [members, setMembers] = useState([]);
+  const [paymentStatus, setPaymentStatus] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState("");
 
   const fetchData = useFetch();
 
@@ -30,7 +34,6 @@ const AddTransactionForm = ({ onSubmit }) => {
   const transactionIdRef = useRef("");
   const transactionDateRef = useRef("");
   const paymentStatusRef = useRef("");
-  const productIdRef = useRef("");
   const memberIdRef = useRef("");
   const staffIdRef = useRef("");
 
@@ -57,23 +60,18 @@ const AddTransactionForm = ({ onSubmit }) => {
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSubmit(transaction);
-  };
-
   // PUT to add a new transaction
   const addTransactions = async () => {
     const res = await fetchData(
       "/transactions",
       "PUT",
       {
-        transactionId: transactionIdRef.current.value,
+        transactionId: transaction.transactionId,
         transactionDate: transactionDateRef.current.value,
-        paymentStatus: paymentStatusRef.current.value,
-        productId: productIdRef.current.value,
-        memberId: memberIdRef.current.value,
-        staffId: staffIdRef.current.value,
+        paymentStatus: paymentStatus,
+        productId: selectedProductId,
+        memberId: transaction.memberId,
+        staffId: userCtx.staffId,
       },
       userCtx.accessToken
     );
@@ -87,76 +85,99 @@ const AddTransactionForm = ({ onSubmit }) => {
     }
   };
 
-  return (
-    <Container maxWidth="md" sx={{ textAlign: "center", marginBottom: "50vh" }}>
-      <form onSubmit={handleSubmit}>
-        <Typography variant="h5">Add a New Transaction</Typography>
-        <br />
-        <TextField
-          label="Member ID"
-          name="memberId"
-          value={transaction.memberId}
-          onChange={handleInputChange}
-          fullWidth
-          placeholder="Search for a member..."
-          inputProps={{
-            list: "member-options",
-            autoComplete: "off",
-          }}
-        />
-        <datalist id="member-options">
-          {members.map((member) => (
-            <option key={member.memberId} value={member.memberId}>
-              {member.memberId}
-            </option>
-          ))}
-        </datalist>
-        <br />
-        <br />
-        <FormControl fullWidth>
-          <InputLabel>Product</InputLabel>
-          <Select
-            name="product"
-            value={transaction.product}
-            onChange={handleInputChange}
-          >
-            {products.map((product) => (
-              <MenuItem key={product.productId} value={product.productId}>
-                {`${product.productName} ($${product.productPrice})`}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <br />
-        <br />
-        <TextField
-          label="Transaction ID"
-          name="transactionId"
-          value={transaction.transactionId}
-          fullWidth
-          disabled
-        />
-        <br />
-        <br />
-        <TextField
-          label="Transaction Date"
-          name="transactionDate"
-          type="date"
-          value={transaction.transactionDate.toISOString().split("T")[0]}
-          onChange={handleInputChange}
-          fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          disabled
-        />
-        <br />
-        <br />
+  const handlePaymentStatusChange = (event) => {
+    setPaymentStatus(event.target.checked);
+  };
 
-        <Button type="submit" variant="contained" color="primary">
-          Add Transaction
-        </Button>
-      </form>
+  return (
+    <Container component="main" maxWidth="xs">
+      <Typography component="h1" variant="h5">
+        Add a New Transaction
+      </Typography>
+      <br />
+      <TextField
+        label="Member ID"
+        name="memberId"
+        value={transaction.memberId}
+        onChange={handleInputChange}
+        fullWidth
+        placeholder="Search for a member..."
+        inputProps={{
+          list: "member-options",
+          autoComplete: "off",
+        }}
+      />
+      <datalist id="member-options">
+        {members.map((member) => (
+          <option key={member.memberId} value={member.memberId}>
+            {member.memberId}
+          </option>
+        ))}
+      </datalist>
+      <br />
+      <br />
+      <FormControl fullWidth>
+        <InputLabel>Product</InputLabel>
+        <RadioGroup
+          name="product"
+          value={selectedProductId}
+          onChange={(event) => setSelectedProductId(event.target.value)}
+        >
+          <br />
+          <br />
+          {products.map((product) => (
+            <FormControlLabel
+              key={product.productId}
+              value={product.productId}
+              control={<Radio />}
+              label={`${product.productName} ($${product.productPrice})`}
+            />
+          ))}
+        </RadioGroup>
+      </FormControl>
+      <br />
+      <br />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={paymentStatus}
+            onChange={handlePaymentStatusChange}
+            name="paymentStatus"
+            color="primary"
+          />
+        }
+        label="Paid?"
+      />
+      <br />
+      <br />
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        onClick={addTransactions}
+      >
+        Add Transaction
+      </Button>
+      <br />
+      <br />
+      <Typography>For Staff Use Only</Typography>
+      <Typography style={{ fontSize: "12px" }} value={userCtx.staffId}>
+        Staff ID: {userCtx.staffId}
+      </Typography>{" "}
+      <Typography
+        style={{ fontSize: "12px" }}
+        value={transaction.transactionDate.toISOString()}
+      >
+        Transaction Date: {transaction.transactionDate.toISOString()}
+      </Typography>
+      <Typography
+        style={{ fontSize: "12px" }}
+        value={transaction.transactionId}
+      >
+        Transaction ID: {transaction.transactionId}
+      </Typography>
+      <br />
+      <br />
     </Container>
   );
 };
