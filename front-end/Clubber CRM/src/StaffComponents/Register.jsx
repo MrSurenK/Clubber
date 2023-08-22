@@ -86,13 +86,34 @@ export default function SignUp() {
     getDisplayMemberRank();
   }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const handleRegister = async () => {
+    const registerData = {
+      name: formName,
+      email: formEmail,
+      password: formPassword,
+      isStaff: formIsStaff,
+      staffRank: formStaffRank,
+      isMember: formIsMember,
+      memberRank: formMemberRank,
+    };
+
+    const res = await fetchData("/auth/register", "PUT", registerData);
+
+    if (res.ok) {
+      setFormName("");
+      setFormEmail("");
+      setFormPassword("");
+      setFormIsStaff(false);
+      setFormStaffRank("");
+      setFormIsMember(false);
+      setFormMemberRank("");
+
+      console.log("Registration successful:", res.data);
+      // You can add logic here to navigate to a success page or perform other actions.
+    } else {
+      console.error("Registration failed:", res.data);
+      // You can display an error message to the user or perform other error handling.
+    }
   };
 
   return (
@@ -119,7 +140,7 @@ export default function SignUp() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              // onSubmit={handleRegister}
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
@@ -241,7 +262,7 @@ export default function SignUp() {
                 </TextField>
               </Grid>
               <Button
-                type="submit"
+                type="button"
                 fullWidth
                 variant="contained"
                 sx={{
@@ -250,18 +271,10 @@ export default function SignUp() {
                   bgcolor: customTheme.palette.secondary.main,
                   "&:hover": { bgcolor: customTheme.palette.secondary.main },
                 }}
+                onClick={handleRegister}
               >
                 Sign Up
               </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item xs={9}>
-                  <RouterLink to="/">
-                    <Typography variant="body2">
-                      Already have an account? Sign in
-                    </Typography>
-                  </RouterLink>
-                </Grid>
-              </Grid>
             </Box>
             <Copyright sx={{ mt: 8, mb: 4, ml: 12 }} />
           </Box>
