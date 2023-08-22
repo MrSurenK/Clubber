@@ -18,6 +18,9 @@ import styles from "../LoginSignUp/styles.module.css";
 import sketch from "../../assets/sketch.png";
 import MenuItem from "@mui/material/MenuItem";
 import useFetch from "../hooks/useFetch";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
 
 function Copyright(props) {
   return (
@@ -127,7 +130,7 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    id="ename"
+                    id="formName"
                     label="Name"
                     name="name"
                     autoComplete="name"
@@ -137,7 +140,7 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    id="email"
+                    id="formEmail"
                     label="Email Address"
                     name="email"
                     autoComplete="email"
@@ -147,7 +150,7 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    name="password"
+                    name="formPassword"
                     label="Password"
                     type="password"
                     id="password"
@@ -160,7 +163,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="isStaff"
+                  id="formIsStaff"
                   label="Is Staff"
                   name="isStaff"
                   select
@@ -173,15 +176,17 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="staffRank"
+                  id="formStaffRank"
                   label="Staff Rank"
                   name="staffRank"
                   select
                   value={formStaffRank}
-                  onChange={(e) => setFormStaffRank(e.target.value)}
+                  onChange={(e) => {
+                    setFormStaffRank(e.target.value);
+                  }}
                 >
                   {displayStaffRank.map((rank) => (
-                    <MenuItem key={rank.id} value={rank.id}>
+                    <MenuItem key={rank.staffRank} value={rank.staffRank}>
                       {rank.staffRank}
                     </MenuItem>
                   ))}
@@ -191,7 +196,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="isMember"
+                  id="formIsMember"
                   label="Is Member"
                   name="isMember"
                   select
@@ -204,15 +209,15 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="memberRank"
+                  id="formMemberRank"
                   label="Member Rank"
-                  name="memberRank"
+                  name="formMemberRank"
                   select
                   value={formMemberRank}
                   onChange={(e) => setFormMemberRank(e.target.value)}
                 >
                   {displayMemberRank.map((rank) => (
-                    <MenuItem key={rank.id} value={rank.id}>
+                    <MenuItem key={rank.memberRank} value={rank.memberRank}>
                       {rank.memberRank}
                     </MenuItem>
                   ))}

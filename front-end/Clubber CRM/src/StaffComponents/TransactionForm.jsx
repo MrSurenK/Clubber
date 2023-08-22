@@ -39,7 +39,7 @@ const AddTransactionForm = ({ onSubmit }) => {
   };
 
   const fetchMembers = async () => {
-    const res = await fetchData("/users/members");
+    const res = await fetchData("/users/member");
     setMembers(res.data);
     console.log(members);
   };
