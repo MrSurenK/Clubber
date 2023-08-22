@@ -29,7 +29,11 @@ const MemberDisplay = () => {
   // Control Modal
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  // Create state to extract the selected member
+  const [selectedMember, setSelectedMember] = useState(null);
+
+  const handleClickOpen = (member) => {
+    setSelectedMember(member);
     setOpen(true);
   };
 
@@ -70,7 +74,7 @@ const MemberDisplay = () => {
       "/transactions/outstandingamount/" + memberId,
       "GET"
     );
-    console.log("Outstanding Amt for", memberId, ":", res);
+    // console.log("Outstanding Amt for", memberId, ":", res);
     if (res.ok) {
       setOutstanding((prevOutstanding) => ({
         ...prevOutstanding,
@@ -96,7 +100,7 @@ const MemberDisplay = () => {
     const all = await Promise.all(
       members.map((member) => getOutstandingAmount(member.memberId))
     );
-    console.log(all);
+    // console.log(all);
     setLoading(false);
   };
 
@@ -206,10 +210,10 @@ const MemberDisplay = () => {
         </TableContainer>
       </Container>
       <MemberModal
-        name={members.name}
-        id={members.memberId}
-        email={members.email}
-        rank={members.memberRank}
+        name={selectedMember.name}
+        id={selectedMember.memberId}
+        email={selectedMember.email}
+        rank={selectedMember.memberRank}
         open={open}
         setOpen={setOpen}
         handleClickOpen={handleClickOpen}
