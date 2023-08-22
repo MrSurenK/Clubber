@@ -13,8 +13,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
-import styles from "./styles.module.css";
+import styles from "../LoginSignUp/styles.module.css";
 import sketch from "../../assets/sketch.png";
+import MenuItem from "@mui/material/MenuItem";
 
 function Copyright(props) {
   return (
@@ -83,25 +84,14 @@ export default function SignUp() {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
+                    id="ename"
+                    label="Name"
+                    name="name"
+                    autoComplete="name"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -125,6 +115,57 @@ export default function SignUp() {
                     autoComplete="new-password"
                   />
                 </Grid>
+              </Grid>
+              {/* New drop-down inputs */}
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="isStaff"
+                  label="Is Staff"
+                  name="isStaff"
+                  select
+                >
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="staffRank"
+                  label="Staff Rank"
+                  name="staffRank"
+                  select
+                >
+                  {/* Your staff rank options */}
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="isMember"
+                  label="Is Member"
+                  name="isMember"
+                  select
+                >
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="memberRank"
+                  label="Member Rank"
+                  name="memberRank"
+                  select
+                >
+                  {/* Your member rank options */}
+                </TextField>
               </Grid>
               <Button
                 type="submit"

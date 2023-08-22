@@ -101,6 +101,31 @@ const getMemberById = async (req, res) => {
   }
 };
 
+const getStaffById = async (req, res) => {
+  try {
+    const staff = await UserModel.findOne({ staffId: req.body.staffId });
+
+    if (!staff) {
+      return res.status(404).json({ status: "error", msg: "Staff not found" });
+    }
+
+    const staffReturn = {
+      _id: staff._id,
+      email: staff.email,
+      isActive: staff.isActive,
+      name: staff.name,
+      created_at: formatDateInTimeZone(staff.created_at),
+      staffId: staff.staffId,
+      staffRank: staff.staffRank,
+    };
+
+    res.json(staffReturn);
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", msg: error.message });
+  }
+};
+
 const patchMember = async (req, res) => {
   try {
     const existingMember = await UserModel.find({
@@ -207,6 +232,7 @@ module.exports = {
   getAllMember,
   getAllUser,
   getMemberById,
+  getStaffById,
   patchMember,
   patchStaff,
   delUser,
