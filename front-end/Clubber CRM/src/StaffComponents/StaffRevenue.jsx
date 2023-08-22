@@ -147,7 +147,7 @@ const StaffRevenue = () => {
         >
           <Button>Add New Transaction</Button>
 
-          <Typography variant="h5">Open Bar Tab</Typography>
+          <Typography variant="h5">Bar Tab</Typography>
 
           <input
             type="text"

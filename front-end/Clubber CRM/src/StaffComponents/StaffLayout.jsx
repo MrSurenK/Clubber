@@ -13,6 +13,7 @@ import { deepPurple } from "@mui/material/colors";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import ReceiptIcon from "@mui/icons-material/Receipt";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import BookIcon from "@mui/icons-material/Book";
 import ListItem from "@mui/material/ListItem";
@@ -132,29 +133,35 @@ const StaffLayout = (props) => {
                 route: "dashboard",
               },
               {
+                text: "Add New User",
+                icon: <BookIcon sx={{ color: "white" }} />,
+                route: "registration",
+              },
+              {
                 text: "Members",
                 icon: <GroupIcon sx={{ color: "white" }} />,
                 route: "members",
               },
-              {
-                text: "Revenue",
-                icon: <ReceiptIcon sx={{ color: "white" }} />,
-                route: "revenue",
-              },
+
               {
                 text: "Staff",
                 icon: <EngineeringIcon sx={{ color: "white" }} />,
                 route: "employee",
               },
               {
+                text: "Bar Tab",
+                icon: <AttachMoneyIcon sx={{ color: "white" }} />,
+                route: "revenue",
+              },
+              {
+                text: "Add New Transaction",
+                icon: <ReceiptIcon sx={{ color: "white" }} />,
+                route: "transaction",
+              },
+              {
                 text: "Reservation",
                 icon: <BookIcon sx={{ color: "white" }} />,
                 route: "reservations", //Will break, does not exist yet(Stetch goal)
-              },
-              {
-                text: "Registration",
-                icon: <BookIcon sx={{ color: "white" }} />,
-                route: "registration",
               },
             ].map((item, index) => (
               <ListItem key={index} disablePadding>
