@@ -92,6 +92,9 @@ const AddTransactionForm = ({ onSubmit }) => {
       <form onSubmit={handleSubmit}>
         <Typography variant="h5">Add a New Transaction</Typography>
         <br />
+
+        {userCtx.staffId}
+
         <TextField
           label="Member ID"
           name="memberId"
