@@ -14,7 +14,6 @@ const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
@@ -27,17 +26,11 @@ const StaffDashboard = () => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Item>
-            Total Earnings per Month
-            <br />
-            <br />
             <EarningsperMonth></EarningsperMonth>
           </Item>
         </Grid>
         <Grid item xs={6}>
           <Item>
-            Aging Receivables
-            <br />
-            <br />
             <ReceivablesperMonth></ReceivablesperMonth>
           </Item>
         </Grid>

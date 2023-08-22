@@ -1,11 +1,10 @@
 import React from "react";
+import { Typography } from "@mui/material";
 
 const NumberOfMembers = () => {
   return (
     <div>
-      Number of New Members
-      <br />
-      <br />
+      <Typography variant="h6">Number of New Members</Typography>
       [Previous Month] | [Current Month]
       <br />
       34 | 49

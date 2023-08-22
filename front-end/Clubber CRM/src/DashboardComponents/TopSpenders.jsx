@@ -3,81 +3,54 @@ import useFetch from "../hooks/useFetch";
 import { Typography } from "@mui/material";
 
 const TopSpenders = () => {
-  const [members, setMembers] = useState([]);
-  const [transactions, setTransactions] = useState([]);
   const fetchData = useFetch();
+  const [topSpendingMembers, setTopSpendingMembers] = useState([]);
 
   useEffect(() => {
-    getMembers();
+    fetchTopSpenders();
   }, []);
 
-  // Get members from API
-  const getMembers = async () => {
+  const fetchTopSpenders = async () => {
     const res = await fetchData("/users/member", "GET");
     if (res.ok) {
-      setMembers(res.data);
+      const members = res.data;
+      const transactions = await Promise.all(
+        members.map(async (member) => {
+          const transactionRes = await fetchData(
+            `/transactions/totalamount/${member.memberId}`,
+            "GET"
+          );
+          return {
+            memberId: member.memberId,
+            name: member.name,
+            spendAmount: transactionRes.ok
+              ? transactionRes.data.totalAmount
+              : 0,
+          };
+        })
+      );
+      const sortedMembers = transactions.sort(
+        (a, b) => b.spendAmount - a.spendAmount
+      );
+      setTopSpendingMembers(sortedMembers.slice(0, 5));
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
     }
   };
-
-  const fetchSpend = async () => {
-    await Promise.all(
-      members.map((member) => getTransactions(member.memberId))
-    );
-  };
-
-  const getTransactions = async (memberId) => {
-    const res = await fetchData("/transactions/totalamount/" + memberId, "GET");
-    // console.log("Transaction response for", memberId, ":", res);
-    if (res.ok) {
-      setTransactions((prevTransactions) => ({
-        ...prevTransactions,
-        [memberId]: res.data.totalAmount,
-      }));
-      console.log(res.data);
-    } else {
-      alert(JSON.stringify(res.data));
-      console.log(res.data);
-    }
-  };
-
-  useEffect(() => {
-    fetchSpend();
-  }, [members]);
-
-  const getTopSpendingMembers = (members, transactions) => {
-    const membersWithSpend = members.map((member) => {
-      const spendAmount = transactions[member.memberId] || 0;
-      return {
-        ...member,
-        spendAmount,
-      };
-    });
-
-    // Sort the array in descending order based on spend amount
-    const sortedMembers = membersWithSpend.sort(
-      (a, b) => b.spendAmount - a.spendAmount
-    );
-
-    return sortedMembers.slice(0, 5);
-  };
-
-  const topSpendingMembers = getTopSpendingMembers(members, transactions);
 
   return (
     <div>
-      <Typography component="h1" variant="h5">
-        Spenders
+      <Typography variant="h5">Top Spenders</Typography>
+      <Typography variant="h6">
+        <ol>
+          {topSpendingMembers.map((member, index) => (
+            <li key={member.memberId}>
+              {member.name} ${member.spendAmount}
+            </li>
+          ))}
+        </ol>
       </Typography>
-      <ol>
-        {topSpendingMembers.map((member, index) => (
-          <li key={member.memberId}>
-            {member.name} ${member.spendAmount}
-          </li>
-        ))}
-      </ol>
     </div>
   );
 };
