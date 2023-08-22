@@ -112,8 +112,6 @@ const StaffRevenue = () => {
           maxWidth="md"
           sx={{ textAlign: "center", marginBottom: "50vh" }}
         >
-          <Button>Add New Transaction</Button>
-
           <Typography variant="h5">Bar Tab</Typography>
 
           <input
