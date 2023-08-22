@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 
 const StaffRevenue = () => {
-  // const userCtx = useContext(UserContext);
+  const userCtx = useContext(UserContext);
   const [transactions, setTransactions] = useState([]);
   const [products, setProducts] = useState([]);
   const [staff, setStaff] = useState([]);
@@ -28,14 +28,6 @@ const StaffRevenue = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const fetchData = useFetch();
-
-  // for adding new transaction
-  const transactionIdRef = useRef("");
-  const transactionDateRef = useRef("");
-  const paymentStatusRef = useRef("");
-  const productIdRef = useRef("");
-  const memberIdRef = useRef("");
-  const staffIdRef = useRef("");
 
   // for updating payment status
   const [updatedPaymentStatus, setUpdatedPaymentStatus] = useState([]);
@@ -58,7 +50,6 @@ const StaffRevenue = () => {
       }
       // Fetch member data
       const memberRes = await fetchData("/users/member");
-
       if (memberRes.ok) {
         setMembers(memberRes.data); // Assuming members are stored in state using `setMembers`
       }
@@ -75,32 +66,9 @@ const StaffRevenue = () => {
     const res = await fetchData(
       `/transactions/${transaction.transactionId}`,
       "PATCH",
-      { paymentStatus: updatedStatus }
-    );
-    if (res.ok) {
-      getTransactions();
-    } else {
-      alert(JSON.stringify(res.data));
-      console.log(res.data);
-    }
-  };
-
-  // PUT to add a new transaction
-  const addTransactions = async () => {
-    const res = await fetchData(
-      "/transactions",
-      "PUT",
-      {
-        transactionId: transactionIdRef.current.value,
-        transactionDate: transactionDateRef.current.value,
-        paymentStatus: paymentStatusRef.current.value,
-        productId: productIdRef.current.value,
-        memberId: memberIdRef.current.value,
-        staffId: staffIdRef.current.value,
-      },
+      { paymentStatus: updatedStatus },
       userCtx.accessToken
     );
-
     if (res.ok) {
       getTransactions();
     } else {
@@ -147,7 +115,7 @@ const StaffRevenue = () => {
         >
           <Button>Add New Transaction</Button>
 
-          <Typography variant="h5">Open Bar Tab</Typography>
+          <Typography variant="h5">Bar Tab</Typography>
 
           <input
             type="text"

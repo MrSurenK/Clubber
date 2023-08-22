@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,6 +17,7 @@ import { Link as RouterLink } from "react-router-dom";
 import styles from "../LoginSignUp/styles.module.css";
 import sketch from "../../assets/sketch.png";
 import MenuItem from "@mui/material/MenuItem";
+import useFetch from "../hooks/useFetch";
 
 function Copyright(props) {
   return (
@@ -47,13 +49,71 @@ const customTheme = createTheme({
 });
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const fetchData = useFetch();
+  const [formName, setFormName] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPassword, setFormPassword] = useState("");
+  const [formIsStaff, setFormIsStaff] = useState(false);
+  const [formStaffRank, setFormStaffRank] = useState("");
+  const [formIsMember, setFormIsMember] = useState(false);
+  const [formMemberRank, setFormMemberRank] = useState("");
+
+  const [displayStaffRank, setDisplayStaffRank] = useState([]);
+  const [displayMemberRank, setDisplayMemberRank] = useState([]);
+
+  const getDisplayStaffRank = async () => {
+    const res = await fetchData("/staffRank/get");
+
+    if (res.ok) {
+      setDisplayStaffRank(res.data);
+    } else {
+      console.log(res.data);
+    }
+  };
+
+  const getDisplayMemberRank = async () => {
+    const res = await fetchData("/memberRank/get");
+
+    if (res.ok) {
+      setDisplayMemberRank(res.data);
+    } else {
+      console.log(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getDisplayStaffRank();
+    getDisplayMemberRank();
+  }, []);
+
+  const handleRegister = async () => {
+    const registerData = {
+      name: formName,
+      email: formEmail,
+      password: formPassword,
+      isStaff: formIsStaff,
+      staffRank: formStaffRank,
+      isMember: formIsMember,
+      memberRank: formMemberRank,
+    };
+
+    const res = await fetchData("/auth/register", "PUT", registerData);
+
+    if (res.ok) {
+      setFormName("");
+      setFormEmail("");
+      setFormPassword("");
+      setFormIsStaff(false);
+      setFormStaffRank("");
+      setFormIsMember(false);
+      setFormMemberRank("");
+
+      console.log("Registration successful:", res.data);
+      // You can add logic here to navigate to a success page or perform other actions.
+    } else {
+      console.error("Registration failed:", res.data);
+      // You can display an error message to the user or perform other error handling.
+    }
   };
 
   return (
@@ -80,7 +140,7 @@ export default function SignUp() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              // onSubmit={handleRegister}
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
@@ -88,31 +148,43 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    id="ename"
+                    id="formName"
                     label="Name"
                     name="name"
                     autoComplete="name"
+                    value={formName}
+                    onChange={(e) => {
+                      setFormName(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    id="email"
+                    id="formEmail"
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    value={formEmail}
+                    onChange={(e) => {
+                      setFormEmail(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    name="password"
+                    name="formPassword"
                     label="Password"
                     type="password"
                     id="password"
                     autoComplete="new-password"
+                    value={formPassword}
+                    onChange={(e) => {
+                      setFormPassword(e.target.value);
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -121,10 +193,14 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="isStaff"
+                  id="formIsStaff"
                   label="Is Staff"
                   name="isStaff"
                   select
+                  value={formIsStaff}
+                  onChange={(e) => {
+                    setFormIsStaff(e.target.value);
+                  }}
                 >
                   <MenuItem value={true}>Yes</MenuItem>
                   <MenuItem value={false}>No</MenuItem>
@@ -134,22 +210,34 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="staffRank"
+                  id="formStaffRank"
                   label="Staff Rank"
                   name="staffRank"
                   select
+                  value={formStaffRank}
+                  onChange={(e) => {
+                    setFormStaffRank(e.target.value);
+                  }}
                 >
-                  {/* Your staff rank options */}
+                  {displayStaffRank.map((rank) => (
+                    <MenuItem key={rank.staffRank} value={rank.staffRank}>
+                      {rank.staffRank}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="isMember"
+                  id="formIsMember"
                   label="Is Member"
                   name="isMember"
                   select
+                  value={formIsMember}
+                  onChange={(e) => {
+                    setFormIsMember(e.target.value);
+                  }}
                 >
                   <MenuItem value={true}>Yes</MenuItem>
                   <MenuItem value={false}>No</MenuItem>
@@ -159,16 +247,22 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="memberRank"
+                  id="formMemberRank"
                   label="Member Rank"
-                  name="memberRank"
+                  name="formMemberRank"
                   select
+                  value={formMemberRank}
+                  onChange={(e) => setFormMemberRank(e.target.value)}
                 >
-                  {/* Your member rank options */}
+                  {displayMemberRank.map((rank) => (
+                    <MenuItem key={rank.memberRank} value={rank.memberRank}>
+                      {rank.memberRank}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
               <Button
-                type="submit"
+                type="button"
                 fullWidth
                 variant="contained"
                 sx={{
@@ -177,18 +271,10 @@ export default function SignUp() {
                   bgcolor: customTheme.palette.secondary.main,
                   "&:hover": { bgcolor: customTheme.palette.secondary.main },
                 }}
+                onClick={handleRegister}
               >
                 Sign Up
               </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item xs={9}>
-                  <RouterLink to="/">
-                    <Typography variant="body2">
-                      Already have an account? Sign in
-                    </Typography>
-                  </RouterLink>
-                </Grid>
-              </Grid>
             </Box>
             <Copyright sx={{ mt: 8, mb: 4, ml: 12 }} />
           </Box>
