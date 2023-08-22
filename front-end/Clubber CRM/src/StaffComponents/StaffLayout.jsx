@@ -51,9 +51,14 @@ const StaffLayout = (props) => {
   };
 
   const getStaffDetails = async () => {
-    const res = await fetchData("/users/staff", "POST", {
-      staffId: userCtx.staffId,
-    });
+    const res = await fetchData(
+      "/users/staff",
+      "POST",
+      {
+        staffId: userCtx.staffId,
+      },
+      userCtx.accessToken
+    );
 
     if (res.ok) {
       setNameDisplay(res.data.name);
