@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import {
@@ -9,10 +9,12 @@ import {
   FormControl,
   InputLabel,
   Container,
+  Typography,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 
 const AddTransactionForm = ({ onSubmit }) => {
+  const userCtx = useContext(UserContext);
   const [transaction, setTransaction] = useState({
     transactionId: "TRA-" + uuidv4(),
     transactionDate: new Date(),
@@ -24,24 +26,22 @@ const AddTransactionForm = ({ onSubmit }) => {
 
   const fetchData = useFetch();
 
-  // // for adding new transaction
-  // const transactionIdRef = useRef("");
-  // const transactionDateRef = useRef("");
-  // const paymentStatusRef = useRef("");
-  // const productIdRef = useRef("");
-  // const memberIdRef = useRef("");
-  // const staffIdRef = useRef("");
+  // for adding new transaction
+  const transactionIdRef = useRef("");
+  const transactionDateRef = useRef("");
+  const paymentStatusRef = useRef("");
+  const productIdRef = useRef("");
+  const memberIdRef = useRef("");
+  const staffIdRef = useRef("");
 
   const fetchProducts = async () => {
     const res = await fetchData("/products");
     setProducts(res.data);
-    console.log(products);
   };
 
   const fetchMembers = async () => {
     const res = await fetchData("/users/member");
     setMembers(res.data);
-    console.log(members);
   };
 
   useEffect(() => {
@@ -62,28 +62,73 @@ const AddTransactionForm = ({ onSubmit }) => {
     onSubmit(transaction);
   };
 
-  // // PUT to add a new transaction
-  // const addTransactions = async () => {
-  //   const res = await fetchData("/transactions", "PUT", {
-  //     transactionId: transactionIdRef.current.value,
-  //     transactionDate: transactionDateRef.current.value,
-  //     paymentStatus: paymentStatusRef.current.value,
-  //     productId: productIdRef.current.value,
-  //     memberId: memberIdRef.current.value,
-  //     staffId: staffIdRef.current.value,
-  //   });
+  // PUT to add a new transaction
+  const addTransactions = async () => {
+    const res = await fetchData(
+      "/transactions",
+      "PUT",
+      {
+        transactionId: transactionIdRef.current.value,
+        transactionDate: transactionDateRef.current.value,
+        paymentStatus: paymentStatusRef.current.value,
+        productId: productIdRef.current.value,
+        memberId: memberIdRef.current.value,
+        staffId: staffIdRef.current.value,
+      },
+      userCtx.accessToken
+    );
 
-  //   if (res.ok) {
-  //     getTransactions();
-  //   } else {
-  //     alert(JSON.stringify(res.data));
-  //     console.log(res.data);
-  //   }
-  // };
+    if (res.ok) {
+      getTransactions();
+      console.log("Transaction Added Successfully");
+    } else {
+      alert(JSON.stringify(res.data));
+      console.log(res.data);
+    }
+  };
 
   return (
     <Container maxWidth="md" sx={{ textAlign: "center", marginBottom: "50vh" }}>
       <form onSubmit={handleSubmit}>
+        <Typography variant="h5">Add a New Transaction</Typography>
+        <br />
+        <TextField
+          label="Member ID"
+          name="memberId"
+          value={transaction.memberId}
+          onChange={handleInputChange}
+          fullWidth
+          placeholder="Search for a member..."
+          inputProps={{
+            list: "member-options",
+            autoComplete: "off",
+          }}
+        />
+        <datalist id="member-options">
+          {members.map((member) => (
+            <option key={member.memberId} value={member.memberId}>
+              {member.memberId}
+            </option>
+          ))}
+        </datalist>
+        <br />
+        <br />
+        <FormControl fullWidth>
+          <InputLabel>Product</InputLabel>
+          <Select
+            name="product"
+            value={transaction.product}
+            onChange={handleInputChange}
+          >
+            {products.map((product) => (
+              <MenuItem key={product.productId} value={product.productId}>
+                {`${product.productName} ($${product.productPrice})`}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <br />
+        <br />
         <TextField
           label="Transaction ID"
           name="transactionId"
@@ -108,44 +153,6 @@ const AddTransactionForm = ({ onSubmit }) => {
         <br />
         <br />
 
-        <FormControl fullWidth>
-          <InputLabel>Product</InputLabel>
-          <Select
-            name="product"
-            value={transaction.product}
-            onChange={handleInputChange}
-          >
-            {products.map((product) => (
-              <MenuItem key={product.productId} value={product.productId}>
-                {product.productName}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <br />
-        <br />
-
-        <TextField
-          label="Member"
-          name="memberId"
-          value={transaction.memberId}
-          onChange={handleInputChange}
-          fullWidth
-          placeholder="Search for a member..."
-          inputProps={{
-            list: "member-options",
-            autoComplete: "off",
-          }}
-        />
-        <datalist id="member-options">
-          {members.map((member) => (
-            <option key={member.memberId} value={member.memberId}>
-              {member.memberName}
-            </option>
-          ))}
-        </datalist>
-        <br />
-        <br />
         <Button type="submit" variant="contained" color="primary">
           Add Transaction
         </Button>

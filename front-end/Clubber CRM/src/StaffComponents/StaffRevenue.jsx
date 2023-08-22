@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 
 const StaffRevenue = () => {
-  // const userCtx = useContext(UserContext);
+  const userCtx = useContext(UserContext);
   const [transactions, setTransactions] = useState([]);
   const [products, setProducts] = useState([]);
   const [staff, setStaff] = useState([]);
@@ -66,7 +66,8 @@ const StaffRevenue = () => {
     const res = await fetchData(
       `/transactions/${transaction.transactionId}`,
       "PATCH",
-      { paymentStatus: updatedStatus }
+      { paymentStatus: updatedStatus },
+      userCtx.accessToken
     );
     if (res.ok) {
       getTransactions();
