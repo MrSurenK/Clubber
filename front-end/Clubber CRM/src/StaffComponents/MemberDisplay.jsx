@@ -29,11 +29,7 @@ const MemberDisplay = () => {
   // Control Modal
   const [open, setOpen] = useState(false);
 
-  // Create state to extract the selected member
-  const [selectedMember, setSelectedMember] = useState(null);
-
-  const handleClickOpen = (member) => {
-    setSelectedMember(member);
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
@@ -47,7 +43,7 @@ const MemberDisplay = () => {
     const res = await fetchData("/users/member", "GET");
     if (res.ok) {
       setMembers(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
@@ -176,13 +172,13 @@ const MemberDisplay = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {handleSearch().map((row) => {
+                {handleSearch().map((row, idx) => {
                   return (
                     <TableRow
                       sx={{
                         cursor: "pointer",
                       }}
-                      key={row.name}
+                      key={idx}
                     >
                       <TableCell component="th" scope="row">
                         {row.name}
@@ -209,16 +205,25 @@ const MemberDisplay = () => {
           )}
         </TableContainer>
       </Container>
-      <MemberModal
-        name={selectedMember.name}
-        id={selectedMember.memberId}
-        email={selectedMember.email}
-        rank={selectedMember.memberRank}
-        open={open}
-        setOpen={setOpen}
-        handleClickOpen={handleClickOpen}
-        handleClose={handleClose}
-      ></MemberModal>
+
+      <Container>
+        {members.map((eachMember, idx) => {
+          return (
+            <MemberModal
+              key={idx}
+              name={eachMember.name}
+              id={eachMember.memberId}
+              email={eachMember.email}
+              rank={eachMember.memberRank}
+              open={open}
+              setOpen={setOpen}
+              handleClickOpen={handleClickOpen}
+              handleClose={handleClose}
+              getMembers={getMembers}
+            ></MemberModal>
+          );
+        })}
+      </Container>
     </>
   );
 };
