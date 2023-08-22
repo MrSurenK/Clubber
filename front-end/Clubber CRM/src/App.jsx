@@ -9,6 +9,7 @@ import StaffDashboard from "./StaffComponents/StaffDashboard";
 import MemberDisplay from "./StaffComponents/MemberDisplay";
 import StaffRevenue from "./StaffComponents/StaffRevenue";
 import StaffEmployee from "./StaffComponents/StaffEmployee";
+import TransactionForm from "./StaffComponents/TransactionForm";
 import CustomerDashboard from "./CustomerPortal/CustomerDashboard";
 import CustomerPortal from "./CustomerPortal/CustomerPortal";
 import CmAccountMgmt from "./CustomerPortal/CmAccountMgmt";
@@ -67,6 +68,7 @@ function App() {
                   <Route path="revenue" element={<StaffRevenue />} />
                   <Route path="employee" element={<StaffEmployee />} />
                   <Route path="registration" element={<Registration />} />
+                  <Route path="transaction" element={<TransactionForm />} />
                 </Route>
               )}
             </Route>

@@ -1,6 +1,5 @@
 const TransactionsModel = require("../models/Transactions");
 const ProductsModel = require("../models/Products");
-const uuid = require("uuid");
 
 // SEED - seed payment transactions
 const seedTransactions = async (req, res) => {
@@ -106,7 +105,6 @@ const getTransactionsByMemberId = async (req, res) => {
 const addNewTransactions = async (req, res) => {
   try {
     const newTransaction = {
-      transactionId: `TRA-${uuid.v4()}`,
       paymentStatus: req.body.paymentStatus,
       productId: req.body.productId,
       memberId: req.body.memberId,
@@ -137,7 +135,7 @@ const updatePaymentStatus = async (req, res) => {
         res,
         status(404).json({
           status: "error",
-          msg: "no transactions foundto update",
+          msg: "no transactions found to update",
         })
       );
     }
