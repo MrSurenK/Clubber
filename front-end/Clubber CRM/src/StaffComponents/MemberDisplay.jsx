@@ -75,9 +75,10 @@ const MemberDisplay = () => {
       setOutstanding((prevOutstanding) => ({
         ...prevOutstanding,
         // Without .outstanding, you would be trying to set the outstanding state with an entire response object instead of just the outstanding value.
-        [memberId]: res.data.outstanding,
+        [memberId]: res.data.totalAmount,
       }));
-      console.log(res.data);
+      console.log("res", res.data);
+      return res.data.totalAmount;
     } else {
       alert(JSON.stringify(res.data));
       // console.log(res.data);
@@ -92,9 +93,10 @@ const MemberDisplay = () => {
   };
 
   const fetchOutstanding = async () => {
-    await Promise.all(
+    const all = await Promise.all(
       members.map((member) => getOutstandingAmount(member.memberId))
     );
+    console.log(all);
     setLoading(false);
   };
 
@@ -191,7 +193,7 @@ const MemberDisplay = () => {
                       </TableCell>
                       <TableCell>
                         {outstanding[row.memberId]
-                          ? outstanding[row.memberId]
+                          ? `$ ${outstanding[row.memberId]}`
                           : "No outstanding"}
                       </TableCell>
                       <TableCell>{editIcon}</TableCell>
