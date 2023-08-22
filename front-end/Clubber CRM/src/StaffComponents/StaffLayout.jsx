@@ -87,13 +87,15 @@ const StaffLayout = (props) => {
 
             <Typography variant="h5">Staff Portal</Typography>
 
-            <Button
-              onClick={handleAppBarButton}
-              variant="contained"
-              sx={{ height: "100%" }}
-            >
-              MyClubber
-            </Button>
+            {userCtx.isMember && (
+              <Button
+                onClick={handleAppBarButton}
+                variant="contained"
+                sx={{ height: "100%" }}
+              >
+                MyClubber
+              </Button>
+            )}
 
             {/* Right side */}
             <Stack direction="row" alignItems="center" spacing={2}>
