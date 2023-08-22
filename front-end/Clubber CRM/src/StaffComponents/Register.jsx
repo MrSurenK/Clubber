@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,6 +17,7 @@ import { Link as RouterLink } from "react-router-dom";
 import styles from "../LoginSignUp/styles.module.css";
 import sketch from "../../assets/sketch.png";
 import MenuItem from "@mui/material/MenuItem";
+import useFetch from "../hooks/useFetch";
 
 function Copyright(props) {
   return (
@@ -47,6 +49,43 @@ const customTheme = createTheme({
 });
 
 export default function SignUp() {
+  const fetchData = useFetch();
+  const [formName, setFormName] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPassword, setFormPassword] = useState("");
+  const [formIsStaff, setFormIsStaff] = useState(false);
+  const [formStaffRank, setFormStaffRank] = useState("");
+  const [formIsMember, setFormIsMember] = useState(false);
+  const [formMemberRank, setFormMemberRank] = useState("");
+
+  const [displayStaffRank, setDisplayStaffRank] = useState([]);
+  const [displayMemberRank, setDisplayMemberRank] = useState([]);
+
+  const getDisplayStaffRank = async () => {
+    const res = await fetchData("/staffRank/get");
+
+    if (res.ok) {
+      setDisplayStaffRank(res.data);
+    } else {
+      console.log(res.data);
+    }
+  };
+
+  const getDisplayMemberRank = async () => {
+    const res = await fetchData("/memberRank/get");
+
+    if (res.ok) {
+      setDisplayMemberRank(res.data);
+    } else {
+      console.log(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getDisplayStaffRank();
+    getDisplayMemberRank();
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -138,8 +177,14 @@ export default function SignUp() {
                   label="Staff Rank"
                   name="staffRank"
                   select
+                  value={formStaffRank}
+                  onChange={(e) => setFormStaffRank(e.target.value)}
                 >
-                  {/* Your staff rank options */}
+                  {displayStaffRank.map((rank) => (
+                    <MenuItem key={rank.id} value={rank.id}>
+                      {rank.staffRank}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
               <Grid item xs={12}>
@@ -163,8 +208,14 @@ export default function SignUp() {
                   label="Member Rank"
                   name="memberRank"
                   select
+                  value={formMemberRank}
+                  onChange={(e) => setFormMemberRank(e.target.value)}
                 >
-                  {/* Your member rank options */}
+                  {displayMemberRank.map((rank) => (
+                    <MenuItem key={rank.id} value={rank.id}>
+                      {rank.memberRank}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
               <Button
