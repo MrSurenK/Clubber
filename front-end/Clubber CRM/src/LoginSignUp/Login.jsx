@@ -47,8 +47,8 @@ const customTheme = createTheme({
 
 export default function Login(props) {
   const userCtx = useContext(UserContext);
-  const [email, setEmail] = useState("user@gmail.com");
-  const [password, setPassword] = useState("example");
+  const [email, setEmail] = useState("test1@test.com");
+  const [password, setPassword] = useState("123456");
   const fetchData = useFetch();
 
   // const handleSubmit = (event) => {
