@@ -54,14 +54,13 @@ const Reservations = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Email</TableCell>
-              <TableCell align="right">ReservationId</TableCell>
-              <TableCell align="right">Member Id</TableCell>
-              <TableCell align="right">Date</TableCell>
-              <TableCell align="right">Time</TableCell>
+              <TableCell align="left">ReservationId</TableCell>
+              <TableCell align="left">Member Id</TableCell>
+              <TableCell align="left">Date</TableCell>
+              <TableCell align="left">Time</TableCell>
               <TableCell align="right">Pax</TableCell>
-              <TableCell align="right">Reservation Status</TableCell>
-              <TableCell align="right">Edit</TableCell>
+              <TableCell align="center">Reservation Status</TableCell>
+              <TableCell align="center">Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -73,20 +72,20 @@ const Reservations = () => {
                 <TableCell component="th" scope="row">
                   {reservation.reservationId}
                 </TableCell>
-                <TableCell align="right">{reservation.memberId}</TableCell>
-                <TableCell align="right">
+                <TableCell align="left">{reservation.memberId}</TableCell>
+                <TableCell align="left">
                   {reservation.reservationDate}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="left">
                   {reservation.reservationTime}
                 </TableCell>
                 <TableCell align="right">
                   {reservation.reservationPax}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="center">
                   {reservation.reservationStatus}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="center">
                   <button
                     onClick={() => {
                       setSelectedDate(reservation.reservationDate);
