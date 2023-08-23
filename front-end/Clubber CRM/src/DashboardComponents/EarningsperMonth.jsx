@@ -1,24 +1,36 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { Typography } from "@mui/material";
 import Chart from "chart.js/auto";
+import UserContext from "../context/user";
 
 const EarningsperMonth = () => {
   const [transactions, setTransactions] = useState([]);
   const [products, setProducts] = useState([]);
 
+  const userCtx = useContext(UserContext);
   const fetchData = useFetch();
 
   const chartRef = useRef();
 
   // GET for all transactions
   const getTransactions = async () => {
-    const res = await fetchData("/transactions");
+    const res = await fetchData(
+      "/transactions",
+      "GET",
+      undefined,
+      userCtx.accessToken
+    );
 
     if (res.ok) {
       setTransactions(res.data);
       // Fetch product data
-      const productRes = await fetchData("/products");
+      const productRes = await fetchData(
+        "/products",
+        "GET",
+        undefined,
+        userCtx.accessToken
+      );
       if (productRes.ok) {
         setProducts(productRes.data); // Assuming products are stored in state using `setProducts`
       }
@@ -81,7 +93,7 @@ const EarningsperMonth = () => {
     };
   };
   useEffect(() => {
-    getTransactions();
+    // getTransactions();
 
     // Create the Chart instance
     if (chartRef.current) {

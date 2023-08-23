@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { useState, useEffect, useContext, useRef } from "react";
 import Button from "@mui/material/Button";
@@ -21,10 +20,8 @@ const Overlay = (props) => {
   const barTabActiveRef = useRef();
   const [displayMemberRank, setDisplayMemberRank] = useState([]);
 
-
   const updateMember = async (memberId) => {
     const updateData = {};
-
 
     if (nameRef.current.value) updateData.name = nameRef.current.value;
     if (isActiveRef.current.value)
@@ -38,7 +35,7 @@ const Overlay = (props) => {
 
     const res = await fetchData(
       "/users/member/" + memberId,
-
+      "PATCH",
       updateData,
       userCtx.accessToken
     );

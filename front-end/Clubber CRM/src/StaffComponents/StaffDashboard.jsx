@@ -19,45 +19,47 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const StaffDashboard = () => {
   return (
-    <Box sx={{ flexGrow: 1, p: 5 }}>
-      <Typography component="h1" variant="h4">
-        Revenue Data
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Item>
-            <EarningsperMonth></EarningsperMonth>
-          </Item>
-        </Grid>
-        <Grid item xs={6}>
+    <>
+      <Box sx={{ flexGrow: 1, p: 5 }}>
+        <Typography component="h1" variant="h4">
+          Revenue Data
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Item>
+              <EarningsperMonth></EarningsperMonth>
+            </Item>
+          </Grid>
+          {/* <Grid item xs={6}>
           <Item>
             <ReceivablesperMonth></ReceivablesperMonth>
           </Item>
+        </Grid> */}
         </Grid>
-      </Grid>
-      <br />
-      <br />
-      <Typography component="h1" variant="h4">
-        Member Data
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Item>
-            <NumberOfMembers></NumberOfMembers>
-          </Item>
+        <br />
+        <br />
+        <Typography component="h1" variant="h4">
+          Member Data
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Item>
+              <NumberOfMembers></NumberOfMembers>
+            </Item>
+          </Grid>
+          <Grid item xs={4}>
+            <Item>
+              <TopSpenders></TopSpenders>
+            </Item>
+          </Grid>
+          <Grid item xs={4}>
+            <Item>
+              <TopOweMoney></TopOweMoney>
+            </Item>
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <Item>
-            <TopSpenders></TopSpenders>
-          </Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>
-            <TopOweMoney></TopOweMoney>
-          </Item>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 };
 
