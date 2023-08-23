@@ -25,9 +25,9 @@ const CustomerDashboard = () => {
         </Typography>
         <Item>
           <CustomerQRCode memberId={userCtx.memberId} />
-        </Item>
-        <br />
-        <Item>
+
+          <br />
+
           <Typography component="h2" variant="h4">
             Member Rank:
           </Typography>
