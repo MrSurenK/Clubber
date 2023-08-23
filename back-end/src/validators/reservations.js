@@ -22,12 +22,12 @@ const validateIdInParam = [
 
 const validateAddReservationData = [
   body("reservationId", "reservationId is required").not().isEmpty(),
-  body("reservationId", "reservationId is invalid").matches(/^R\d{7}$/),
-  body("reservationId").custom(async (value) => {
-    if (!(await isReservationIdUnique(value))) {
-      throw new Error("reservationId has already been used");
-    }
-  }),
+  // body("reservationId", "reservationId is invalid").matches(/^R\d{7}$/),
+  // body("reservationId").custom(async (value) => {
+  //   if (!(await isReservationIdUnique(value))) {
+  //     throw new Error("reservationId has already been used");
+  //   }
+  // }),
   body("memberId", "memberId is required").not().isEmpty(),
   body("memberId", "memberId is invalid").matches(
     /^MEM-\d{7}-[A-Za-z0-9]{6}-\d{6}$/

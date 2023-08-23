@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   TextField,
   Button,
@@ -14,38 +16,27 @@ import {
   Radio,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import { DatePicker, DateField } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-const AddTransactionForm = () => {
+const ReservationForm = () => {
   const userCtx = useContext(UserContext);
   const [reservation, setReservation] = useState({
-    transactionId: "TRA-" + uuidv4(),
-    transactionDate: new Date(),
-    product: "",
+    reservationId: "REV-" + uuidv4(),
+    reservationDate: new Date(),
     memberId: "",
   });
-  const [products, setProducts] = useState([]);
+
   const [members, setMembers] = useState([]);
-  const [paymentStatus, setPaymentStatus] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState("");
+  const [date, setDate] = useState([]);
+  const [time, setTime] = useState([]);
+  const [pax, setPax] = useState([]);
+  const [value, setValue] = useState(dayjs("2022-04-17"));
+  const [status, setStatus] = useState([]);
 
   const fetchData = useFetch();
 
-  // for adding new transaction
-  const transactionIdRef = useRef("");
-  const transactionDateRef = useRef("");
-  const paymentStatusRef = useRef("");
-  const memberIdRef = useRef("");
-  const staffIdRef = useRef("");
-
-  const fetchProducts = async () => {
-    const res = await fetchData(
-      "/products",
-      undefined,
-      undefined,
-      userCtx.accessToken
-    );
-    setProducts(res.data);
-  };
+  //for adding new reservations
 
   const fetchMembers = async () => {
     const res = await fetchData(
@@ -58,138 +49,101 @@ const AddTransactionForm = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
     fetchMembers();
+    console.log(members);
   }, []);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setTransaction((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  // PUT to add a new transaction
-  const addTransactions = async () => {
+  // API PUT Call
+  const addReservation = async () => {
     const res = await fetchData(
-      "/transactions",
+      "/reservations",
       "PUT",
       {
-        transactionId: transaction.transactionId,
-        transactionDate: transactionDateRef.current.value,
-        paymentStatus: paymentStatus,
-        productId: selectedProductId,
-        memberId: transaction.memberId,
-        staffId: userCtx.staffId,
+        reservationId: reservation.reservationId,
+        memberId: reservation.memberId,
+        reservationDate: date,
+        reservationTime: time,
+        reservationPax: pax,
+        reservationStatus: "Pending",
+        reservationCreatedDate: reservation.reservationDate,
       },
       userCtx.accessToken
     );
 
     if (res.ok) {
-      getTransactions();
-      console.log("Transaction Added Successfully");
+      console.log("Reservation Added Successfully");
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
     }
   };
 
-  const handlePaymentStatusChange = (event) => {
-    setPaymentStatus(event.target.checked);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setReservation((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Typography component="h1" variant="h5">
-        Add a New Transaction
-      </Typography>
-      <br />
-      <TextField
-        label="Member ID"
-        name="memberId"
-        value={transaction.memberId}
-        onChange={handleInputChange}
-        fullWidth
-        placeholder="Search for a member..."
-        inputProps={{
-          list: "member-options",
-          autoComplete: "off",
-        }}
-      />
-      <datalist id="member-options">
-        {members.map((member) => (
-          <option key={member.memberId} value={member.memberId}>
-            {member.memberId}
-          </option>
-        ))}
-      </datalist>
-      <br />
-      <br />
-      <FormControl fullWidth>
-        <InputLabel>Product</InputLabel>
-        <RadioGroup
-          name="product"
-          value={selectedProductId}
-          onChange={(event) => setSelectedProductId(event.target.value)}
-        >
-          <br />
-          <br />
-          {products.map((product) => (
-            <FormControlLabel
-              key={product.productId}
-              value={product.productId}
-              control={<Radio />}
-              label={`${product.productName} ($${product.productPrice})`}
-            />
+    <div>
+      <Container component="main" maxWidth="xs">
+        <Typography component="h1" variant="h5">
+          Add a New Reservation
+        </Typography>
+        <br />
+        <TextField
+          label="Member ID"
+          name="memberId"
+          value={reservation.memberId}
+          onChange={handleInputChange}
+          fullWidth
+          placeholder="Search for a member..."
+          inputProps={{
+            list: "member-options",
+            autoComplete: "off",
+          }}
+        />
+        <datalist id="member-options">
+          {members.map((member) => (
+            <option key={member.memberId} value={member.memberId}>
+              {member.memberId}
+            </option>
           ))}
-        </RadioGroup>
-      </FormControl>
-      <br />
-      <br />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={paymentStatus}
-            onChange={handlePaymentStatusChange}
-            name="paymentStatus"
-            color="primary"
-          />
-        }
-        label="Paid?"
-      />
-      <br />
-      <br />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        onClick={addTransactions}
-      >
-        Add Transaction
-      </Button>
-      <br />
-      <br />
-      <Typography>For Staff Use Only</Typography>
-      <Typography style={{ fontSize: "12px" }} value={userCtx.staffId}>
-        Staff ID: {userCtx.staffId}
-      </Typography>{" "}
-      <Typography
-        style={{ fontSize: "12px" }}
-        value={transaction.transactionDate.toISOString()}
-      >
-        Transaction Date: {transaction.transactionDate.toISOString()}
-      </Typography>
-      <Typography
-        style={{ fontSize: "12px" }}
-        value={transaction.transactionId}
-      >
-        Transaction ID: {transaction.transactionId}
-      </Typography>
-      <br />
-      <br />
-    </Container>
+        </datalist>
+        <FormControl fullWidth>
+          <Typography>Date</Typography>
+          <TextField
+            value={date}
+            onChange={(e) => {
+              setDate(e.target.value);
+            }}
+          ></TextField>
+          <br />
+          <Typography>Time</Typography>
+          <TextField
+            value={time}
+            onChange={(e) => {
+              setTime(e.target.value);
+            }}
+          ></TextField>
+          <br />
+          <Typography>Pax</Typography>
+          <TextField
+            value={pax}
+            onChange={(e) => {
+              setPax(e.target.value);
+            }}
+          ></TextField>
+          <br />
+          <Typography>Status</Typography>
+          <TextField value={"Pending"}>Pending</TextField>
+          <Button onClick={addReservation}>Add Reservation</Button>
+        </FormControl>
+      </Container>
+    </div>
   );
 };
 
-export default AddTransactionForm;
+export default ReservationForm;
