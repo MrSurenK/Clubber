@@ -115,6 +115,7 @@ const StaffEmployee = () => {
               <TableCell>Staff Id</TableCell>
               <TableCell>Staff Rank</TableCell>
               <TableCell></TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -129,7 +130,7 @@ const StaffEmployee = () => {
                 <TableCell>
                   <Button
                     type="submit"
-                    variant="outlined"
+                    variant="contained"
                     onClick={() => {
                       setSelectedStaffName(staff.name);
                       setSelectedStaffId(staff.staffId);
@@ -138,6 +139,8 @@ const StaffEmployee = () => {
                   >
                     Update
                   </Button>
+                </TableCell>
+                <TableCell>
                   {userCtx.staffRank === "manager" && (
                     <Button
                       variant="outlined"
