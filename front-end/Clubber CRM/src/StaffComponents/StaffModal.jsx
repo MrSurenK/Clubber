@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { useState, useEffect, useContext, useRef } from "react";
 import Button from "@mui/material/Button";
@@ -16,53 +15,47 @@ const Overlay = (props) => {
   const fetchData = useFetch();
   const nameRef = useRef();
   const isActiveRef = useRef();
-  const isMemberRef = useRef();
-  const memberRankRef = useRef();
-  const barTabActiveRef = useRef();
-  const [displayMemberRank, setDisplayMemberRank] = useState([]);
+  const isStaffRef = useRef();
+  const staffRankRef = useRef();
+  const [displayStaffRank, setDisplayStaffRank] = useState([]);
 
-
-  const updateMember = async (memberId) => {
+  const updateStaff = async (staffId) => {
     const updateData = {};
-
 
     if (nameRef.current.value) updateData.name = nameRef.current.value;
     if (isActiveRef.current.value)
       updateData.isActive = isActiveRef.current.value;
-    if (isMemberRef.current.value)
-      updateData.isMember = isMemberRef.current.value;
-    if (memberRankRef.current.value)
-      updateData.memberRank = memberRankRef.current.value;
-    if (barTabActiveRef.current.value)
-      updateData.barTabActive = barTabActiveRef.current.value;
+    if (isStaffRef.current.value) updateData.isStaff = isStaffRef.current.value;
+    if (staffRankRef.current.value)
+      updateData.staffRank = staffRankRef.current.value;
 
     const res = await fetchData(
-      "/users/member/" + memberId,
-
+      "/users/staff/" + staffId,
+      "PATCH",
       updateData,
       userCtx.accessToken
     );
     if (res.ok) {
-      props.getMembers();
-      props.setShowMemberModal(false);
+      props.getStaff();
+      props.setShowStaffModal(false);
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
     }
   };
 
-  const getDisplayMemberRank = async () => {
-    const res = await fetchData("/memberRank/get");
+  const getDisplayStaffRank = async () => {
+    const res = await fetchData("/staffRank/get");
 
     if (res.ok) {
-      setDisplayMemberRank(res.data);
+      setDisplayStaffRank(res.data);
     } else {
       console.log(res.data);
     }
   };
 
   useEffect(() => {
-    getDisplayMemberRank();
+    getDisplayStaffRank();
   }, []);
 
   return (
@@ -74,11 +67,11 @@ const Overlay = (props) => {
           </Typography>
           <br />
           <Typography component="h1" variant="h6">
-            {props.memberName}
+            {props.staffName}
           </Typography>
           <br />
           <Typography component="h1" variant="h6">
-            {props.memberId}
+            {props.staffId}
           </Typography>
           <br />
           <Box>
@@ -104,17 +97,18 @@ const Overlay = (props) => {
             >
               <MenuItem value={true}>Yes</MenuItem>
               <MenuItem value={false}>No</MenuItem>
+              <MenuItem></MenuItem>
             </TextField>
             <br />
             <br />
             <TextField
               required
               fullWidth
-              id="formIsMember"
-              label="Is Member"
-              name="Member"
+              id="formIsStaff"
+              label="Is Staff"
+              name="Staff"
               select
-              inputRef={isMemberRef}
+              inputRef={isStaffRef}
             >
               <MenuItem value={true}>Yes</MenuItem>
               <MenuItem value={false}>No</MenuItem>
@@ -124,31 +118,17 @@ const Overlay = (props) => {
             <TextField
               required
               fullWidth
-              id="formMemberRank"
-              label="Member Rank"
-              name="Member Rank"
+              id="formStaffRank"
+              label="Staff Rank"
+              name="Staff Rank"
               select
-              inputRef={memberRankRef}
+              inputRef={staffRankRef}
             >
-              {displayMemberRank.map((rank) => (
-                <MenuItem key={rank.memberRank} value={rank.memberRank}>
-                  {rank.memberRank}
+              {displayStaffRank.map((rank) => (
+                <MenuItem key={rank.staffRank} value={rank.staffRank}>
+                  {rank.staffRank}
                 </MenuItem>
               ))}
-            </TextField>
-            <br />
-            <br />
-            <TextField
-              required
-              fullWidth
-              id="formBarTabActive"
-              label="BarTab Active"
-              name="BarTab Active"
-              select
-              inputRef={barTabActiveRef}
-            >
-              <MenuItem value={true}>Yes</MenuItem>
-              <MenuItem value={false}>No</MenuItem>
             </TextField>
             <br />
             <br />
@@ -157,7 +137,7 @@ const Overlay = (props) => {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={() => updateMember(props.memberId)}
+              onClick={() => updateStaff(props.staffId)}
             >
               Update
             </Button>
@@ -166,7 +146,7 @@ const Overlay = (props) => {
               fullWidth
               variant="contained"
               color="secondary"
-              onClick={() => props.setShowMemberModal(false)}
+              onClick={() => props.setShowStaffModal(false)}
             >
               Cancel
             </Button>
@@ -177,17 +157,17 @@ const Overlay = (props) => {
   );
 };
 
-const MemberModal = (props) => {
+const StaffModal = (props) => {
   return (
     <>
       <Overlay
-        memberName={props.memberName}
-        memberId={props.memberId}
-        getMembers={props.getMembers}
-        setShowMemberModal={props.setShowMemberModal}
+        staffName={props.staffName}
+        staffId={props.staffId}
+        getStaff={props.getStaff}
+        setShowStaffModal={props.setShowStaffModal}
       />
     </>
   );
 };
 
-export default MemberModal;
+export default StaffModal;

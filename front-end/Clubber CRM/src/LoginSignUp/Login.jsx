@@ -51,15 +51,6 @@ export default function Login(props) {
   const [password, setPassword] = useState("123456");
   const fetchData = useFetch();
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
-
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
@@ -149,16 +140,6 @@ export default function Login(props) {
               >
                 Sign In
               </Button>
-
-              {/* <Grid container justifyContent={"center"}>
-                <Grid item s={6}>
-                  <RouterLink to="/register">
-                    <Typography variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Typography>
-                  </RouterLink>
-                </Grid>
-              </Grid> */}
 
               <Copyright sx={{ mt: 8, mb: 4 }} />
             </Box>

@@ -20,25 +20,36 @@ const {
 
 const checkValid = require("../middleware/checkValid");
 
+const { auth, authStaff, authManager } = require("../middleware/auth");
+
 const router = express.Router();
 
 router.get("/seed", seedTransactions);
-router.get("/", getAllTransactions);
+router.get("/", authStaff, getAllTransactions);
 router.get(
   "/t/:transactionId",
+  authStaff,
   validatetransactionIdInParam,
   checkValid,
   getTransactionsByTransactionId
 );
 router.get(
   "/m/:memberId",
+  authStaff,
   validatememberIdInParam,
   checkValid,
   getTransactionsByMemberId
 );
-router.put("/", validateAddTransactionData, checkValid, addNewTransactions);
+router.put(
+  "/",
+  authStaff,
+  validateAddTransactionData,
+  checkValid,
+  addNewTransactions
+);
 router.patch(
   "/:transactionId",
+  authStaff,
   validatetransactionIdInParam,
   validateUpdateTransactionkData,
   checkValid,
@@ -46,12 +57,14 @@ router.patch(
 );
 router.get(
   "/totalamount/:memberId",
+  authStaff,
   validatememberIdInParam,
   checkValid,
   getTotalAmountSpentbyMemberId
 );
 router.get(
   "/outstandingamount/:memberId",
+  authStaff,
   validatememberIdInParam,
   checkValid,
   getTotalAmountOutstandingbyMemberId
