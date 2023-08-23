@@ -137,12 +137,12 @@ const CustomerLayout = (props) => {
           <List>
             {[
               {
-                text: "Dashboard",
+                text: "Membership Details",
                 icon: <DashboardIcon sx={{ color: "white" }} />,
                 route: "dashboard",
               },
               {
-                text: "Account Mangement",
+                text: "Change Password",
                 icon: <GroupIcon sx={{ color: "white" }} />,
                 route: "account",
               },
