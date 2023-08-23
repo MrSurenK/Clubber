@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Typography from "@mui/material/Typography";
@@ -13,28 +13,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import { TextField } from "@mui/material";
+import ReservationModal from "./ReservationModal";
 
 const Reservations = () => {
-  // Declare states to store table variables
-  const [reservation, setReservation] = useState([]);
-
-  // For pagination
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [search, setSearch] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+  const userCtx = useContext(UserContext);
   const fetchData = useFetch();
+  const [reservations, setReservations] = useState([]);
 
-  // For confirming/rejecting reservation
-  const [confirm, setConfirm] = useState([]);
+  const [showMemberModal, setShowMemberModal] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useState("");
+  const [selectedreservationId, setSelectedReservationId] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedPax, setSelectedPax] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
-  // Get API call
   const getReservations = async () => {
-    const res = await fetchData("/reservations");
+    const res = await fetchData(
+      "/reservations/",
+      "GET",
+      undefined,
+      userCtx.accessToken
+    );
 
     if (res.ok) {
-      setReservation(res.data);
+      setReservations(res.data);
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
@@ -43,92 +46,73 @@ const Reservations = () => {
 
   useEffect(() => {
     getReservations();
-    console.log(reservation);
   }, []);
-
-  useEffect(() => {
-    console.log(reservation[0].reservationId);
-    console.log(reservation[0].memberId);
-  });
-
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(parseInt(event.target.value, 5));
-  //   setPage(0);
-  // };
-
-  // Search function
-  const handleSearch = () => {
-    return reservation.filter((reserve) => {
-      return (
-        reserve.reservationId.toLowerCase().includes(search) ||
-        reserve.memberId.toLowerCase().includes(search)
-      );
-    });
-  };
-
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return new Date(dateString).toLocaleDateString("en-US", options);
-  };
 
   return (
     <>
-      <Container fixed sx={{ textAlign: "center" }}>
-        <Typography variant="h4">Reservations</Typography>
-        <TextField
-          label="Search Reservation..."
-          variant="outlined"
-          sx={{ mb: 5, width: "40%" }}
-          onChange={(e) => setSearch(e.target.value.toLowerCase())}
-        />
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead sx={{ bgcolor: "#ffc400" }}>
-              <TableRow>
-                {[
-                  "Reservation ID",
-                  "Member ID",
-                  "Date",
-                  "Time",
-                  "Pax",
-                  "Status",
-                ].map((header) => (
-                  <TableCell
-                    sx={{
-                      color: "black",
-                      fontWeight: "700",
-                      fontFamily: "Exo",
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">ReservationId</TableCell>
+              <TableCell align="left">Member Id</TableCell>
+              <TableCell align="left">Date</TableCell>
+              <TableCell align="left">Time</TableCell>
+              <TableCell align="right">Pax</TableCell>
+              <TableCell align="center">Reservation Status</TableCell>
+              <TableCell align="center">Edit</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {reservations.map((reservation) => (
+              <TableRow
+                key={reservation._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {reservation.reservationId}
+                </TableCell>
+                <TableCell align="left">{reservation.memberId}</TableCell>
+                <TableCell align="left">
+                  {reservation.reservationDate}
+                </TableCell>
+                <TableCell align="left">
+                  {reservation.reservationTime}
+                </TableCell>
+                <TableCell align="right">
+                  {reservation.reservationPax}
+                </TableCell>
+                <TableCell align="center">
+                  {reservation.reservationStatus}
+                </TableCell>
+                <TableCell align="center">
+                  <button
+                    onClick={() => {
+                      setSelectedDate(reservation.reservationDate);
+                      setSelectedTime(reservation.reservationTime);
+                      setSelectedPax(reservation.reservationPax);
+                      setSelectedStatus(reservation.reservationStatus);
+                      setSelectedReservationId(reservation.reservationId);
+                      setShowMemberModal(true);
                     }}
-                    key={header}
                   >
-                    {header}
-                  </TableCell>
-                ))}
+                    Edit Symbol
+                  </button>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {handleSearch().map((row, idx) => {
-                return (
-                  <TableRow key={idx}>
-                    <TableCell component="th" scope="row">
-                      {row.reservationId}
-                    </TableCell>
-                    <TableCell>{row.memberId}</TableCell>
-                    <TableCell>{formatDate(row.reservationDate)}</TableCell>
-                    <TableCell>{row.reservationTime}</TableCell>
-                    <TableCell>{row.reservationPax}</TableCell>
-                    <TableCell>{row.reservationStatus}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {showMemberModal && (
+        <ReservationModal
+          reservationId={selectedreservationId}
+          memberId={selectedMemberId}
+          getReservations={getReservations}
+          setShowMemberModal={setShowMemberModal}
+        />
+      )}
     </>
   );
 };
