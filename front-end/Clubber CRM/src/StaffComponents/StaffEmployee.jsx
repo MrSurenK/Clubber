@@ -45,13 +45,65 @@ const StaffEmployee = () => {
     getStaff();
   }, []);
 
+  const handleDelete = async (id) => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+
+    if (shouldDelete) {
+      const res = await fetchData(
+        "/users/all/" + id,
+        "DELETE",
+        { staffRank: userCtx.staffRank },
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        getStaff();
+      } else {
+        alert(JSON.stringify(res.data));
+        console.log(res.data);
+      }
+    }
+  };
+
+  // search query
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredStaffs = staffs.filter((staff) => {
+    const lowerSearchQuery = searchQuery.toLowerCase();
+    return (
+      staff.name.toLowerCase().includes(lowerSearchQuery) ||
+      staff.staffId.toLowerCase().includes(lowerSearchQuery)
+    );
+  });
+
+  // Pagination state
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  // Calculate the range of staff members to display based on pagination
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+
   return (
     <div style={{ marginLeft: "20px" }}>
       <Container sx={{ textAlign: "left", marginBottom: "20px" }}>
         <Typography variant="h5">Staff Database</Typography>
         <input
           type="text"
-          placeholder="Search by Transaction ID or Member Name"
+          placeholder="Search by Name or Staff ID"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
         <Table>
           <TableHead>
@@ -66,19 +118,15 @@ const StaffEmployee = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {staffs.map((staff) => (
+            {filteredStaffs.slice(startIndex, endIndex).map((staff) => (
               <TableRow key={staff._id}>
-                <TableCell component="th" scope="row">
-                  {staff.email}
-                </TableCell>
-                <TableCell align="right">
-                  {staff.isActive ? "true" : "false"}
-                </TableCell>
-                <TableCell align="right">{staff.name}</TableCell>
-                <TableCell align="right">{staff.created_at}</TableCell>
-                <TableCell align="right">{staff.staffId}</TableCell>
-                <TableCell align="right">{staff.staffRank}</TableCell>
-                <TableCell align="right">
+                <TableCell>{staff.email}</TableCell>
+                <TableCell>{staff.isActive ? "true" : "false"}</TableCell>
+                <TableCell>{staff.name}</TableCell>
+                <TableCell>{staff.created_at}</TableCell>
+                <TableCell>{staff.staffId}</TableCell>
+                <TableCell>{staff.staffRank}</TableCell>
+                <TableCell>
                   <Button
                     type="submit"
                     variant="outlined"
@@ -90,13 +138,28 @@ const StaffEmployee = () => {
                   >
                     Update
                   </Button>
+                  {userCtx.staffRank === "manager" && (
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleDelete(staff._id)}
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        <TablePagination
+          component="div"
+          count={filteredStaffs.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Container>
-
       {showStaffModal && (
         <StaffModal
           staffName={selectedStaffName}

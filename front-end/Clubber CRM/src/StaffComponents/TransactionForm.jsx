@@ -87,7 +87,6 @@ const AddTransactionForm = () => {
     );
 
     if (res.ok) {
-      getTransactions();
       console.log("Transaction Added Successfully");
     } else {
       alert(JSON.stringify(res.data));

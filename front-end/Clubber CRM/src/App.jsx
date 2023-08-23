@@ -16,6 +16,7 @@ import CmAccountMgmt from "./CustomerPortal/CmAccountMgmt";
 import UserContext from "./context/user";
 import Registration from "./StaffComponents/Register";
 import Reservations from "./StaffComponents/Reservations";
+import ReservationForm from "./StaffComponents/ReservationForm";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -77,6 +78,7 @@ function App() {
                   <Route path="registration" element={<Registration />} />
                   <Route path="transaction" element={<TransactionForm />} />
                   <Route path="reservations" element={<Reservations />} />
+                  <Route path="reserve" element={<ReservationForm />} />
                 </Route>
               )}
             </Route>

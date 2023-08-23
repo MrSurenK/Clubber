@@ -25,6 +25,7 @@ import sketch from "../../assets/sketch.png";
 import Button from "@mui/material/Button";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
 const StaffLayout = (props) => {
   const userCtx = useContext(UserContext);
@@ -92,7 +93,11 @@ const StaffLayout = (props) => {
           <ToolBar>
             <img src="../../assets/Company_Name.png" alt="Company Logo" />
 
-            <Typography variant="h5">Staff Portal</Typography>
+            <Typography variant="h5">
+              {userCtx.staffRank === "manager"
+                ? "Manager Portal"
+                : "Staff Portal"}
+            </Typography>
 
             {userCtx.isMember && (
               <Button
@@ -171,6 +176,11 @@ const StaffLayout = (props) => {
                 text: "Reservation",
                 icon: <BookIcon sx={{ color: "white" }} />,
                 route: "reservations", //Will break, does not exist yet(Stetch goal)
+              },
+              {
+                text: "Add Reservation",
+                icon: <AddBoxIcon sx={{ color: "white" }} />,
+                route: "reserve",
               },
             ].map((item, index) => (
               <ListItem key={index} disablePadding>

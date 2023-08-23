@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useContext } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -32,9 +32,11 @@ const CmAccountMgmt = () => {
     const res = await fetchData("/auth/reset", "POST", data);
 
     if (res.ok) {
-      console.log("Reset Password successful", res.data);
+      // console.log("Reset Password successful", res.data);
+      alert(JSON.stringify(res.data));
     } else {
-      console.error("Reset Password failed:", res.data);
+      // console.error("Reset Password failed:", res.data);
+      alert(JSON.stringify(res.data));
     }
   };
 
