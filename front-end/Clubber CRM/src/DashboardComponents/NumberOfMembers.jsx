@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 
+
 const NumberOfMembers = () => {
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
@@ -51,8 +52,6 @@ const NumberOfMembers = () => {
     <div>
       Number of New Members
       <br />
-      <br />
-      {/* [Previous Month] | [Current Month] */}
       <br />
       {previousMonthMembers} | {currentMonthMembers}
     </div>

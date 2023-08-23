@@ -15,6 +15,7 @@ const MemberDisplay = () => {
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const [members, setMembers] = useState([]);
+
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [selectedMemberName, setSelectedMemberName] = useState("");
   const [selectedMemberId, setSelectedMemberId] = useState("");

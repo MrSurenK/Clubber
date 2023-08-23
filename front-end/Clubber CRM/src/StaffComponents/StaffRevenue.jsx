@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Container from "@mui/material/Container";
@@ -133,8 +132,6 @@ const StaffRevenue = () => {
           maxWidth="md"
           sx={{ textAlign: "center", marginBottom: "50vh" }}
         >
-          <Button>Add New Transaction</Button>
-
           <Typography variant="h5">Bar Tab</Typography>
 
           <input
