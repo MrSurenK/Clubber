@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
-
+import { Typography } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 
 const NumberOfMembers = () => {
   const fetchData = useFetch();
@@ -50,10 +52,28 @@ const NumberOfMembers = () => {
 
   return (
     <div>
-      Number of New Members
-      <br />
-      <br />
-      {previousMonthMembers} | {currentMonthMembers}
+      <Typography variant="h6" align="center" fontWeight="bold">
+        Number of New Members
+      </Typography>
+      <br></br>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Typography variant="h1" align="center">
+            {previousMonthMembers}
+          </Typography>
+          <Typography variant="h6" align="center">
+            Previous Month
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="h1" align="center">
+            {currentMonthMembers}
+          </Typography>
+          <Typography variant="h6" align="center">
+            Current Month
+          </Typography>
+        </Grid>
+      </Grid>
     </div>
   );
 };

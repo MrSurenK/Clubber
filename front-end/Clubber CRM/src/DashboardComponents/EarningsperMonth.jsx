@@ -125,7 +125,9 @@ const EarningsperMonth = () => {
 
   return (
     <div>
-      <Typography variant="h6">Total Earnings per Month</Typography>
+      <Typography variant="h6" align="center" fontWeight="bold">
+        Total Earnings per Month
+      </Typography>
       <canvas ref={chartRef} />
     </div>
   );

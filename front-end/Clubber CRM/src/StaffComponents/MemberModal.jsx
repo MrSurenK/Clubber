@@ -3,8 +3,8 @@ import { useState, useEffect, useContext, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
@@ -65,18 +65,13 @@ const Overlay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={`${styles.modal} container`}>
-        <Container component="main" maxWidth="xs">
-          <Typography component="h1" variant="h6">
+        <Container>
+          <Typography variant="h5" fontWeight="bold">
             Update User
           </Typography>
           <br />
-          <Typography component="h1" variant="h6">
-            {props.memberName}
-          </Typography>
-          <br />
-          <Typography component="h1" variant="h6">
-            {props.memberId}
-          </Typography>
+          <Typography>Member Name: {props.memberName}</Typography>
+          <Typography>Member ID: {props.memberId}</Typography>
           <br />
           <Box>
             <TextField
@@ -88,6 +83,23 @@ const Overlay = (props) => {
               autoComplete="name"
               inputRef={nameRef}
             />
+            <br />
+            <br />
+            <TextField
+              required
+              fullWidth
+              id="formMemberRank"
+              label="Member Rank"
+              name="Member Rank"
+              select
+              inputRef={memberRankRef}
+            >
+              {displayMemberRank.map((rank) => (
+                <MenuItem key={rank.memberRank} value={rank.memberRank}>
+                  {rank.memberRank}
+                </MenuItem>
+              ))}
+            </TextField>
             <br />
             <br />
             <TextField
@@ -121,23 +133,6 @@ const Overlay = (props) => {
             <TextField
               required
               fullWidth
-              id="formMemberRank"
-              label="Member Rank"
-              name="Member Rank"
-              select
-              inputRef={memberRankRef}
-            >
-              {displayMemberRank.map((rank) => (
-                <MenuItem key={rank.memberRank} value={rank.memberRank}>
-                  {rank.memberRank}
-                </MenuItem>
-              ))}
-            </TextField>
-            <br />
-            <br />
-            <TextField
-              required
-              fullWidth
               id="formBarTabActive"
               label="BarTab Active"
               name="BarTab Active"
@@ -153,16 +148,15 @@ const Overlay = (props) => {
               type="button"
               fullWidth
               variant="contained"
-              color="primary"
               onClick={() => updateMember(props.memberId)}
             >
               Update
             </Button>
+            <br /> <br />
             <Button
               type="button"
               fullWidth
-              variant="contained"
-              color="secondary"
+              variant="outlined"
               onClick={() => props.setShowMemberModal(false)}
             >
               Cancel

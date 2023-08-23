@@ -50,16 +50,16 @@ const TopSpenders = () => {
 
   return (
     <div>
-      <Typography variant="h5">Top Spenders</Typography>
-      <Typography variant="h6">
-        <ol>
-          {topSpendingMembers.map((member, index) => (
-            <li key={member.memberId}>
-              {member.name} ${member.spendAmount}
-            </li>
-          ))}
-        </ol>
+      <Typography variant="h6" align="center" fontWeight="bold">
+        Top Spenders
       </Typography>
+      <br />
+      <br />
+      {topSpendingMembers.map((member, index) => (
+        <Typography variant="h6" align="center" key={member.memberId}>
+          {index + 1}. {member.name} ${member.spendAmount}
+        </Typography>
+      ))}
     </div>
   );
 };

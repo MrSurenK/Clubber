@@ -3,7 +3,6 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 
 import {
@@ -127,11 +126,8 @@ const StaffRevenue = () => {
 
   return (
     <>
-      <div>
-        <Container
-          maxWidth="md"
-          sx={{ textAlign: "center", marginBottom: "50vh" }}
-        >
+      <div style={{ marginLeft: "20px" }}>
+        <Container sx={{ textAlign: "left", marginBottom: "20px" }}>
           <Typography variant="h5">Bar Tab</Typography>
 
           <input
@@ -191,14 +187,13 @@ const StaffRevenue = () => {
                       </TableCell>
                       <TableCell>{member ? member.name : ""}</TableCell>
                       <TableCell>
-                        <TableCell>
-                          <Checkbox
-                            defaultChecked={transaction.paymentStatus}
-                            onChange={() =>
-                              handlePaymentStatusChange(transaction)
-                            }
-                          />
-                        </TableCell>
+                        <Checkbox
+                          size="small"
+                          defaultChecked={transaction.paymentStatus}
+                          onChange={() =>
+                            handlePaymentStatusChange(transaction)
+                          }
+                        />
                       </TableCell>
                     </TableRow>
                   );

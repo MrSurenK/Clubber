@@ -130,7 +130,9 @@ const ReceivablesperMonth = () => {
 
   return (
     <div>
-      <Typography variant="h6">Aging Receivables</Typography>
+      <Typography variant="h6" align="center" fontWeight="bold">
+        Aging Receivables
+      </Typography>
       <canvas ref={chartRef} />
     </div>
   );

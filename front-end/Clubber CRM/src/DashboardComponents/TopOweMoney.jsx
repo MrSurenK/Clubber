@@ -56,16 +56,16 @@ const TopOweMoney = () => {
 
   return (
     <div>
-      <Typography variant="h5">Top O$P$</Typography>
-      <Typography variant="h6">
-        <ol>
-          {topOweingMembers.map((member, index) => (
-            <li key={member.memberId}>
-              {member.name} ${member.spendAmount}
-            </li>
-          ))}
-        </ol>
+      <Typography variant="h6" align="center" fontWeight="bold">
+        Top O$P$
       </Typography>
+      <br />
+      <br />
+      {topOweingMembers.map((member, index) => (
+        <Typography variant="h6" align="center" key={member.memberId}>
+          {index + 1}. {member.name} ${member.spendAmount}
+        </Typography>
+      ))}
     </div>
   );
 };
