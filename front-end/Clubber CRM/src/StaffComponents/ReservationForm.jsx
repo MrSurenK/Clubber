@@ -134,6 +134,7 @@ const ReservationForm = () => {
         <br />
         <Typography>Time</Typography>
         <TextField
+          label="HH:MM"
           value={time}
           onChange={(e) => {
             setTime(e.target.value);
