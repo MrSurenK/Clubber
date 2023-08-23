@@ -46,6 +46,11 @@ const Reservations = () => {
     console.log(reservation);
   }, []);
 
+  useEffect(() => {
+    console.log(reservation[0].reservationId);
+    console.log(reservation[0].memberId);
+  });
+
   // const handleChangePage = (event, newPage) => {
   //   setPage(newPage);
   // };
@@ -78,7 +83,7 @@ const Reservations = () => {
           label="Search Reservation..."
           variant="outlined"
           sx={{ mb: 5, width: "40%" }}
-          onChange={(e) => setSearch(e.target.value.toLowerCase)}
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
         />
         <TableContainer component={Paper}>
           <Table>
