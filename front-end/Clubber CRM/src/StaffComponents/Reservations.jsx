@@ -5,7 +5,6 @@ import ReservationModal from "./ReservationModal";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import { TextField } from "@mui/material";
 import {
