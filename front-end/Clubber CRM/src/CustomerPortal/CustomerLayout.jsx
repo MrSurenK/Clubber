@@ -33,6 +33,8 @@ const CustomerLayout = (props) => {
   const [nameDisplay, setNameDisplay] = useState("");
   const [emailDisplay, setEmailDisplay] = useState("");
 
+  const firstLetter = nameDisplay ? nameDisplay.charAt(0).toUpperCase() : "";
+
   const LayoutTheme = createTheme({
     typography: {
       fontFamily: "Exo,Roboto",
@@ -104,7 +106,7 @@ const CustomerLayout = (props) => {
 
             {/* Right side */}
             <Stack direction="row" alignItems="center" spacing={2}>
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>KS</Avatar>
+              <Avatar sx={{ bgcolor: deepPurple[500] }}>{firstLetter}</Avatar>
               <Stack direction="column" alignItems="flex-end">
                 <Typography variant="h6" marginRight={"auto"} paddingTop={2}>
                   {nameDisplay}
