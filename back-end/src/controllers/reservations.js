@@ -1,5 +1,6 @@
 const Reservations = require("../models/Reservations");
 const ReservationsModel = require("../models/Reservations");
+const { v4: uuidv4 } = require("uuid");
 
 //SEED - seed reservations
 const seedReservations = async (req, res) => {
@@ -49,7 +50,7 @@ const getAllReservations = async (req, res) => {
 const addNewReservations = async (req, res) => {
   try {
     const newReservation = {
-      reservationId: req.body.reservationId,
+      reservationId: "REV-" + uuidv4(),
       memberId: req.body.memberId,
       reservationDate: req.body.reservationDate,
       reservationTime: req.body.reservationTime,
