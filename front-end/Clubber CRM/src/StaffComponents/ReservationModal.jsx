@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -14,8 +14,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 const Overlay = (props) => {
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
-  const reservationIdRef = useRef();
-  const memberIdRef = useRef();
   const reservationDateRef = useRef();
   const reservationTimeRef = useRef();
   const reservationPaxRef = useRef();

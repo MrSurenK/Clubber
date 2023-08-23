@@ -7,24 +7,16 @@ import {
   TextField,
   Button,
   FormControl,
-  FormControlLabel,
-  InputLabel,
   Container,
   Typography,
-  Checkbox,
-  RadioGroup,
-  Radio,
 } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
 import { DatePicker, DateField } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Box from "@mui/material/Box";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 const ReservationForm = () => {
   const userCtx = useContext(UserContext);
   const [reservation, setReservation] = useState({
-    // reservationId: "REV-" + uuidv4(),
     reservationDate: new Date(),
     memberId: "",
   });
@@ -62,7 +54,6 @@ const ReservationForm = () => {
       "/reservations",
       "PUT",
       {
-        // reservationId: reservation.reservationId,
         memberId: reservation.memberId,
         reservationDate: selectedDate,
         reservationTime: time,
@@ -124,13 +115,6 @@ const ReservationForm = () => {
             />
           </DemoContainer>
         </LocalizationProvider>
-
-        {/* <TextField
-          value={date}
-          onChange={(e) => {
-            setDate(e.target.value);
-          }}
-        ></TextField> */}
         <br />
         <Typography>Time</Typography>
         <TextField
