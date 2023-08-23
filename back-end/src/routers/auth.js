@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const checkValid = require("../middleware/checkValid");
+const {
+  validateRegistrationData,
+  validateLoginData,
+  validateRefreshData,
+  validateResetPassworddata,
+} = require("../validators/auth");
 
 const {
   register,
@@ -10,9 +16,9 @@ const {
   resetPassword,
 } = require("../controllers/auth");
 
-router.put("/register", checkValid, register);
-router.post("/login", checkValid, login);
-router.post("/refresh", checkValid, refresh);
-router.post("/reset", checkValid, resetPassword);
+router.put("/register", validateRegistrationData, checkValid, register);
+router.post("/login", validateLoginData, checkValid, login);
+router.post("/refresh", validateRefreshData, checkValid, refresh);
+router.post("/reset", validateResetPassworddata, checkValid, resetPassword);
 
 module.exports = router;
