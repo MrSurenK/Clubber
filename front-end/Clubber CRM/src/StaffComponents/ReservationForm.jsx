@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DatePicker, DateField } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Box from "@mui/material/Box";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
 const ReservationForm = () => {
   const userCtx = useContext(UserContext);
@@ -32,7 +33,7 @@ const ReservationForm = () => {
   const [date, setDate] = useState([]);
   const [time, setTime] = useState([]);
   const [pax, setPax] = useState([]);
-  const [value, setValue] = useState(dayjs("2022-04-17"));
+  const [value, setValue] = useState(null);
   const [status, setStatus] = useState([]);
 
   const fetchData = useFetch();
@@ -56,13 +57,14 @@ const ReservationForm = () => {
 
   // API PUT Call
   const addReservation = async () => {
+    const selectedDate = value ? dayjs(value).format("YYYY-MM-DD") : null; // Convert selected date to string
     const res = await fetchData(
       "/reservations",
       "PUT",
       {
         // reservationId: reservation.reservationId,
         memberId: reservation.memberId,
-        reservationDate: date,
+        reservationDate: selectedDate,
         reservationTime: time,
         reservationPax: pax,
         reservationStatus: "Pending",
@@ -114,12 +116,21 @@ const ReservationForm = () => {
       </datalist>
       <FormControl fullWidth>
         <Typography>Date</Typography>
-        <TextField
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker
+              value={value}
+              onChange={(newValue) => setValue(newValue)}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+
+        {/* <TextField
           value={date}
           onChange={(e) => {
             setDate(e.target.value);
           }}
-        ></TextField>
+        ></TextField> */}
         <br />
         <Typography>Time</Typography>
         <TextField
