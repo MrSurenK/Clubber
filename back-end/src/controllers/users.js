@@ -219,11 +219,17 @@ const patchStaff = async (req, res) => {
 
 const delUser = async (req, res) => {
   try {
+    if (req.body.staffRank !== "manager") {
+      return res
+        .status(403)
+        .json({ status: "error", message: "Not authorized" });
+    }
+
     await UserModel.findByIdAndDelete(req.params.id);
     res.json({ message: "User deleted" });
   } catch (error) {
     console.log(error.message);
-    res.json({ status: "error", message: error.message });
+    res.status(500).json({ status: "error", message: "Internal Server Error" });
   }
 };
 

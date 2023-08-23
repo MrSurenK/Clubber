@@ -46,6 +46,28 @@ const MemberDisplay = () => {
     getMembers();
   }, []);
 
+  const handleDelete = async (id) => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+
+    if (shouldDelete) {
+      const res = await fetchData(
+        "/users/all/" + id,
+        "DELETE",
+        { staffRank: userCtx.staffRank },
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        getMembers();
+      } else {
+        alert(JSON.stringify(res.data));
+        console.log(res.data);
+      }
+    }
+  };
+
   // search query
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -119,7 +141,14 @@ const MemberDisplay = () => {
                   >
                     Update
                   </Button>
-                  <Button>Delete</Button>
+                  {userCtx.staffRank === "manager" && (
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleDelete(member._id)}
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
