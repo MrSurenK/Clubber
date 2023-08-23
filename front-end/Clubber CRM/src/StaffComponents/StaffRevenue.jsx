@@ -3,7 +3,6 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 
 import {
@@ -21,10 +20,6 @@ const StaffRevenue = () => {
   const [products, setProducts] = useState([]);
   const [staff, setStaff] = useState([]);
   const [members, setMembers] = useState([]);
-
-  // for pagination
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const fetchData = useFetch();
 
@@ -100,16 +95,6 @@ const StaffRevenue = () => {
     getTransactions();
   }, []);
 
-  // pagination
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 5));
-    setPage(0);
-  };
-
   // search query
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -125,13 +110,30 @@ const StaffRevenue = () => {
     return matchesTransactionId || matchesMemberName;
   });
 
+  // Pagination state
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(event.target.value, 5);
+    setPage(0);
+  };
+
+  // Calculate the range of transactions to display based on pagination
+  const startIndex = page * rowsPerPage;
+  const endIndex = Math.min(
+    startIndex + rowsPerPage,
+    filteredTransactions.length
+  );
+
   return (
     <>
-      <div>
-        <Container
-          maxWidth="md"
-          sx={{ textAlign: "center", marginBottom: "50vh" }}
-        >
+      <div style={{ marginLeft: "20px" }}>
+        <Container sx={{ textAlign: "left", marginBottom: "20px" }}>
           <Typography variant="h5">Bar Tab</Typography>
 
           <input
@@ -158,7 +160,7 @@ const StaffRevenue = () => {
             </TableHead>
             <TableBody>
               {filteredTransactions
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .slice(startIndex, endIndex)
                 .map((transaction) => {
                   const product = products.find(
                     (p) => p.productId === transaction.productId
@@ -191,14 +193,13 @@ const StaffRevenue = () => {
                       </TableCell>
                       <TableCell>{member ? member.name : ""}</TableCell>
                       <TableCell>
-                        <TableCell>
-                          <Checkbox
-                            defaultChecked={transaction.paymentStatus}
-                            onChange={() =>
-                              handlePaymentStatusChange(transaction)
-                            }
-                          />
-                        </TableCell>
+                        <Checkbox
+                          size="small"
+                          defaultChecked={transaction.paymentStatus}
+                          onChange={() =>
+                            handlePaymentStatusChange(transaction)
+                          }
+                        />
                       </TableCell>
                     </TableRow>
                   );
@@ -206,9 +207,9 @@ const StaffRevenue = () => {
             </TableBody>
           </Table>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 50]}
+            rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={transactions.length}
+            count={filteredTransactions.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

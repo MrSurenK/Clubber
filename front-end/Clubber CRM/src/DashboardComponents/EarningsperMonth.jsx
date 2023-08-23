@@ -13,36 +13,66 @@ const EarningsperMonth = () => {
 
   const chartRef = useRef();
 
-  // GET for all transactions
-  const getTransactions = async () => {
-    const res = await fetchData(
-      "/transactions",
-      "GET",
-      undefined,
-      userCtx.accessToken
-    );
+  const fetchDataAndRenderChart = async () => {
+    try {
+      // Fetch transactions and products using Promise.all
+      const [transactionsResponse, productsResponse] = await Promise.all([
+        fetchData("/transactions", "GET", undefined, userCtx.accessToken),
+        fetchData("/products", "GET", undefined, userCtx.accessToken),
+      ]);
 
-    if (res.ok) {
-      setTransactions(res.data);
-      // Fetch product data
-      const productRes = await fetchData(
-        "/products",
-        "GET",
-        undefined,
-        userCtx.accessToken
-      );
-      if (productRes.ok) {
-        setProducts(productRes.data); // Assuming products are stored in state using `setProducts`
+      if (transactionsResponse.ok) {
+        setTransactions(transactionsResponse.data);
+      } else {
+        console.error(
+          "Error fetching transactions:",
+          transactionsResponse.data
+        );
       }
-    } else {
-      alert(JSON.stringify(res.data));
-      console.log(res.data);
+
+      if (productsResponse.ok) {
+        setProducts(productsResponse.data);
+      } else {
+        console.error("Error fetching products:", productsResponse.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    getTransactions();
+    fetchDataAndRenderChart();
   }, []);
+
+  useEffect(() => {
+    if (transactions.length > 0) {
+      // Create the Chart instance
+      if (chartRef.current) {
+        const ctx = chartRef.current.getContext("2d");
+
+        // Destroy the previous Chart instance, if it exists
+        if (chartRef.current.chart) {
+          chartRef.current.chart.destroy();
+        }
+
+        const monthlyTotals = calculateMonthlyTotals();
+        const chartData = formatChartData(monthlyTotals);
+
+        // Create a new Chart instance
+        chartRef.current.chart = new Chart(ctx, {
+          type: "bar",
+          data: chartData,
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+    }
+  }, [transactions]);
 
   const calculateMonthlyTotals = () => {
     const currentDate = new Date(); // Replace this with your actual date handling logic
@@ -92,39 +122,12 @@ const EarningsperMonth = () => {
       ],
     };
   };
-  useEffect(() => {
-    // getTransactions();
-
-    // Create the Chart instance
-    if (chartRef.current) {
-      const ctx = chartRef.current.getContext("2d");
-
-      // Destroy the previous Chart instance, if it exists
-      if (chartRef.current.chart) {
-        chartRef.current.chart.destroy();
-      }
-
-      const monthlyTotals = calculateMonthlyTotals();
-      const chartData = formatChartData(monthlyTotals);
-
-      // Create a new Chart instance
-      chartRef.current.chart = new Chart(ctx, {
-        type: "bar",
-        data: chartData,
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-    }
-  }, [transactions]);
 
   return (
     <div>
-      <Typography variant="h6">Total Earnings per Month</Typography>
+      <Typography variant="h6" align="center" fontWeight="bold">
+        Total Earnings per Month
+      </Typography>
       <canvas ref={chartRef} />
     </div>
   );

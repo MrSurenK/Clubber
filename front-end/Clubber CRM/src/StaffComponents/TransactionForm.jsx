@@ -173,7 +173,7 @@ const AddTransactionForm = () => {
       <Typography>For Staff Use Only</Typography>
       <Typography style={{ fontSize: "12px" }} value={userCtx.staffId}>
         Staff ID: {userCtx.staffId}
-      </Typography>{" "}
+      </Typography>
       <Typography
         style={{ fontSize: "12px" }}
         value={transaction.transactionDate.toISOString()}

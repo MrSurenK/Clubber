@@ -1,15 +1,21 @@
 import { useState, useContext, useEffect } from "react";
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import StaffModal from "./StaffModal";
+
+import Container from "@mui/material/Container";
+import {
+  Button,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TablePagination,
+  Typography,
+} from "@mui/material";
 
 const StaffEmployee = () => {
   const userCtx = useContext(UserContext);
@@ -39,27 +45,59 @@ const StaffEmployee = () => {
     getStaff();
   }, []);
 
+  // search query
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredStaffs = staffs.filter((staff) => {
+    const lowerSearchQuery = searchQuery.toLowerCase();
+    return (
+      staff.name.toLowerCase().includes(lowerSearchQuery) ||
+      staff.staffId.toLowerCase().includes(lowerSearchQuery)
+    );
+  });
+
+  // Pagination state
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  // Calculate the range of staff members to display based on pagination
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <div style={{ marginLeft: "20px" }}>
+      <Container sx={{ textAlign: "left", marginBottom: "20px" }}>
+        <Typography variant="h5">Staff Database</Typography>
+        <input
+          type="text"
+          placeholder="Search by Name or Staff ID"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Email</TableCell>
-              <TableCell align="right">isActive</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Created At</TableCell>
-              <TableCell align="right">Staff Id</TableCell>
-              <TableCell align="right">Staff Rank</TableCell>
-              <TableCell align="right">Edit</TableCell>
+              <TableCell>isActive</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Staff Id</TableCell>
+              <TableCell>Staff Rank</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {staffs.map((staff) => (
-              <TableRow
-                key={staff._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+            {filteredStaffs.slice(startIndex, endIndex).map((staff) => (
+              <TableRow key={staff._id}>
                 <TableCell component="th" scope="row">
                   {staff.email}
                 </TableCell>
@@ -71,22 +109,32 @@ const StaffEmployee = () => {
                 <TableCell align="right">{staff.staffId}</TableCell>
                 <TableCell align="right">{staff.staffRank}</TableCell>
                 <TableCell align="right">
-                  <button
+                  <Button
+                    type="submit"
+                    variant="outlined"
                     onClick={() => {
                       setSelectedStaffName(staff.name);
                       setSelectedStaffId(staff.staffId);
                       setShowStaffModal(true);
                     }}
                   >
-                    Edit Symbol
-                  </button>
+                    Update
+                  </Button>
+                  <Button>DELETE</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-
+        <TablePagination
+          component="div"
+          count={filteredStaffs.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Container>
       {showStaffModal && (
         <StaffModal
           staffName={selectedStaffName}
@@ -95,7 +143,7 @@ const StaffEmployee = () => {
           setShowStaffModal={setShowStaffModal}
         />
       )}
-    </>
+    </div>
   );
 };
 

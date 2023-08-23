@@ -61,18 +61,13 @@ const Overlay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={`${styles.modal} container`}>
-        <Container component="main" maxWidth="xs">
-          <Typography component="h1" variant="h6">
+        <Container>
+          <Typography variant="h5" fontWeight="bold">
             Update User
           </Typography>
           <br />
-          <Typography component="h1" variant="h6">
-            {props.staffName}
-          </Typography>
-          <br />
-          <Typography component="h1" variant="h6">
-            {props.staffId}
-          </Typography>
+          <Typography>Staff Name: {props.staffName}</Typography>
+          <Typography>Staff ID: {props.staffId} </Typography>
           <br />
           <Box>
             <TextField
@@ -136,16 +131,15 @@ const Overlay = (props) => {
               type="button"
               fullWidth
               variant="contained"
-              color="primary"
               onClick={() => updateStaff(props.staffId)}
             >
               Update
             </Button>
+            <br /> <br />
             <Button
               type="button"
               fullWidth
-              variant="contained"
-              color="secondary"
+              variant="outlined"
               onClick={() => props.setShowStaffModal(false)}
             >
               Cancel

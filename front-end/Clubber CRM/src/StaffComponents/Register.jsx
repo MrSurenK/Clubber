@@ -71,10 +71,8 @@ export default function SignUp() {
       setFormMemberRank("");
 
       console.log("Registration successful:", res.data);
-      // You can add logic here to navigate to a success page or perform other actions.
     } else {
       console.error("Registration failed:", res.data);
-      // You can display an error message to the user or perform other error handling.
     }
   };
 
@@ -125,7 +123,7 @@ export default function SignUp() {
           onChange={(e) => {
             setFormPassword(e.target.value);
           }}
-        />{" "}
+        />
         <br />
         <br />
         {/* New drop-down inputs */}
@@ -143,7 +141,7 @@ export default function SignUp() {
         >
           <MenuItem value={true}>Yes</MenuItem>
           <MenuItem value={false}>No</MenuItem>
-        </TextField>{" "}
+        </TextField>
         <br />
         <br />
         <TextField
@@ -163,7 +161,7 @@ export default function SignUp() {
               {rank.staffRank}
             </MenuItem>
           ))}
-        </TextField>{" "}
+        </TextField>
         <br />
         <br />
         <TextField
@@ -180,7 +178,7 @@ export default function SignUp() {
         >
           <MenuItem value={true}>Yes</MenuItem>
           <MenuItem value={false}>No</MenuItem>
-        </TextField>{" "}
+        </TextField>
         <br />
         <br />
         <TextField
@@ -198,7 +196,7 @@ export default function SignUp() {
               {rank.memberRank}
             </MenuItem>
           ))}
-        </TextField>{" "}
+        </TextField>
         <br />
         <br />
         <Button

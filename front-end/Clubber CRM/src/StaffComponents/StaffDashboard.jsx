@@ -11,9 +11,9 @@ import NumberOfMembers from "../DashboardComponents/NumberOfMembers";
 import TopOweMoney from "../DashboardComponents/TopOweMoney";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f2f2f2",
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: theme.spacing(),
   color: theme.palette.text.secondary,
 }));
 
@@ -30,11 +30,11 @@ const StaffDashboard = () => {
               <EarningsperMonth></EarningsperMonth>
             </Item>
           </Grid>
-          {/* <Grid item xs={6}>
-          <Item>
-            <ReceivablesperMonth></ReceivablesperMonth>
-          </Item>
-        </Grid> */}
+          <Grid item xs={6}>
+            <Item>
+              <ReceivablesperMonth></ReceivablesperMonth>
+            </Item>
+          </Grid>
         </Grid>
         <br />
         <br />

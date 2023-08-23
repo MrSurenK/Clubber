@@ -1,15 +1,21 @@
 import { useState, useContext, useEffect } from "react";
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import MemberModal from "./MemberModal";
+
+import Container from "@mui/material/Container";
+import {
+  Button,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TablePagination,
+  Typography,
+} from "@mui/material";
 
 const MemberDisplay = () => {
   const userCtx = useContext(UserContext);
@@ -40,58 +46,94 @@ const MemberDisplay = () => {
     getMembers();
   }, []);
 
+  // search query
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredMembers = members.filter((member) => {
+    const lowerSearchQuery = searchQuery.toLowerCase();
+    return (
+      member.name.toLowerCase().includes(lowerSearchQuery) ||
+      member.memberId.toLowerCase().includes(lowerSearchQuery)
+    );
+  });
+
+  // Pagination state
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  // Calculate the range of members to display based on pagination
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <div style={{ marginLeft: "20px" }}>
+      <Container sx={{ textAlign: "left", marginBottom: "20px" }}>
+        <Typography variant="h5">Member Database</Typography>
+        <input
+          type="text"
+          placeholder="Search by Name or Member ID"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Email</TableCell>
-              <TableCell align="right">isActive</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Created At</TableCell>
-              <TableCell align="right">Member Id</TableCell>
-              <TableCell align="right">Member Rank</TableCell>
-              <TableCell align="right">BarTab Active</TableCell>
-              <TableCell align="right">Edit</TableCell>
+              <TableCell>isActive</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Member Id</TableCell>
+              <TableCell>Member Rank</TableCell>
+              <TableCell>BarTab Active</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {members.map((member) => (
-              <TableRow
-                key={member._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {member.email}
-                </TableCell>
-                <TableCell align="right">
-                  {member.isActive ? "true" : "false"}
-                </TableCell>
-                <TableCell align="right">{member.name}</TableCell>
-                <TableCell align="right">{member.created_at}</TableCell>
-                <TableCell align="right">{member.memberId}</TableCell>
-                <TableCell align="right">{member.memberRank}</TableCell>
-                <TableCell align="right">
-                  {member.barTabActive ? "true" : "false"}
-                </TableCell>
-                <TableCell align="right">
-                  <button
+            {filteredMembers.slice(startIndex, endIndex).map((member) => (
+              <TableRow key={member._id}>
+                <TableCell>{member.email}</TableCell>
+                <TableCell>{member.isActive ? "true" : "false"}</TableCell>
+                <TableCell>{member.name}</TableCell>
+                <TableCell>{member.created_at}</TableCell>
+                <TableCell>{member.memberId}</TableCell>
+                <TableCell>{member.memberRank}</TableCell>
+                <TableCell>{member.barTabActive ? "true" : "false"}</TableCell>
+                <TableCell>
+                  <Button
+                    type="submit"
+                    variant="outlined"
                     onClick={() => {
                       setSelectedMemberName(member.name);
                       setSelectedMemberId(member.memberId);
                       setShowMemberModal(true);
                     }}
                   >
-                    Edit Symbol
-                  </button>
+                    Update
+                  </Button>
+                  <Button>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-
+        <TablePagination
+          component="div"
+          count={filteredMembers.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Container>
       {showMemberModal && (
         <MemberModal
           memberName={selectedMemberName}
@@ -100,7 +142,7 @@ const MemberDisplay = () => {
           setShowMemberModal={setShowMemberModal}
         />
       )}
-    </>
+    </div>
   );
 };
 

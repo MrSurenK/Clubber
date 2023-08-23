@@ -25,6 +25,7 @@ function App() {
   const [isMember, setIsMember] = useState(false);
   const [memberId, setMemberId] = useState("");
   const [memberRank, setMemberRank] = useState("");
+  const [userId, setUserId] = useState("");
 
   return (
     <>
@@ -44,6 +45,8 @@ function App() {
           setMemberId,
           memberRank,
           setMemberRank,
+          userId,
+          setUserId,
         }}
       >
         <BrowserRouter>
@@ -53,7 +56,10 @@ function App() {
 
             <Route path="/user" element={<User />}>
               {isMember === true && (
-                <Route path="customer" element={<CustomerPortal />}>
+                <Route
+                  path="customer"
+                  element={<CustomerPortal memberId={memberId} />}
+                >
                   <Route path="dashboard" element={<CustomerDashboard />} />
                   <Route path="account" element={<CmAccountMgmt />} />
                 </Route>
