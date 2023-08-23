@@ -120,7 +120,7 @@ const StaffEmployee = () => {
                   >
                     Update
                   </Button>
-                  <Buttons>DELETE</Buttons>
+                  <Button>DELETE</Button>
                 </TableCell>
               </TableRow>
             ))}
