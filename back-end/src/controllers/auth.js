@@ -63,7 +63,7 @@ const register = async (req, res) => {
       name: req.body.name,
       isStaff: req.body.isStaff,
       staffId: newStaffId,
-      staffRank: req.body.staffRank || "minion",
+      staffRank: req.body.staffRank || null,
       isMember: req.body.isMember,
       memberId: newMemberId,
       memberRank: req.body.memberRank || null,
@@ -95,6 +95,7 @@ const login = async (req, res) => {
       return res.status(401).json({ status: "error", msg: "login failed" });
     }
     const claims = {
+      id: auth._id,
       email: auth.email,
       isStaff: auth.isStaff,
       staffId: auth.staffId,
@@ -122,6 +123,7 @@ const refresh = (req, res) => {
   try {
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
     const claims = {
+      id: decoded._id,
       email: decoded.email,
       isStaff: decoded.isStaff,
       staffId: decoded.staffId,
@@ -141,4 +143,26 @@ const refresh = (req, res) => {
   }
 };
 
-module.exports = { register, login, refresh };
+const resetPassword = async (req, res) => {
+  try {
+    const auth = await UserModel.findOne({ _id: req.body.id });
+    if (!auth) {
+      console.log("user not found");
+      return res.status(400).json({ status: "error", msg: "not authorised" });
+    }
+    const result = await bcrypt.compare(req.body.currentPassword, auth.hash);
+    if (!result) {
+      console.log("password error");
+      return res.status(401).json({ status: "error", msg: "password error" });
+    }
+    const newHash = await bcrypt.hash(req.body.newPassword, 12);
+    auth.hash = newHash;
+    await auth.save();
+    res.json({ status: "success", msg: "Password reset successfully" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ status: "error", msg: "Password reset failed" });
+  }
+};
+
+module.exports = { register, login, refresh, resetPassword };
