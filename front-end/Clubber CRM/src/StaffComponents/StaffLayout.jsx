@@ -25,6 +25,7 @@ import sketch from "../../assets/sketch.png";
 import Button from "@mui/material/Button";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
 const StaffLayout = (props) => {
   const userCtx = useContext(UserContext);
@@ -171,6 +172,11 @@ const StaffLayout = (props) => {
                 text: "Reservation",
                 icon: <BookIcon sx={{ color: "white" }} />,
                 route: "reservations", //Will break, does not exist yet(Stetch goal)
+              },
+              {
+                text: "Add Reservation",
+                icon: <AddBoxIcon sx={{ color: "white" }} />,
+                route: "reserve",
               },
             ].map((item, index) => (
               <ListItem key={index} disablePadding>
