@@ -53,7 +53,10 @@ function App() {
 
             <Route path="/user" element={<User />}>
               {isMember === true && (
-                <Route path="customer" element={<CustomerPortal />}>
+                <Route
+                  path="customer"
+                  element={<CustomerPortal memberId={memberId} />}
+                >
                   <Route path="dashboard" element={<CustomerDashboard />} />
                   <Route path="account" element={<CmAccountMgmt />} />
                 </Route>
