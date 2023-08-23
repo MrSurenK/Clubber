@@ -157,8 +157,6 @@ const getTotalAmountSpentbyMemberId = async (req, res) => {
       memberId: memberId,
     });
 
-    console.log(memberId);
-
     // Calculate the total product amount for these transactions
     let totalAmount = 0;
     for (const transaction of transactions) {
