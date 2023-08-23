@@ -140,35 +140,9 @@ const CustomerLayout = (props) => {
                 route: "dashboard",
               },
               {
-                text: "Add New User",
-                icon: <BookIcon sx={{ color: "white" }} />,
-                route: "registration",
-              },
-              {
-                text: "Members",
+                text: "Account Mangement",
                 icon: <GroupIcon sx={{ color: "white" }} />,
-                route: "members",
-              },
-
-              {
-                text: "Staff",
-                icon: <EngineeringIcon sx={{ color: "white" }} />,
-                route: "employee",
-              },
-              {
-                text: "Bar Tab",
-                icon: <AttachMoneyIcon sx={{ color: "white" }} />,
-                route: "revenue",
-              },
-              {
-                text: "Add New Transaction",
-                icon: <ReceiptIcon sx={{ color: "white" }} />,
-                route: "transaction",
-              },
-              {
-                text: "Reservation",
-                icon: <BookIcon sx={{ color: "white" }} />,
-                route: "reservations", //Will break, does not exist yet(Stetch goal)
+                route: "account",
               },
             ].map((item, index) => (
               <ListItem key={index} disablePadding>
