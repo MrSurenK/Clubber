@@ -98,17 +98,13 @@ const StaffEmployee = () => {
           <TableBody>
             {filteredStaffs.slice(startIndex, endIndex).map((staff) => (
               <TableRow key={staff._id}>
-                <TableCell component="th" scope="row">
-                  {staff.email}
-                </TableCell>
-                <TableCell align="right">
-                  {staff.isActive ? "true" : "false"}
-                </TableCell>
-                <TableCell align="right">{staff.name}</TableCell>
-                <TableCell align="right">{staff.created_at}</TableCell>
-                <TableCell align="right">{staff.staffId}</TableCell>
-                <TableCell align="right">{staff.staffRank}</TableCell>
-                <TableCell align="right">
+                <TableCell>{staff.email}</TableCell>
+                <TableCell>{staff.isActive ? "true" : "false"}</TableCell>
+                <TableCell>{staff.name}</TableCell>
+                <TableCell>{staff.created_at}</TableCell>
+                <TableCell>{staff.staffId}</TableCell>
+                <TableCell>{staff.staffRank}</TableCell>
+                <TableCell>
                   <Button
                     type="submit"
                     variant="outlined"

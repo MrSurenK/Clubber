@@ -1,25 +1,27 @@
 import React, { useEffect, useState, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import ReservationModal from "./ReservationModal";
+
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
-import { Paper } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
 import { TextField } from "@mui/material";
-import ReservationModal from "./ReservationModal";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TablePagination,
+} from "@mui/material";
 
 const Reservations = () => {
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const [reservations, setReservations] = useState([]);
-
+  const [members, setMembers] = useState([]);
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState("");
   const [selectedreservationId, setSelectedReservationId] = useState("");
@@ -28,6 +30,7 @@ const Reservations = () => {
   const [selectedPax, setSelectedPax] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
 
+  // GET for all reservations
   const getReservations = async () => {
     const res = await fetchData(
       "/reservations/",
@@ -38,6 +41,16 @@ const Reservations = () => {
 
     if (res.ok) {
       setReservations(res.data);
+      // Fetch member data
+      const memberRes = await fetchData(
+        "/users/member",
+        undefined,
+        undefined,
+        userCtx.accessToken
+      );
+      if (memberRes.ok) {
+        setMembers(memberRes.data); // Assuming members are stored in state using `setMembers`
+      }
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
@@ -49,61 +62,62 @@ const Reservations = () => {
   }, []);
 
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <div style={{ marginLeft: "20px" }}>
+      <Container sx={{ textAlign: "left", marginBottom: "20px" }}>
+        <Typography variant="h5">Reservations</Typography>
+
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="left">ReservationId</TableCell>
-              <TableCell align="left">Member Id</TableCell>
-              <TableCell align="left">Date</TableCell>
-              <TableCell align="left">Time</TableCell>
-              <TableCell align="right">Pax</TableCell>
-              <TableCell align="center">Reservation Status</TableCell>
-              <TableCell align="center">Edit</TableCell>
+              <TableCell>ReservationId</TableCell>
+              <TableCell>Member Id</TableCell>
+              <TableCell>Member Name</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Time</TableCell>
+              <TableCell>Pax</TableCell>
+              <TableCell>Reservation Status</TableCell>
+              <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {reservations.map((reservation) => (
-              <TableRow
-                key={reservation._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {reservation.reservationId}
-                </TableCell>
-                <TableCell align="left">{reservation.memberId}</TableCell>
-                <TableCell align="left">
-                  {reservation.reservationDate}
-                </TableCell>
-                <TableCell align="left">
-                  {reservation.reservationTime}
-                </TableCell>
-                <TableCell align="right">
-                  {reservation.reservationPax}
-                </TableCell>
-                <TableCell align="center">
-                  {reservation.reservationStatus}
-                </TableCell>
-                <TableCell align="center">
-                  <button
-                    onClick={() => {
-                      setSelectedDate(reservation.reservationDate);
-                      setSelectedTime(reservation.reservationTime);
-                      setSelectedPax(reservation.reservationPax);
-                      setSelectedStatus(reservation.reservationStatus);
-                      setSelectedReservationId(reservation.reservationId);
-                      setShowMemberModal(true);
-                    }}
-                  >
-                    Edit Symbol
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {reservations.map((reservation) => {
+              const member = members.find(
+                (m) => m.memberId === reservation.memberId
+              );
+              return (
+                <TableRow key={reservation._id}>
+                  <TableCell>{reservation.reservationId}</TableCell>
+                  <TableCell>{reservation.memberId}</TableCell>
+                  <TableCell>{member ? member.name : ""}</TableCell>
+                  <TableCell>{reservation.reservationDate}</TableCell>
+                  <TableCell>{reservation.reservationTime}</TableCell>
+                  <TableCell>{reservation.reservationPax}</TableCell>
+                  <TableCell align="center">
+                    {reservation.reservationStatus}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      type="submit"
+                      variant="outlined"
+                      onClick={() => {
+                        setSelectedMemberId(reservation.memberId);
+                        setSelectedDate(reservation.reservationDate);
+                        setSelectedTime(reservation.reservationTime);
+                        setSelectedPax(reservation.reservationPax);
+                        setSelectedStatus(reservation.reservationStatus);
+                        setSelectedReservationId(reservation.reservationId);
+                        setShowMemberModal(true);
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
-      </TableContainer>
+      </Container>
 
       {showMemberModal && (
         <ReservationModal
@@ -113,7 +127,7 @@ const Reservations = () => {
           setShowMemberModal={setShowMemberModal}
         />
       )}
-    </>
+    </div>
   );
 };
 
