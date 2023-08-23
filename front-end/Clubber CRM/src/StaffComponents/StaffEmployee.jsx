@@ -45,6 +45,28 @@ const StaffEmployee = () => {
     getStaff();
   }, []);
 
+  const handleDelete = async (id) => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+
+    if (shouldDelete) {
+      const res = await fetchData(
+        "/users/all/" + id,
+        "DELETE",
+        { staffRank: userCtx.staffRank },
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        getStaff();
+      } else {
+        alert(JSON.stringify(res.data));
+        console.log(res.data);
+      }
+    }
+  };
+
   // search query
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -98,17 +120,13 @@ const StaffEmployee = () => {
           <TableBody>
             {filteredStaffs.slice(startIndex, endIndex).map((staff) => (
               <TableRow key={staff._id}>
-                <TableCell component="th" scope="row">
-                  {staff.email}
-                </TableCell>
-                <TableCell align="right">
-                  {staff.isActive ? "true" : "false"}
-                </TableCell>
-                <TableCell align="right">{staff.name}</TableCell>
-                <TableCell align="right">{staff.created_at}</TableCell>
-                <TableCell align="right">{staff.staffId}</TableCell>
-                <TableCell align="right">{staff.staffRank}</TableCell>
-                <TableCell align="right">
+                <TableCell>{staff.email}</TableCell>
+                <TableCell>{staff.isActive ? "true" : "false"}</TableCell>
+                <TableCell>{staff.name}</TableCell>
+                <TableCell>{staff.created_at}</TableCell>
+                <TableCell>{staff.staffId}</TableCell>
+                <TableCell>{staff.staffRank}</TableCell>
+                <TableCell>
                   <Button
                     type="submit"
                     variant="outlined"
@@ -120,7 +138,14 @@ const StaffEmployee = () => {
                   >
                     Update
                   </Button>
-                  <Button>DELETE</Button>
+                  {userCtx.staffRank === "manager" && (
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleDelete(staff._id)}
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

@@ -93,7 +93,11 @@ const StaffLayout = (props) => {
           <ToolBar>
             <img src="../../assets/Company_Name.png" alt="Company Logo" />
 
-            <Typography variant="h5">Staff Portal</Typography>
+            <Typography variant="h5">
+              {userCtx.staffRank === "manager"
+                ? "Manager Portal"
+                : "Staff Portal"}
+            </Typography>
 
             {userCtx.isMember && (
               <Button

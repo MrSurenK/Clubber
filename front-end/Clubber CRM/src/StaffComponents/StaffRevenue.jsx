@@ -23,9 +23,6 @@ const StaffRevenue = () => {
 
   const fetchData = useFetch();
 
-  // for updating payment status
-  const [updatedPaymentStatus, setUpdatedPaymentStatus] = useState([]);
-
   // GET for all transactions
   const getTransactions = async () => {
     const res = await fetchData(
