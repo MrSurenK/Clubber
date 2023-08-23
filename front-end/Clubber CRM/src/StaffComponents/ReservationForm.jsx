@@ -18,11 +18,12 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { DatePicker, DateField } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import Box from "@mui/material/Box";
 
 const ReservationForm = () => {
   const userCtx = useContext(UserContext);
   const [reservation, setReservation] = useState({
-    reservationId: "REV-" + uuidv4(),
+    // reservationId: "REV-" + uuidv4(),
     reservationDate: new Date(),
     memberId: "",
   });
@@ -59,7 +60,7 @@ const ReservationForm = () => {
       "/reservations",
       "PUT",
       {
-        reservationId: reservation.reservationId,
+        // reservationId: reservation.reservationId,
         memberId: reservation.memberId,
         reservationDate: date,
         reservationTime: time,
@@ -87,62 +88,63 @@ const ReservationForm = () => {
   };
 
   return (
-    <div>
-      <Container component="main" maxWidth="xs">
-        <Typography component="h1" variant="h5">
-          Add a New Reservation
-        </Typography>
-        <br />
+    <Container component="main" maxWidth="xs">
+      <Typography component="h1" variant="h5">
+        Add a New Reservation
+      </Typography>
+      <br />
+      <TextField
+        label="Member ID"
+        name="memberId"
+        value={reservation.memberId}
+        onChange={handleInputChange}
+        fullWidth
+        placeholder="Search for a member..."
+        inputProps={{
+          list: "member-options",
+          autoComplete: "off",
+        }}
+      />
+      <datalist id="member-options">
+        {members.map((member) => (
+          <option key={member.memberId} value={member.memberId}>
+            {member.memberId}
+          </option>
+        ))}
+      </datalist>
+      <FormControl fullWidth>
+        <Typography>Date</Typography>
         <TextField
-          label="Member ID"
-          name="memberId"
-          value={reservation.memberId}
-          onChange={handleInputChange}
-          fullWidth
-          placeholder="Search for a member..."
-          inputProps={{
-            list: "member-options",
-            autoComplete: "off",
+          value={date}
+          onChange={(e) => {
+            setDate(e.target.value);
           }}
-        />
-        <datalist id="member-options">
-          {members.map((member) => (
-            <option key={member.memberId} value={member.memberId}>
-              {member.memberId}
-            </option>
-          ))}
-        </datalist>
-        <FormControl fullWidth>
-          <Typography>Date</Typography>
-          <TextField
-            value={date}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }}
-          ></TextField>
-          <br />
-          <Typography>Time</Typography>
-          <TextField
-            value={time}
-            onChange={(e) => {
-              setTime(e.target.value);
-            }}
-          ></TextField>
-          <br />
-          <Typography>Pax</Typography>
-          <TextField
-            value={pax}
-            onChange={(e) => {
-              setPax(e.target.value);
-            }}
-          ></TextField>
-          <br />
-          <Typography>Status</Typography>
-          <TextField value={"Pending"}>Pending</TextField>
-          <Button onClick={addReservation}>Add Reservation</Button>
-        </FormControl>
-      </Container>
-    </div>
+        ></TextField>
+        <br />
+        <Typography>Time</Typography>
+        <TextField
+          value={time}
+          onChange={(e) => {
+            setTime(e.target.value);
+          }}
+        ></TextField>
+        <br />
+        <Typography>Pax</Typography>
+        <TextField
+          value={pax}
+          onChange={(e) => {
+            setPax(e.target.value);
+          }}
+        ></TextField>
+        <br />
+        <Typography>Status</Typography>
+        <TextField value={"Pending"}>Pending</TextField>
+        <br />
+        <Button variant="contained" onClick={addReservation}>
+          Add Reservation
+        </Button>
+      </FormControl>
+    </Container>
   );
 };
 
