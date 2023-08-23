@@ -19,14 +19,14 @@ import BookIcon from "@mui/icons-material/Book";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import styles from "./StaffLayout.module.css";
+import styles from "./CustomerLayout.moduel.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import sketch from "../../assets/sketch.png";
 import Button from "@mui/material/Button";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 
-const StaffLayout = (props) => {
+const CustomerLayout = (props) => {
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const drawerWidth = 240;
@@ -47,15 +47,15 @@ const StaffLayout = (props) => {
   };
 
   const handleAppBarButton = () => {
-    navigate("/user/customer");
+    navigate("/user/staff");
   };
 
-  const getStaffDetails = async () => {
+  const getMemberDetails = async () => {
     const res = await fetchData(
-      "/users/staff",
+      "/users/member",
       "POST",
       {
-        staffId: userCtx.staffId,
+        memberId: userCtx.memberId,
       },
       userCtx.accessToken
     );
@@ -70,7 +70,7 @@ const StaffLayout = (props) => {
   };
 
   useEffect(() => {
-    getStaffDetails();
+    getMemberDetails();
   }, []);
 
   return (
@@ -90,15 +90,15 @@ const StaffLayout = (props) => {
           <ToolBar>
             <img src="../../assets/Company_Name.png" alt="Company Logo" />
 
-            <Typography variant="h5">Staff Portal</Typography>
+            <Typography variant="h5">Member Portal</Typography>
 
-            {userCtx.isMember && (
+            {userCtx.isStaff && (
               <Button
                 onClick={handleAppBarButton}
                 variant="contained"
                 sx={{ height: "100%" }}
               >
-                Member Portal
+                Staff Portal
               </Button>
             )}
 
@@ -200,4 +200,4 @@ const StaffLayout = (props) => {
   );
 };
 
-export default StaffLayout;
+export default CustomerLayout;
