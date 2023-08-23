@@ -30,11 +30,11 @@ const StaffDashboard = () => {
               <EarningsperMonth></EarningsperMonth>
             </Item>
           </Grid>
-          {/* <Grid item xs={6}>
-          <Item>
-            <ReceivablesperMonth></ReceivablesperMonth>
-          </Item>
-        </Grid> */}
+          <Grid item xs={6}>
+            <Item>
+              <ReceivablesperMonth></ReceivablesperMonth>
+            </Item>
+          </Grid>
         </Grid>
         <br />
         <br />
