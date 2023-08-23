@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { Typography } from "@mui/material";
+import UserContext from "../context/user";
 
 const TopSpenders = () => {
+  const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const [topSpendingMembers, setTopSpendingMembers] = useState([]);
 
@@ -11,14 +13,21 @@ const TopSpenders = () => {
   }, []);
 
   const fetchTopSpenders = async () => {
-    const res = await fetchData("/users/member", "GET");
+    const res = await fetchData(
+      "/users/member",
+      "GET",
+      undefined,
+      userCtx.accessToken
+    );
     if (res.ok) {
       const members = res.data;
       const transactions = await Promise.all(
         members.map(async (member) => {
           const transactionRes = await fetchData(
             `/transactions/totalamount/${member.memberId}`,
-            "GET"
+            "GET",
+            undefined,
+            userCtx.accessToken
           );
           return {
             memberId: member.memberId,
