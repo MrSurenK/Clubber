@@ -25,6 +25,7 @@ function App() {
   const [isMember, setIsMember] = useState(false);
   const [memberId, setMemberId] = useState("");
   const [memberRank, setMemberRank] = useState("");
+  const [userId, setUserId] = useState("");
 
   return (
     <>
@@ -44,6 +45,8 @@ function App() {
           setMemberId,
           memberRank,
           setMemberRank,
+          userId,
+          setUserId,
         }}
       >
         <BrowserRouter>

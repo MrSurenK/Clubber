@@ -60,13 +60,13 @@ export default function Login(props) {
     if (res.ok) {
       userCtx.setAccessToken(res.data.access);
       const decoded = jwtDecode(res.data.access);
-      console.log("Decoded Claims:", decoded);
       userCtx.setIsStaff(decoded.isStaff);
       userCtx.setStaffId(decoded.staffId);
       userCtx.setStaffRank(decoded.staffRank);
       userCtx.setIsMember(decoded.isMember);
       userCtx.setMemberId(decoded.memberId);
       userCtx.setMemberRank(decoded.memberRank);
+      userCtx.setUserId(decoded.id);
 
       // Check if user is a staff member or a customer
       if (decoded.isStaff) {
