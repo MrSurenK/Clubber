@@ -79,48 +79,53 @@ const StaffLayout = (props) => {
   return (
     <ThemeProvider theme={LayoutTheme}>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
         <AppBar
           position="fixed"
           sx={{
-            display: "flex",
-            alignItems: "flex-end",
             width: `calc(100% -${drawerWidth}px)`,
             ml: `${drawerWidth}px`,
             bgcolor: "#000000",
           }}
         >
           <ToolBar>
-            <img src="../../assets/Company_Name.png" alt="Company Logo" />
-
-            <Typography variant="h5">
-              {userCtx.staffRank === "manager"
-                ? "Manager Portal"
-                : "Staff Portal"}
-            </Typography>
-
-            {userCtx.isMember && (
-              <Button
-                onClick={handleAppBarButton}
-                variant="contained"
-                sx={{ height: "100%" }}
-              >
-                Member Portal
+            <Box width="15%"></Box>
+            <Box width="25%" alignItems="center" align="left">
+              <img
+                src="../../assets/Company_Name.png"
+                alt="Company Logo"
+                style={{ maxWidth: "60%", height: "auto" }}
+              />
+            </Box>{" "}
+            <Box width="20%"></Box>
+            <Box width="25%">
+              <Button variant="contained">
+                {userCtx.staffRank === "manager"
+                  ? "Manager Portal"
+                  : "Staff Portal"}
               </Button>
-            )}
-
-            {/* Right side */}
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>{firstLetter}</Avatar>
-              <Stack direction="column" alignItems="flex-end">
-                <Typography variant="h6" marginRight={"auto"} paddingTop={2}>
-                  {nameDisplay}
-                </Typography>
-                <Typography variant="h6" marginBottom={2}>
-                  {emailDisplay}
-                </Typography>
+              {userCtx.isMember && (
+                <Button
+                  onClick={handleAppBarButton}
+                  variant="outlined"
+                  sx={{ height: "100%" }}
+                >
+                  Member Portal
+                </Button>
+              )}
+            </Box>
+            <Box width="20%" align="right" marginRight="0">
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Stack direction="column" alignItems="flex-end">
+                  <Typography variant="h6" paddingTop={2}>
+                    {nameDisplay}
+                  </Typography>
+                  <Typography variant="h6" marginBottom={2}>
+                    {emailDisplay}
+                  </Typography>
+                </Stack>
+                <Avatar sx={{ bgcolor: deepPurple[500] }}>{firstLetter}</Avatar>
               </Stack>
-            </Stack>
+            </Box>
           </ToolBar>
         </AppBar>
         <Drawer
@@ -136,9 +141,12 @@ const StaffLayout = (props) => {
           variant="permanent"
           anchor="left"
         >
-          <ToolBar>
-            <img src={sketch} alt="logo" className={styles.logo} />
-          </ToolBar>
+          <img
+            src={sketch}
+            alt="logo"
+            className={styles.logo}
+            style={{ maxWidth: "25%", height: "auto" }}
+          />
           <List>
             {[
               {

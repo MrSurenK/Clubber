@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
+import useFetch from "../hooks/useFetch";
+import UserContext from "../context/user";
+import styles from "./CustomerLayout.module.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import sketch from "../../assets/sketch.png";
+
+//material UI imports
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import ToolBar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
+
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
@@ -12,19 +18,11 @@ import Stack from "@mui/material/Stack";
 import { deepPurple } from "@mui/material/colors";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import EngineeringIcon from "@mui/icons-material/Engineering";
-import BookIcon from "@mui/icons-material/Book";
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import styles from "./CustomerLayout.moduel.css";
-import { useNavigate, useLocation } from "react-router-dom";
-import sketch from "../../assets/sketch.png";
 import Button from "@mui/material/Button";
-import useFetch from "../hooks/useFetch";
-import UserContext from "../context/user";
 
 const CustomerLayout = (props) => {
   const userCtx = useContext(UserContext);
@@ -78,44 +76,49 @@ const CustomerLayout = (props) => {
   return (
     <ThemeProvider theme={LayoutTheme}>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
         <AppBar
           position="fixed"
           sx={{
-            display: "flex",
-            alignItems: "flex-end",
             width: `calc(100% -${drawerWidth}px)`,
             ml: `${drawerWidth}px`,
             bgcolor: "#000000",
           }}
         >
           <ToolBar>
-            <img src="../../assets/Company_Name.png" alt="Company Logo" />
-
-            <Typography variant="h5">Member Portal</Typography>
-
-            {userCtx.isStaff && (
-              <Button
-                onClick={handleAppBarButton}
-                variant="contained"
-                sx={{ height: "100%" }}
-              >
-                Staff Portal
-              </Button>
-            )}
-
-            {/* Right side */}
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>{firstLetter}</Avatar>
-              <Stack direction="column" alignItems="flex-end">
-                <Typography variant="h6" marginRight={"auto"} paddingTop={2}>
-                  {nameDisplay}
-                </Typography>
-                <Typography variant="h6" marginBottom={2}>
-                  {emailDisplay}
-                </Typography>
+            <Box width="15%"></Box>
+            <Box width="25%" alignItems="center" align="left">
+              <img
+                src="../../assets/Company_Name.png"
+                alt="Company Logo"
+                style={{ maxWidth: "60%", height: "auto" }}
+              />
+            </Box>
+            <Box width="20%"></Box>
+            <Box width="25%">
+              {userCtx.isStaff && (
+                <Button
+                  onClick={handleAppBarButton}
+                  variant="outlined"
+                  sx={{ height: "100%" }}
+                >
+                  Staff Portal
+                </Button>
+              )}
+              <Button variant="contained">Member Portal</Button>
+            </Box>
+            <Box width="20%" align="right" marginRight="0">
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Stack direction="column" alignItems="flex-end">
+                  <Typography variant="h6" paddingTop={2}>
+                    {nameDisplay}
+                  </Typography>
+                  <Typography variant="h6" marginBottom={2}>
+                    {emailDisplay}
+                  </Typography>
+                </Stack>
+                <Avatar sx={{ bgcolor: deepPurple[500] }}>{firstLetter}</Avatar>
               </Stack>
-            </Stack>
+            </Box>
           </ToolBar>
         </AppBar>
         <Drawer
@@ -131,9 +134,12 @@ const CustomerLayout = (props) => {
           variant="permanent"
           anchor="left"
         >
-          <ToolBar>
-            <img src={sketch} alt="logo" className={styles.logo} />
-          </ToolBar>
+          <img
+            src={sketch}
+            alt="logo"
+            className={styles.logo}
+            style={{ maxWidth: "25%", height: "auto" }}
+          />
           <List>
             {[
               {
