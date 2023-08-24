@@ -56,7 +56,7 @@ function App() {
             <Route path="/register" element={<SignUp />} />
 
             <Route path="/user" element={<User />}>
-              {isMember === true && (
+              {isMember && (
                 <Route
                   path="customer"
                   element={<CustomerPortal memberId={memberId} />}
@@ -66,7 +66,7 @@ function App() {
                 </Route>
               )}
 
-              {isStaff === true && (
+              {isStaff && (
                 <Route path="staff" element={<StaffPortal />}>
                   <Route
                     path="dashboard"

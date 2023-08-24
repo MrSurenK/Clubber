@@ -54,7 +54,6 @@ const TopSpenders = () => {
         Top Spenders
       </Typography>
       <br />
-      <br />
       {topSpendingMembers.map((member, index) => (
         <Typography variant="h6" align="center" key={member.memberId}>
           {index + 1}. {member.name} ${member.spendAmount}

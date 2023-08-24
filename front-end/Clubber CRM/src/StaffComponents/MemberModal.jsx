@@ -81,6 +81,7 @@ const Overlay = (props) => {
               label="Name"
               name="name"
               autoComplete="name"
+              defaultValue={props.memberName}
               inputRef={nameRef}
             />
             <br />
