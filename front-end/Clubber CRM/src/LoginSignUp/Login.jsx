@@ -30,9 +30,8 @@ function Copyright(props) {
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Clubber.com
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -50,8 +49,8 @@ const customTheme = createTheme({
 
 export default function Login(props) {
   const userCtx = useContext(UserContext);
-  const [email, setEmail] = useState("test1@test.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const fetchData = useFetch();
 
   const [showPassword, setShowPassword] = useState(false);
