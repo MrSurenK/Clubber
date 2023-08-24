@@ -13,7 +13,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TablePagination,
+
 } from "@mui/material";
 
 const Reservations = () => {
