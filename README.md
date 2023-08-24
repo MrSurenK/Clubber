@@ -1,8 +1,8 @@
 # Clubber
-A club CRM app
+A club CRM app created to help managers in clubs manage their membership status and keep track of payments
 
-## Background
-
+## Link to API documentation
+https://docs.google.com/spreadsheets/d/1FmVztUn2-Sr114CnifQ51lseAS8ftadl1j_gChNGzxg/edit#gid=0
 
 ## Technologies Used:
 - Mongoose DB
