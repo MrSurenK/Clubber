@@ -49,7 +49,7 @@ const StaffLayout = (props) => {
   };
 
   const handleAppBarButton = () => {
-    navigate("/user/customer");
+    navigate("/user/customer/dashboard");
   };
 
   const getStaffDetails = async () => {
@@ -87,8 +87,8 @@ const StaffLayout = (props) => {
           }}
         >
           <ToolBar>
-            <Box width="15%"></Box>
-            <Box width="25%" alignItems="center" align="left">
+            <Box width="20%"></Box>
+            <Box width="20%" alignItems="center" align="left">
               <img
                 src="../../assets/Company_Name.png"
                 alt="Company Logo"

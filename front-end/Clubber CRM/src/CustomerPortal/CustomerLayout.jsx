@@ -47,7 +47,7 @@ const CustomerLayout = (props) => {
   };
 
   const handleAppBarButton = () => {
-    navigate("/user/staff");
+    navigate("/user/staff/dashboard");
   };
 
   const getMemberDetails = async () => {
@@ -85,8 +85,8 @@ const CustomerLayout = (props) => {
           }}
         >
           <ToolBar>
-            <Box width="15%"></Box>
-            <Box width="25%" alignItems="center" align="left">
+            <Box width="20%"></Box>
+            <Box width="20%" alignItems="center" align="left">
               <img
                 src="../../assets/Company_Name.png"
                 alt="Company Logo"
