@@ -13,7 +13,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TablePagination,
+
 } from "@mui/material";
 
 const Reservations = () => {
@@ -24,10 +24,6 @@ const Reservations = () => {
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState("");
   const [selectedreservationId, setSelectedReservationId] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [selectedPax, setSelectedPax] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
 
   // GET for all reservations
   const getReservations = async () => {

@@ -117,6 +117,7 @@ const MemberDisplay = () => {
               <TableCell>Member Rank</TableCell>
               <TableCell>BarTab Active</TableCell>
               <TableCell></TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -132,7 +133,7 @@ const MemberDisplay = () => {
                 <TableCell>
                   <Button
                     type="submit"
-                    variant="outlined"
+                    variant="contained"
                     onClick={() => {
                       setSelectedMemberName(member.name);
                       setSelectedMemberId(member.memberId);
@@ -141,6 +142,8 @@ const MemberDisplay = () => {
                   >
                     Update
                   </Button>
+                </TableCell>
+                <TableCell>
                   {userCtx.staffRank === "manager" && (
                     <Button
                       variant="outlined"

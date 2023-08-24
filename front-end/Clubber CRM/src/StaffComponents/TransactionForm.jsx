@@ -31,11 +31,7 @@ const AddTransactionForm = () => {
   const fetchData = useFetch();
 
   // for adding new transaction
-  const transactionIdRef = useRef("");
   const transactionDateRef = useRef("");
-  const paymentStatusRef = useRef("");
-  const memberIdRef = useRef("");
-  const staffIdRef = useRef("");
 
   const fetchProducts = async () => {
     const res = await fetchData(
