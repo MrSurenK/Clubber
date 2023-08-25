@@ -15,15 +15,15 @@ A club CRM app created to help managers in clubs manage their membership status 
 
 ## Getting Started 
 1. Setup Back-End:
-   - Create a .env file with the following varibles
+   >Create a .env file with the following varibles
      ```
      SERVER=5001
      DATABASE="Key in your MongoDB database"
      ACCESS_SECRET="YOU RANDOMLY GENERATED STRING"
      REFRESH_SECRET="YOU RANDOMLY GENERATED STRING"
      ```
-      <br/> 
-   *In terminal:*
+      
+   *In backend terminal:*
    ```
    npm i
    ```
@@ -32,13 +32,12 @@ A club CRM app created to help managers in clubs manage their membership status 
    npm run dev
    ```
 3. Setup Front-End:
-   - Creat a .env file with the following variables
+   >Creat a .env file with the following variables
    ```
    VITE_SERVER=http://localhost:5001
    ```
-   <br/>
 
-   *In terminal:*
+   *In frontend terminal:*
    ```
    npm i
    ```
