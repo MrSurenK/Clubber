@@ -48,7 +48,7 @@ A club CRM app created to help managers in clubs manage their membership status 
    - **Manager Account**: Full access to CRM
    - **Minion Account**: Same access to CRM but does not have the option to delete staff or members <br/>
      ![Manager Member Portal](front-end/Clubber-CRM/screenshots/ManagerMember.png)
-     ![Minon Member Portal](front-end/Clubber-CRM/screenshots/MinonMember.png)
+     ![Minon Member Portal](front-end/Clubber-CRM/screenshots/MinionMember.png)
    - **Customer Account**: Access to Customer portal only <br/><br/>
      ![Customer Portal](front-end/Clubber-CRM/screenshots/CustomerPortal.png) <br/>
     *Staff accountsabove also have access to customer accounts as they are customers of Clubber. Once logged in Staff can switch to the customer portal through the available buttons in the header*
