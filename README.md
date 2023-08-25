@@ -85,6 +85,7 @@ A club CRM app created to help managers in clubs manage their membership status 
       }
 
       ```
+   - If you see ``` { status: "success", msg: "registration successful" } ``` in Postman then the account has been successfully created.
 
 8. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
    - **Manager Account**: Full access to CRM
