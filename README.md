@@ -1,6 +1,6 @@
 # Clubber
 A club CRM app created to help managers in clubs manage their membership status and keep track of payments <br/>
-![Dashboard](front-end/Clubber-CRM/screenshots)
+![Dashboard](front-end/Clubber-CRM/screenshots/Dashboard.png)
 
 ## Table of Contents:
 1. Getting Started
