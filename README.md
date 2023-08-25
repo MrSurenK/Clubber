@@ -23,7 +23,8 @@ A club CRM app created to help managers in clubs manage their membership status 
      REFRESH_SECRET="YOU RANDOMLY GENERATED STRING"
      ```
       
-   *In backend terminal:*
+   *In backend terminal:(Clubber
+/back-end/)*
    ```
    npm i
    ```
@@ -37,7 +38,8 @@ A club CRM app created to help managers in clubs manage their membership status 
    VITE_SERVER=http://localhost:5001
    ```
 
-   *In frontend terminal:*
+   *In frontend terminal:(Clubber/front-end
+/Clubber-CRM/)*
    ```
    npm i
    ```
@@ -70,29 +72,28 @@ A club CRM app created to help managers in clubs manage their membership status 
     - Creat a new environment variable with initial and current value ```http://127.0.0.1:5001```
     - Creat a new collection and select ```PUT``` followed by ```{{server}}/auth/register```
     - In the body, feed the JSON as follows: *(More information regarding the input constraints and user modal schema and the auth validators)*
-      ```
-      {
-      email: 
-      isActive: 
-      name: 
-      isStaff: 
-      staffId: 
-      staffRank: 
-      isMember: 
-      memberId: 
-      memberRank: 
-      barTabActive: ,
-      }
+ ```
+   {
+      "email": string,
+      "hash",
+      "isActive": boolean,
+      "name": string,
+      "isStaff": boolean,
+      "staffRank": string,
+      "isMember": boolean,
+      "memberRank": string,
+      "barTabActive": boolean,
+}
 
-      ```
+  ```
    - If you see ``` { status: "success", msg: "registration successful" } ``` in Postman then the account has been successfully created.
 
 8. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
-   - **Manager Account**: Full access to CRM
-   - **Minion Account**: Same access to CRM but does not have the option to delete staff or members <br/>
+   - **Manager Account**: Full access to CRM *(staffRank:Manager)*
+   - **Minion Account**: Same access to CRM but does not have the option to delete staff or members *(staffRank:Minion)* <br/>
      ![Manager Member Portal](front-end/Clubber-CRM/screenshots/ManagerMember.png)
      ![Minon Member Portal](front-end/Clubber-CRM/screenshots/MinionMember.png)
-   - **Customer Account**: Access to Customer portal only <br/><br/>
+   - **Customer Account**: Access to Customer portal only *(isMember:true)* <br/><br/>
      ![Customer Portal](front-end/Clubber-CRM/screenshots/CustomerDashboard.png) <br/>
     *Staff accountsabove also have access to customer accounts as they are customers of Clubber. Once logged in Staff can switch to the customer portal through the available buttons in the header*
 
