@@ -9,7 +9,8 @@ A club CRM app created to help managers in clubs manage their membership status 
 4. Front-End Libraries used
 5. Back-End libraries used
 6. Key Features
-7. Future Improvements 
+7. Credits 
+8. Future Improvements 
 
 
 ## Getting Started 
@@ -153,6 +154,11 @@ npm i nodemon -D
   - Revenue & Payables Tracking: using the transactions that are logged, managers can keep track of overdue payments
   - Reservations: Help manage reservations
   - Dashboard: Helps manager get a snapshot of how the club is doing at a glance
+
+## Credits 
+@Professed5733
+@melho87
+@MrSurenK
 
 ## Current Bugs:
 
