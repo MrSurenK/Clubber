@@ -21,18 +21,34 @@ A club CRM app created to help managers in clubs manage their membership status 
      DATABASE="Key in your MongoDB database"
      ACCESS_SECRET="YOU RANDOMLY GENERATED STRING"
      REFRESH_SECRET="YOU RANDOMLY GENERATED STRING"
-     ``` <br/> 
+     ```
+      <br/> 
    *In terminal:*
-   > npm run dev 
-2. Setup Front-End:
+   ```
+   npm i
+   ```
+   
+   ```
+   npm run dev
+   ```
+3. Setup Front-End:
    - Creat a .env file with the following variables
    ```
    VITE_SERVER=http://localhost:5001
    ```
-     *In terminal:*
-   > npm run dev 
+   <br/>
 
-3. Login Credentials 
+   *In terminal:*
+   ```
+   npm i
+   ```
+   
+   ```
+   npm run dev
+   ```
+   
+  
+5. Login Credentials 
    - Manager Account <br/>
      Email: ```manager@test.com``` <br/>
      Password: ```123456``` <br/>
@@ -49,7 +65,7 @@ A club CRM app created to help managers in clubs manage their membership status 
    
 
   
-4. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
+6. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
    - **Manager Account**: Full access to CRM
    - **Minion Account**: Same access to CRM but does not have the option to delete staff or members <br/>
      ![Manager Member Portal](front-end/Clubber-CRM/screenshots/ManagerMember.png)
@@ -58,8 +74,8 @@ A club CRM app created to help managers in clubs manage their membership status 
      ![Customer Portal](front-end/Clubber-CRM/screenshots/CustomerDashboard.png) <br/>
     *Staff accountsabove also have access to customer accounts as they are customers of Clubber. Once logged in Staff can switch to the customer portal through the available buttons in the header*
 
-5. Navigate through the site with the sidebar and the top navigation menue.
-6. To get back to the login page or switch accounts, delete all the endpoints except for the local host. eg.```http://localhost:5173/```
+7. Navigate through the site with the sidebar and the top navigation menue.
+8. To get back to the login page or switch accounts, delete all the endpoints except for the local host. eg.```http://localhost:5173/```
 
 ## Link to API documentation
 https://docs.google.com/spreadsheets/d/1FmVztUn2-Sr114CnifQ51lseAS8ftadl1j_gChNGzxg/edit#gid=0
