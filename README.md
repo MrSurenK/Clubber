@@ -63,7 +63,8 @@ https://docs.google.com/spreadsheets/d/1FmVztUn2-Sr114CnifQ51lseAS8ftadl1j_gChNG
 ## Technologies Used:
 **Front-End**
 - React
-- Material UI
+- Material UI <br/><br/>
+
 **Back-End**
 - Express.js
 - Mongoose DB
