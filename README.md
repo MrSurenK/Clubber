@@ -67,7 +67,8 @@ https://docs.google.com/spreadsheets/d/1FmVztUn2-Sr114CnifQ51lseAS8ftadl1j_gChNG
 
 **Back-End**
 - Express.js
-- Mongoose DB
+- Mongoose
+- MongoDB (NoSQL)
 
 ## Front-End Libraries Used: 
 1. React Router Dom v6.15.0
