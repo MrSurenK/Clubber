@@ -156,9 +156,9 @@ npm i nodemon -D
   - Dashboard: Helps manager get a snapshot of how the club is doing at a glance
 
 ## Credits 
-@Professed5733
-@melho87
-@MrSurenK
+@Professed5733 <br/>
+@melho87 <br/> 
+@MrSurenK <br/>
 
 ## Current Bugs:
 
