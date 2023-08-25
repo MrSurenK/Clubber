@@ -38,7 +38,7 @@ A club CRM app created to help managers in clubs manage their membership status 
      Password: ```123456``` <br/>
    - Member Account <br/>
      Email: ```member@test.com``` <br/>
-     Password: ```123456```
+     Password: ```12345678```
 
    >Login Page
    ![Login Page](front-end/Clubber-CRM/screenshots/LoginPage.png)
