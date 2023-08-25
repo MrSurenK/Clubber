@@ -1,6 +1,6 @@
 # Clubber
 A club CRM app created to help managers in clubs manage their membership status and keep track of payments <br/>
-![Dashboard](front-end/Clubber\CRM/screenshots/Dashboard.png)
+![Dashboard](front-end/Clubber-CRM/screenshots/Dashboard.png)
 
 ## Table of Contents:
 1. Getting Started
@@ -9,7 +9,8 @@ A club CRM app created to help managers in clubs manage their membership status 
 4. Front-End Libraries used
 5. Back-End libraries used
 6. Key Features
-7. Future Improvements 
+7. Credits 
+8. Future Improvements 
 
 
 ## Getting Started 
@@ -39,14 +40,18 @@ A club CRM app created to help managers in clubs manage their membership status 
      Email: ```member@test.com``` <br/>
      Password: ```123456```
 
+   >Login Page
+   ![Login Page](front-end/Clubber-CRM/screenshots/LoginPage.png)
+   
+
   
 4. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
    - **Manager Account**: Full access to CRM
    - **Minion Account**: Same access to CRM but does not have the option to delete staff or members <br/>
-     ![Manager Member Portal](front-end/Clubber\CRM/screenshots/ManagerMember.png)
-     ![Minon Member Portal](front-end/Clubber\CRM/screenshots/MinonMember.png)
+     ![Manager Member Portal](front-end/Clubber-CRM/screenshots/ManagerMember.png)
+     ![Minon Member Portal](front-end/Clubber-CRM/screenshots/MinionMember.png)
    - **Customer Account**: Access to Customer portal only <br/><br/>
-     ![Customer Portal](front-end/Clubber\CRM/screenshots/CustomerPortal.png) <br/>
+     ![Customer Portal](front-end/Clubber-CRM/screenshots/CustomerPortal.png) <br/>
     *Staff accountsabove also have access to customer accounts as they are customers of Clubber. Once logged in Staff can switch to the customer portal through the available buttons in the header*
 
 5. Navigate through the site with the sidebar and the top navigation menue.
@@ -58,10 +63,12 @@ https://docs.google.com/spreadsheets/d/1FmVztUn2-Sr114CnifQ51lseAS8ftadl1j_gChNG
 ## Technologies Used:
 **Front-End**
 - React
-- Material UI
+- Material UI <br/><br/>
+
 **Back-End**
 - Express.js
-- Mongoose DB
+- Mongoose
+- MongoDB (NoSQL)
 
 ## Front-End Libraries Used: 
 1. React Router Dom v6.15.0
@@ -149,6 +156,11 @@ npm i nodemon -D
   - Revenue & Payables Tracking: using the transactions that are logged, managers can keep track of overdue payments
   - Reservations: Help manage reservations
   - Dashboard: Helps manager get a snapshot of how the club is doing at a glance
+
+## Credits 
+@Professed5733 <br/>
+@melho87 <br/> 
+@MrSurenK <br/>
 
 ## Current Bugs:
 
