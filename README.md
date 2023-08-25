@@ -1,6 +1,6 @@
 # Clubber
 A club CRM app created to help managers in clubs manage their membership status and keep track of payments <br/>
-![Dashboard](Clubber/front-end/Clubber\CRM/screenshots/Dashboard.png)
+![Dashboard](front-end/Clubber\CRM/screenshots/Dashboard.png)
 
 ## Table of Contents:
 1. Getting Started
@@ -43,10 +43,10 @@ A club CRM app created to help managers in clubs manage their membership status 
 4. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
    - **Manager Account**: Full access to CRM
    - **Minion Account**: Same access to CRM but does not have the option to delete staff or members <br/>
-     ![Manager Member Portal](Clubber/front-end/Clubber\CRM/screenshots/ManagerMember.png)
-     ![Minon Member Portal](Clubber/front-end/Clubber\CRM/screenshots/MinonMember.png)
+     ![Manager Member Portal](front-end/Clubber\CRM/screenshots/ManagerMember.png)
+     ![Minon Member Portal](front-end/Clubber\CRM/screenshots/MinonMember.png)
    - **Customer Account**: Access to Customer portal only <br/><br/>
-     ![Customer Portal](Clubber/front-end/Clubber\CRM/screenshots/CustomerPortal.png) <br/>
+     ![Customer Portal](front-end/Clubber\CRM/screenshots/CustomerPortal.png) <br/>
     *Staff accountsabove also have access to customer accounts as they are customers of Clubber. Once logged in Staff can switch to the customer portal through the available buttons in the header*
 
 5. Navigate through the site with the sidebar and the top navigation menue.
