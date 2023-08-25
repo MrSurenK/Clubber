@@ -21,12 +21,16 @@ A club CRM app created to help managers in clubs manage their membership status 
      DATABASE="Key in your MongoDB database"
      ACCESS_SECRET="YOU RANDOMLY GENERATED STRING"
      REFRESH_SECRET="YOU RANDOMLY GENERATED STRING"
-     ```
+     ``` <br/> 
+   *In terminal:*
+   > npm run dev 
 2. Setup Front-End:
    - Creat a .env file with the following variables
    ```
    VITE_SERVER=http://localhost:5001
    ```
+     *In terminal:*
+   > npm run dev 
 
 3. Login Credentials 
    - Manager Account <br/>
