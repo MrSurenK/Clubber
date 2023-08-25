@@ -64,7 +64,29 @@ A club CRM app created to help managers in clubs manage their membership status 
    
 
   
-6. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
+6.  To set up your own accounts before trying out the CRM system:
+    - Download and install Postman
+    - npm run dev the server folder 
+    - Creat a new environment variable with initial and current value ```http://127.0.0.1:5001```
+    - Creat a new collection and select ```PUT``` followed by ```{{server}}/auth/register```
+    - In the body, feed the JSON as follows: *(More information regarding the input constraints and user modal schema and the auth validators)*
+      ```
+      {
+      email: 
+      isActive: 
+      name: 
+      isStaff: 
+      staffId: 
+      staffRank: 
+      isMember: 
+      memberId: 
+      memberRank: 
+      barTabActive: ,
+      }
+
+      ```
+
+8. After, setting up the above, use any of the login credentials to access the site. Login credentials grant/deny access to features of the web applicaition.
    - **Manager Account**: Full access to CRM
    - **Minion Account**: Same access to CRM but does not have the option to delete staff or members <br/>
      ![Manager Member Portal](front-end/Clubber-CRM/screenshots/ManagerMember.png)
@@ -73,8 +95,8 @@ A club CRM app created to help managers in clubs manage their membership status 
      ![Customer Portal](front-end/Clubber-CRM/screenshots/CustomerDashboard.png) <br/>
     *Staff accountsabove also have access to customer accounts as they are customers of Clubber. Once logged in Staff can switch to the customer portal through the available buttons in the header*
 
-7. Navigate through the site with the sidebar and the top navigation menue.
-8. To get back to the login page or switch accounts, delete all the endpoints except for the local host. eg.```http://localhost:5173/```
+9. Navigate through the site with the sidebar and the top navigation menue.
+10. To get back to the login page or switch accounts, delete all the endpoints except for the local host. eg.```http://localhost:5173/```
 
 ## Link to API documentation
 https://docs.google.com/spreadsheets/d/1FmVztUn2-Sr114CnifQ51lseAS8ftadl1j_gChNGzxg/edit#gid=0
